@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+:root {
+  --background: #F8FAFC;
+  --foreground: #1F2937;
+  
+  --primary-red: #DC2626;
+  --light-red: #FEE2E2;
+  --success-green: #16A34A;
+  --warning-orange: #F59E0B;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  --color-primary-red: var(--primary-red);
+  --color-light-red: var(--light-red);
+  --color-success-green: var(--success-green);
+  --color-warning-orange: var(--warning-orange);
+  
+  --font-sans: var(--font-inter);
+}
+
+@media (prefers-color-scheme: dark) {
+  /* This is overridden by next-themes if they use the class strategy, but kept as a fallback */
+}
+
+/* next-themes uses the .dark class */
+.dark {
+  --background: #0f1115; /* deep dark background */
+  --foreground: #F8FAFC; 
+  
+  /* Deep, vibrant dark mode colors */
+  --primary-red: #ef4444;
+  --light-red: #450a0a;
+  
+  /* Neon Accents for Glowing Effects */
+  --neon-red: #ff2a2a;
+  --neon-cyan: #00f0ff;
+  --neon-emerald: #00ff88;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), Arial, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Helper classes for neon glows */
+.glow-red {
+  box-shadow: 0 0 15px rgba(255, 42, 42, 0.4), 0 0 30px rgba(255, 42, 42, 0.1);
+}
+.glow-cyan {
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.4), 0 0 30px rgba(0, 240, 255, 0.1);
+}
+.glow-emerald {
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.4), 0 0 30px rgba(0, 255, 136, 0.1);
+}
+
+.dark .bg-white {
+  background-color: #1a1d24;
+}
+.dark .text-gray-900 {
+  color: #f8fafc;
+}
+.dark .text-gray-500 {
+  color: #94a3b8;
+}
+.dark .text-gray-600 {
+  color: #cbd5e1;
+}
+.dark .text-gray-700 {
+  color: #e2e8f0;
+}
+.dark .border-gray-100, .dark .border-gray-200 {
+  border-color: #2a2e37;
+}
+.dark .bg-gray-50, .dark .bg-gray-100 {
+  background-color: #14171c;
+}
