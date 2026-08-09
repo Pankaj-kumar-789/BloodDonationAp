@@ -43,7 +43,9 @@ export default function LoginPage() {
         <div className="absolute inset-0 bg-gradient-to-tr from-light-red to-white dark:to-gray-900 opacity-20 pointer-events-none"></div>
         <div className="absolute inset-0 p-12 flex flex-col justify-between">
           <div>
-            <img src={logo.src} alt="RaktaSetu Logo" className="h-12 w-auto object-contain mix-blend-multiply" />
+            <Link href="/">
+              <img src={logo.src} alt="RaktaSetu Logo" className="h-12 w-auto object-contain mix-blend-multiply" />
+            </Link>
           </div>
           <div>
             <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 drop-shadow-md">Save Lives Today.</h2>
@@ -63,12 +65,14 @@ export default function LoginPage() {
           <div className="bg-white dark:bg-gray-900 p-8 sm:p-10 rounded-3xl shadow-xl shadow-gray-100/50 dark:shadow-none border border-gray-100 dark:border-gray-800">
             <div className="flex flex-col items-center mb-8">
               <div className="mb-6 h-16 w-auto flex items-center justify-center">
-                <img 
-                  src={logo.src} 
-                  alt="RaktaSetu Logo" 
-                  className={`h-full w-auto object-contain ${isDark ? '' : 'mix-blend-multiply'}`}
-                  style={isDark ? { filter: 'invert(1) hue-rotate(180deg)', mixBlendMode: 'screen' } : {}}
-                />
+                <Link href="/" className="h-full">
+                  <img 
+                    src={logo.src} 
+                    alt="RaktaSetu Logo" 
+                    className={`h-full w-auto object-contain ${isDark ? '' : 'mix-blend-multiply'}`}
+                    style={isDark ? { filter: 'invert(1) hue-rotate(180deg)', mixBlendMode: 'screen' } : {}}
+                  />
+                </Link>
               </div>
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Welcome Back</h1>
               <p className="text-gray-500 dark:text-gray-400 text-base mt-2">Log in to RaktaSetu</p>

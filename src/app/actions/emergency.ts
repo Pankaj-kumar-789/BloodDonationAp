@@ -2,6 +2,7 @@
 
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { DonationType } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 export async function createEmergencyRequestAction(formData: FormData) {
@@ -11,6 +12,7 @@ export async function createEmergencyRequestAction(formData: FormData) {
 
     const patientName = formData.get("patientName") as string;
     const bloodGroupRaw = formData.get("bloodGroup") as string;
+    const donationType = (formData.get("donationType") as DonationType) || "BLOOD";
     const units = parseInt(formData.get("units") as string, 10);
     const requiredBefore = new Date(formData.get("requiredBefore") as string);
     const hospitalCity = formData.get("hospitalCity") as string;
@@ -64,6 +66,7 @@ export async function createEmergencyRequestAction(formData: FormData) {
         city,
         contactNumber,
         description,
+        donationType,
         creatorId: session.user.id,
         status: "PENDING"
       }
@@ -79,8 +82,8 @@ export async function createEmergencyRequestAction(formData: FormData) {
       await prisma.notification.createMany({
         data: localDonors.map(d => ({
           userId: d.userId,
-          title: "Urgent Blood Request Nearby!",
-          body: `A patient at ${hospital} urgently needs ${bloodGroup.replace('_POS', '+').replace('_NEG', '-')} blood. Can you help?`,
+          title: "Urgent Request Nearby!",
+          body: `A patient at ${hospital} urgently needs ${bloodGroup.replace('_POS', '+').replace('_NEG', '-')} ${donationType.toLowerCase()}. Can you help?`,
           link: "/emergency"
         }))
       });
@@ -133,6 +136,7 @@ export async function updateEmergencyRequestAction(id: string, formData: FormDat
 
     const patientName = formData.get("patientName") as string;
     const bloodGroupRaw = formData.get("bloodGroup") as string;
+    const donationType = formData.get("donationType") as DonationType;
     const units = parseInt(formData.get("units") as string, 10);
     const requiredBefore = new Date(formData.get("requiredBefore") as string);
     const hospitalCity = formData.get("hospitalCity") as string;
@@ -172,6 +176,7 @@ export async function updateEmergencyRequestAction(id: string, formData: FormDat
         ...(city && { city }),
         ...(contactNumber && { contactNumber }),
         ...(description !== undefined && { description }),
+        ...(donationType && { donationType }),
         ...(status && { status }),
       }
     });
@@ -238,6 +243,7 @@ export async function completeEmergencyRequestAction(requestId: string) {
           date: new Date(),
           hospital: request.hospital || "Unknown",
           units: request.units || 1,
+          donationType: request.donationType,
         }
       });
       

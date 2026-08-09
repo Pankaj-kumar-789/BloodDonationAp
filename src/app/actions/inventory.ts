@@ -2,9 +2,10 @@
 
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { DonationType } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
-export async function updateInventoryAction(bloodGroup: string, units: number) {
+export async function updateInventoryAction(bloodGroup: string, units: number, donationType: DonationType = "BLOOD") {
   try {
     const session = await auth();
     if (!session?.user?.id || session.user.role !== "BLOOD_BANK") {
@@ -21,9 +22,10 @@ export async function updateInventoryAction(bloodGroup: string, units: number) {
     // Upsert the specific blood group inventory
     await prisma.bloodInventory.upsert({
       where: {
-        bloodBankId_bloodGroup: {
+        bloodBankId_bloodGroup_donationType: {
           bloodBankId: profile.id,
           bloodGroup: bloodGroup as any,
+          donationType: donationType
         }
       },
       update: {
@@ -32,6 +34,7 @@ export async function updateInventoryAction(bloodGroup: string, units: number) {
       create: {
         bloodBankId: profile.id,
         bloodGroup: bloodGroup as any,
+        donationType: donationType,
         units: Math.max(0, units)
       }
     });

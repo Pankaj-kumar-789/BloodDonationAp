@@ -6,7 +6,7 @@ import { revalidatePath } from "next/cache";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 import { existsSync } from "fs";
-import { BloodGroup } from "@prisma/client";
+import { BloodGroup, DonationType } from "@prisma/client";
 
 export async function updateProfileAction(formData: FormData) {
   try {
@@ -57,6 +57,9 @@ export async function updateProfileAction(formData: FormData) {
       
       const contactFeeRaw = formData.get("contactFee");
       const contactFee = contactFeeRaw ? parseFloat(contactFeeRaw.toString()) : undefined;
+      
+      const donationTypesRaw = formData.getAll("donationTypes") as DonationType[];
+      const donationTypes = donationTypesRaw.length > 0 ? donationTypesRaw : ["BLOOD"];
 
       if (bloodGroup || city || state || isAvailableRaw !== null || contactFee !== undefined) {
         await prisma.donorProfile.upsert({
@@ -66,7 +69,8 @@ export async function updateProfileAction(formData: FormData) {
             ...(city && { city }),
             ...(state && { state }),
             ...(isAvailableRaw !== null && { isAvailable }),
-            ...(contactFee !== undefined && !isNaN(contactFee) && { contactFee })
+            ...(contactFee !== undefined && !isNaN(contactFee) && { contactFee }),
+            donationTypes: donationTypes
           },
           create: {
             userId: session.user.id,
@@ -75,6 +79,7 @@ export async function updateProfileAction(formData: FormData) {
             state: state || "",
             isAvailable: isAvailableRaw !== null ? isAvailable : true,
             contactFee: contactFee !== undefined && !isNaN(contactFee) ? contactFee : 0,
+            donationTypes: donationTypes
           }
         });
       }

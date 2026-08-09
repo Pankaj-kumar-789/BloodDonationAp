@@ -123,12 +123,31 @@ export function SettingsForm({ user, profile }: { user: any, profile: any }) {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Contact Fee (₹)</label>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Donation Fee (₹)</label>
                     <input type="number" name="contactFee" defaultValue={profile?.contactFee || 0} min="0" className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-red/20 focus:border-primary-red" />
+                    <p className="text-xs text-gray-500 mt-1">Amount you request as a reward for donating blood.</p>
+                  </div>
+                </div>
+
+                <div className="relative z-10 p-4 bg-gray-50 border border-gray-200 rounded-xl mt-4">
+                  <h4 className="text-sm font-bold text-gray-900 mb-3">Willing to Donate</h4>
+                  <div className="flex flex-wrap gap-6">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" name="donationTypes" value="BLOOD" defaultChecked={profile?.donationTypes?.includes("BLOOD") ?? true} className="w-4 h-4 text-primary-red focus:ring-primary-red rounded border-gray-300" />
+                      <span className="text-sm font-medium text-gray-700">Blood</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" name="donationTypes" value="PLATELETS" defaultChecked={profile?.donationTypes?.includes("PLATELETS")} className="w-4 h-4 text-primary-red focus:ring-primary-red rounded border-gray-300" />
+                      <span className="text-sm font-medium text-gray-700">Platelets</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input type="checkbox" name="donationTypes" value="PLASMA" defaultChecked={profile?.donationTypes?.includes("PLASMA")} className="w-4 h-4 text-primary-red focus:ring-primary-red rounded border-gray-300" />
+                      <span className="text-sm font-medium text-gray-700">Plasma</span>
+                    </label>
                   </div>
                 </div>
                 
-                <div className="relative z-10 flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-xl">
+                <div className="relative z-10 flex items-center justify-between p-4 bg-gray-50 border border-gray-200 rounded-xl mt-4">
                   <div>
                     <h4 className="text-sm font-bold text-gray-900">Available to Donate</h4>
                     <p className="text-xs text-gray-500">Turn this off if you are temporarily unavailable (e.g., recently donated, on vacation).</p>

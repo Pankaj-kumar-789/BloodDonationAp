@@ -21,6 +21,7 @@ const itemVariants: Variants = {
 
 export default function BloodBankSearchClient({ bloodBanks }: { bloodBanks: any[] }) {
   const [bloodGroupFilter, setBloodGroupFilter] = useState("A_POS");
+  const [donationTypeFilter, setDonationTypeFilter] = useState("BLOOD");
   const [searchQuery, setSearchQuery] = useState("");
 
   const bgOptions = [
@@ -47,8 +48,8 @@ export default function BloodBankSearchClient({ bloodBanks }: { bloodBanks: any[
     
     return true; 
   }).sort((a, b) => {
-    const aUnits = a.inventory.find((i: any) => i.bloodGroup === bloodGroupFilter)?.units || 0;
-    const bUnits = b.inventory.find((i: any) => i.bloodGroup === bloodGroupFilter)?.units || 0;
+    const aUnits = a.inventory.find((i: any) => i.bloodGroup === bloodGroupFilter && i.donationType === donationTypeFilter)?.units || 0;
+    const bUnits = b.inventory.find((i: any) => i.bloodGroup === bloodGroupFilter && i.donationType === donationTypeFilter)?.units || 0;
     return bUnits - aUnits;
   });
 
@@ -68,6 +69,15 @@ export default function BloodBankSearchClient({ bloodBanks }: { bloodBanks: any[
               onChange={(e) => setBloodGroupFilter(e.target.value)}
             >
               {bgOptions.map(bg => <option key={bg.value} value={bg.value}>{bg.label}</option>)}
+            </select>
+            <select 
+              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white font-bold rounded-xl focus:ring-primary-red focus:border-primary-red block p-3 outline-none shadow-sm"
+              value={donationTypeFilter}
+              onChange={(e) => setDonationTypeFilter(e.target.value)}
+            >
+              <option value="BLOOD">Whole Blood</option>
+              <option value="PLATELETS">Platelets</option>
+              <option value="PLASMA">Plasma</option>
             </select>
             
             <div className="relative flex-1 md:w-64">
@@ -99,8 +109,8 @@ export default function BloodBankSearchClient({ bloodBanks }: { bloodBanks: any[
             </motion.div>
           ) : (
             filteredBanks.map((bank) => {
-              const units = bank.inventory.find((i: any) => i.bloodGroup === bloodGroupFilter)?.units || 0;
-              const hasStock = units > 0;
+              const totalUnits = bank.inventory.reduce((sum: number, item: any) => sum + (item.units || 0), 0);
+              const hasStock = totalUnits > 0;
 
               return (
                 <motion.div variants={itemVariants} key={bank.id} className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-700 shadow-sm overflow-hidden hover:shadow-lg dark:hover:shadow-[0_0_20px_rgba(255,42,42,0.15)] transition-all transform hover:-translate-y-1">
@@ -111,12 +121,9 @@ export default function BloodBankSearchClient({ bloodBanks }: { bloodBanks: any[
                           <Droplet className={`w-7 h-7 ${hasStock ? 'fill-current' : ''}`} />
                         </div>
                         <div>
-                          <div className={`text-4xl font-black ${hasStock ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-600'}`}>{units}</div>
-                          <div className={`text-xs font-bold uppercase tracking-wider ${hasStock ? 'text-primary-red' : 'text-gray-400 dark:text-gray-600'}`}>Units Available</div>
+                          <div className={`text-4xl font-black ${hasStock ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-600'}`}>{totalUnits}</div>
+                          <div className={`text-xs font-bold uppercase tracking-wider ${hasStock ? 'text-primary-red' : 'text-gray-400 dark:text-gray-600'}`}>Total Units</div>
                         </div>
-                      </div>
-                      <div className="bg-white dark:bg-gray-900 px-3 py-1.5 rounded-lg border border-gray-100 dark:border-gray-700 text-sm font-bold text-gray-700 dark:text-gray-300 shadow-sm">
-                        {bgOptions.find(b => b.value === bloodGroupFilter)?.label}
                       </div>
                     </div>
                   </div>
@@ -134,7 +141,25 @@ export default function BloodBankSearchClient({ bloodBanks }: { bloodBanks: any[
                       </div>
                       <div className="flex justify-between items-center text-sm bg-gray-50 dark:bg-gray-900/50 p-2.5 rounded-lg">
                         <span className="text-gray-500 dark:text-gray-400 flex items-center gap-2"><Mail className="w-4 h-4" /> Email</span>
-                        <span className="font-bold text-gray-900 dark:text-gray-200 truncate max-w-[150px]">{bank.user?.email}</span>
+                        <span className="font-bold text-gray-900 dark:text-gray-200 truncate max-w-[150px]" title={bank.user?.email}>{bank.user?.email}</span>
+                      </div>
+                    </div>
+                    
+                    <div className="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700">
+                      <div className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3">Available Inventory</div>
+                      <div className="flex flex-wrap gap-2 max-h-32 overflow-y-auto pr-1">
+                        {bank.inventory.filter((i: any) => i.units > 0).length > 0 ? (
+                          bank.inventory.filter((i: any) => i.units > 0).map((inv: any, idx: number) => (
+                            <div key={idx} className="bg-red-50 dark:bg-gray-900/80 border border-red-100 dark:border-gray-700 text-primary-red px-2.5 py-1.5 rounded-md text-xs font-bold flex items-center gap-1.5 shadow-sm">
+                              <span>{inv.bloodGroup.replace("_POS", "+").replace("_NEG", "-")}</span>
+                              <span className="text-gray-400 dark:text-gray-600">•</span>
+                              <span className="text-gray-700 dark:text-gray-300">{inv.donationType === "BLOOD" ? "Blood" : inv.donationType === "PLATELETS" ? "Platelets" : "Plasma"}</span>
+                              <span className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white px-2 py-0.5 rounded shadow-[inset_0_0_2px_rgba(0,0,0,0.1)] ml-0.5">{inv.units}</span>
+                            </div>
+                          ))
+                        ) : (
+                          <div className="text-sm font-medium text-gray-400 dark:text-gray-600">No stock available</div>
+                        )}
                       </div>
                     </div>
                   </div>

@@ -28,6 +28,7 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
   
   // Filter states
   const [bloodGroupFilter, setBloodGroupFilter] = useState("Blood Group");
+  const [donationTypeFilter, setDonationTypeFilter] = useState("Donation Type");
   const [distanceFilter, setDistanceFilter] = useState("Distance");
   const [searchQuery, setSearchQuery] = useState("");
   
@@ -55,8 +56,13 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
     const donorBloodGroup = donor.donorProfile?.bloodGroup?.replace("_POS", "+").replace("_NEG", "-") || "A+";
     const donorCity = donor.donorProfile?.city || "Chandigarh";
     const donorName = donor.name || "";
+    const donorDonationTypes = donor.donorProfile?.donationTypes || ["BLOOD"];
     
     if (bloodGroupFilter !== "Blood Group" && donorBloodGroup !== bloodGroupFilter) {
+      return false;
+    }
+
+    if (donationTypeFilter !== "Donation Type" && !donorDonationTypes.includes(donationTypeFilter)) {
       return false;
     }
     
@@ -79,9 +85,9 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
           <div className="p-4 border-b border-gray-100 dark:border-gray-800 sticky top-0 bg-white dark:bg-gray-900 z-10 transition-colors">
             <h1 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Find Donors</h1>
             <div className="space-y-3">
-              <div className="flex gap-2">
+              <div className="grid grid-cols-2 gap-2">
                 <select 
-                  className="flex-1 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white font-medium text-sm rounded-lg focus:ring-primary-red focus:border-primary-red block w-full p-2.5 outline-none transition-colors"
+                  className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white font-medium text-sm rounded-lg focus:ring-primary-red focus:border-primary-red block w-full p-2.5 outline-none transition-colors"
                   value={bloodGroupFilter}
                   onChange={(e) => setBloodGroupFilter(e.target.value)}
                 >
@@ -96,7 +102,17 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
                   <option value="AB-">AB-</option>
                 </select>
                 <select 
-                  className="flex-1 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white font-medium text-sm rounded-lg focus:ring-primary-red focus:border-primary-red block w-full p-2.5 outline-none transition-colors"
+                  className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white font-medium text-sm rounded-lg focus:ring-primary-red focus:border-primary-red block w-full p-2.5 outline-none transition-colors"
+                  value={donationTypeFilter}
+                  onChange={(e) => setDonationTypeFilter(e.target.value)}
+                >
+                  <option value="Donation Type">Donation Type</option>
+                  <option value="BLOOD">Whole Blood</option>
+                  <option value="PLATELETS">Platelets</option>
+                  <option value="PLASMA">Plasma</option>
+                </select>
+                <select 
+                  className="col-span-2 bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-white font-medium text-sm rounded-lg focus:ring-primary-red focus:border-primary-red block w-full p-2.5 outline-none transition-colors"
                   value={distanceFilter}
                   onChange={(e) => setDistanceFilter(e.target.value)}
                 >
@@ -234,147 +250,189 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               key={selectedDonor.id}
-              className="p-8 max-w-2xl w-full mx-auto pb-20"
+              className="p-6 md:p-8 max-w-5xl w-full mx-auto pb-20"
             >
-              <div className="bg-white dark:bg-gray-900 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 overflow-hidden transition-colors">
+              <div className="bg-white dark:bg-gray-900 rounded-[2.5rem] shadow-xl border border-gray-100 dark:border-gray-800 overflow-hidden transition-colors">
                 {/* Banner */}
-                <div className="h-32 bg-gradient-to-r from-red-500 to-primary-red relative">
-                  <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white px-3 py-1.5 rounded-lg font-bold flex items-center gap-2 border border-white/30 shadow-sm">
-                    <Droplet className="w-4 h-4 fill-current" />
-                    {selectedDonor.donorProfile?.bloodGroup?.replace("_POS", "+").replace("_NEG", "-") || "A+"}
+                <div className="h-48 bg-gradient-to-br from-red-500 via-primary-red to-rose-700 relative overflow-hidden">
+                  <div className="absolute top-[-50%] left-[-10%] w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
+                  <div className="absolute bottom-[-50%] right-[-10%] w-96 h-96 bg-black/10 rounded-full blur-3xl"></div>
+                  
+                  <div className="absolute top-6 right-6 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-xl font-bold flex items-center gap-2 border border-white/30 shadow-lg">
+                    <Droplet className="w-5 h-5 fill-current" />
+                    <span className="text-lg">{selectedDonor.donorProfile?.bloodGroup?.replace("_POS", "+").replace("_NEG", "-") || "A+"}</span>
                   </div>
                 </div>
 
-                <div className="px-8 pb-8">
-                  <div className="flex justify-between items-start relative z-10 mb-4">
-                    <div className="-mt-12">
-                      {selectedDonor.image ? (
-                        <img src={selectedDonor.image} alt={selectedDonor.name} className="w-24 h-24 rounded-2xl object-cover border-4 border-white dark:border-gray-900 shadow-md bg-white dark:bg-gray-800" />
-                      ) : (
-                        <div className="w-24 h-24 rounded-2xl bg-white dark:bg-gray-800 border-4 border-white dark:border-gray-900 shadow-md flex items-center justify-center text-gray-300 dark:text-gray-600 shrink-0">
-                          <UserIcon className="w-12 h-12" />
+                <div className="px-6 md:px-10 pb-10">
+                  <div className="flex flex-col md:flex-row justify-between items-start md:items-end relative z-10 mb-8 -mt-20 gap-6">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-end gap-6">
+                      <div className="relative">
+                        {selectedDonor.image ? (
+                          <img src={selectedDonor.image} alt={selectedDonor.name} className="w-32 h-32 md:w-40 md:h-40 rounded-3xl object-cover border-8 border-white dark:border-gray-900 shadow-xl bg-white dark:bg-gray-800" />
+                        ) : (
+                          <div className="w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-gray-50 dark:bg-gray-800 border-8 border-white dark:border-gray-900 shadow-xl flex items-center justify-center text-gray-300 dark:text-gray-600 shrink-0">
+                            <UserIcon className="w-16 h-16" />
+                          </div>
+                        )}
+                        <div className={`absolute bottom-2 right-2 w-6 h-6 rounded-full border-4 border-white dark:border-gray-900 ${selectedDonor.donorProfile?.isAvailable ?? true ? 'bg-green-500' : 'bg-gray-400'}`}></div>
+                      </div>
+                      <div className="mb-2 md:mb-4">
+                        <h2 className="text-3xl md:text-4xl font-black text-gray-900 dark:text-white tracking-tight">{selectedDonor.name}</h2>
+                        <div className="flex items-center text-gray-500 dark:text-gray-400 gap-2 mt-2 font-medium text-lg">
+                          <MapPin className="w-5 h-5 text-primary-red" /> 
+                          {selectedDonor.donorProfile?.city || "Chandigarh"}, {selectedDonor.donorProfile?.state || "India"}
                         </div>
-                      )}
+                      </div>
                     </div>
                     
-                    <div className="mt-4 shrink-0">
+                    <div className="mb-2 md:mb-4 w-full md:w-auto shrink-0">
                       {selectedDonor.donorProfile?.isAvailable ?? true ? (
                          isSelectedUnlocked ? (
-                           <div className="bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 px-4 py-2.5 rounded-xl border border-green-200 dark:border-green-800 flex items-center gap-2 font-bold shadow-sm">
-                             <CheckCircle2 className="w-5 h-5" />
+                           <div className="bg-green-50 dark:bg-green-900/20 text-green-700 dark:text-green-400 px-6 py-3.5 rounded-2xl border border-green-200 dark:border-green-800 flex items-center justify-center md:justify-start gap-2 font-bold shadow-sm text-lg w-full">
+                             <CheckCircle2 className="w-6 h-6" />
                              Contact Unlocked
                            </div>
                          ) : (
                            <button 
                              onClick={() => handleUnlock(selectedDonor.id)}
                              disabled={isUnlocking[selectedDonor.id]}
-                             className="bg-gray-900 dark:bg-white hover:bg-black dark:hover:bg-gray-200 text-white dark:text-gray-900 font-bold py-2.5 px-5 rounded-xl transition-all shadow-md flex items-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed hover:shadow-lg"
+                             className="w-full bg-gray-900 dark:bg-white hover:bg-black dark:hover:bg-gray-200 text-white dark:text-gray-900 font-bold py-3.5 px-8 rounded-2xl transition-all shadow-xl flex items-center justify-center md:justify-start gap-3 disabled:opacity-70 disabled:cursor-not-allowed hover:shadow-2xl hover:-translate-y-0.5 text-lg"
                            >
                              {isUnlocking[selectedDonor.id] ? (
-                               <><Loader2 className="w-5 h-5 animate-spin" /> Processing...</>
+                               <><Loader2 className="w-6 h-6 animate-spin" /> Processing...</>
                              ) : (
-                               <><ShieldCheck className="w-5 h-5" /> Unlock Contact • ₹20</>
+                               <><ShieldCheck className="w-6 h-6" /> Unlock Contact • ₹20</>
                              )}
                            </button>
                          )
                       ) : (
-                        <button disabled className="bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 font-bold py-2.5 px-5 rounded-xl cursor-not-allowed">
-                          Unavailable
+                        <button disabled className="w-full bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 font-bold py-3.5 px-8 rounded-2xl cursor-not-allowed text-lg border border-gray-200 dark:border-gray-700">
+                          Currently Unavailable
                         </button>
                       )}
                     </div>
                   </div>
 
-                  <div className="mb-8">
-                    <h2 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight">{selectedDonor.name}</h2>
-                    <div className="flex items-center text-gray-500 dark:text-gray-400 gap-2 mt-1 font-medium">
-                      <MapPin className="w-4 h-4 text-primary-red" /> 
-                      {selectedDonor.donorProfile?.city || "Chandigarh"}, {selectedDonor.donorProfile?.state || "India"}
-                    </div>
-                  </div>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Left Column */}
+                    <div className="lg:col-span-2 space-y-8">
+                      {/* Contact Details (if unlocked) */}
+                      <AnimatePresence>
+                        {isSelectedUnlocked && (
+                          <motion.div 
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            className="p-6 bg-gradient-to-br from-gray-50 to-white dark:from-gray-800/50 dark:to-gray-900 border border-gray-200 dark:border-gray-700 rounded-3xl overflow-hidden shadow-sm"
+                          >
+                            <h3 className="font-bold text-gray-900 dark:text-white mb-5 flex items-center gap-2 text-lg"><ShieldCheck className="w-6 h-6 text-green-500" /> Secure Contact Details</h3>
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                              <div className="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow group">
+                                <div className="w-12 h-12 bg-red-50 dark:bg-gray-900 text-primary-red rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                                  <Phone className="w-6 h-6" />
+                                </div>
+                                <div className="min-w-0">
+                                  <div className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider mb-1">Phone Number</div>
+                                  <div className="font-black text-gray-900 dark:text-white text-lg truncate">{selectedDonor.phone || "Not provided"}</div>
+                                </div>
+                              </div>
+                              <div className="bg-white dark:bg-gray-800 p-5 rounded-2xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow group">
+                                <div className="w-12 h-12 bg-red-50 dark:bg-gray-900 text-primary-red rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                                  <Mail className="w-6 h-6" />
+                                </div>
+                                <div className="min-w-0">
+                                  <div className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider mb-1">Email Address</div>
+                                  <div className="font-black text-gray-900 dark:text-white text-lg truncate" title={selectedDonor.email}>{selectedDonor.email}</div>
+                                </div>
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
 
-                  <AnimatePresence>
-                    {isSelectedUnlocked && (
-                      <motion.div 
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        className="mb-8 p-6 bg-gray-50 dark:bg-gray-800/50 border border-gray-100 dark:border-gray-700 rounded-2xl overflow-hidden"
-                      >
-                        <h3 className="font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2"><ShieldCheck className="w-5 h-5 text-green-600 dark:text-green-400" /> Secure Contact Details</h3>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow">
-                            <div className="w-10 h-10 bg-red-50 dark:bg-gray-900 text-primary-red rounded-lg flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(255,42,42,0.1)]">
-                              <Phone className="w-5 h-5" />
-                            </div>
-                            <div className="min-w-0">
-                              <div className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider mb-0.5">Phone Number</div>
-                              <div className="font-black text-gray-900 dark:text-white truncate">{selectedDonor.phone || "Not provided"}</div>
-                            </div>
-                          </div>
-                          <div className="bg-white dark:bg-gray-800 p-4 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm flex items-center gap-4 hover:shadow-md transition-shadow">
-                            <div className="w-10 h-10 bg-red-50 dark:bg-gray-900 text-primary-red rounded-lg flex items-center justify-center shrink-0 shadow-[0_0_10px_rgba(255,42,42,0.1)]">
-                              <Mail className="w-5 h-5" />
-                            </div>
-                            <div className="min-w-0">
-                              <div className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider mb-0.5">Email Address</div>
-                              <div className="font-black text-gray-900 dark:text-white truncate" title={selectedDonor.email}>{selectedDonor.email}</div>
-                            </div>
-                          </div>
+                      <div>
+                        <h3 className="font-bold text-gray-900 dark:text-white text-xl mb-4">About the Donor</h3>
+                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed font-medium text-lg">
+                          {selectedDonor.name} is a verified blood donor on RaktaSetu, committed to saving lives. 
+                          They are currently marked as available for donations in the <strong className="text-gray-900 dark:text-white">{selectedDonor.donorProfile?.city || "Chandigarh"}</strong> area. 
+                          Contact them securely through our platform to discuss your emergency requirements.
+                        </p>
+                      </div>
+
+                      {/* Donation Preferences */}
+                      <div>
+                        <h3 className="font-bold text-gray-900 dark:text-white text-xl mb-4">Willing to Donate</h3>
+                        <div className="flex flex-wrap gap-3">
+                          {["BLOOD", "PLATELETS", "PLASMA"].map((type) => {
+                            const isWilling = selectedDonor.donorProfile?.donationTypes?.includes(type) || (type === "BLOOD" && !selectedDonor.donorProfile?.donationTypes);
+                            return (
+                              <div key={type} className={`px-5 py-2.5 rounded-xl text-sm font-bold border flex items-center gap-2 ${isWilling ? 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-900/50 text-primary-red' : 'bg-gray-50 dark:bg-gray-800/50 border-gray-200 dark:border-gray-700 text-gray-400 dark:text-gray-500'}`}>
+                                <CheckCircle2 className={`w-4 h-4 ${isWilling ? 'opacity-100' : 'opacity-0 hidden'}`} />
+                                {type === "BLOOD" ? "Whole Blood" : type === "PLATELETS" ? "Platelets" : "Plasma"}
+                              </div>
+                            );
+                          })}
                         </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-
-                  <div className="grid grid-cols-3 gap-4 mb-8">
-                    <div className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4 border border-gray-100 dark:border-gray-700 text-center hover:bg-white dark:hover:bg-gray-800 transition-colors">
-                      <div className="text-gray-500 dark:text-gray-400 text-sm font-bold uppercase tracking-wider mb-1">Rating</div>
-                      <div className="font-black text-gray-900 dark:text-white text-lg flex items-center justify-center gap-1">
-                        <Star className="w-5 h-5 text-yellow-500 fill-current" />
-                        {selectedDonor.donorProfile?.rating || "4.9"}
                       </div>
                     </div>
-                    <div className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4 border border-gray-100 dark:border-gray-700 text-center hover:bg-white dark:hover:bg-gray-800 transition-colors">
-                      <div className="text-gray-500 dark:text-gray-400 text-sm font-bold uppercase tracking-wider mb-1">Donations</div>
-                      <div className="font-black text-gray-900 dark:text-white text-lg">0 Times</div>
-                    </div>
-                    <div className="bg-gray-50 dark:bg-gray-800/50 rounded-2xl p-4 border border-gray-100 dark:border-gray-700 text-center hover:bg-white dark:hover:bg-gray-800 transition-colors">
-                      <div className="text-gray-500 dark:text-gray-400 text-sm font-bold uppercase tracking-wider mb-1">Last Active</div>
-                      <div className="font-black text-gray-900 dark:text-white text-lg flex items-center justify-center gap-1">
-                        <Clock className="w-5 h-5 text-primary-red" />
-                        Today
+
+                    {/* Right Column - Stats */}
+                    <div className="space-y-4">
+                      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 hover:bg-white dark:hover:bg-gray-800 transition-colors shadow-sm">
+                        <div className="text-gray-500 dark:text-gray-400 text-sm font-bold uppercase tracking-wider mb-2">Donor Rating</div>
+                        <div className="font-black text-gray-900 dark:text-white text-4xl flex items-center gap-2">
+                          {selectedDonor.donorProfile?.rating || "4.9"}
+                          <Star className="w-8 h-8 text-yellow-500 fill-current" />
+                        </div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400 mt-2 font-medium">Based on previous donations</div>
+                      </div>
+                      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 hover:bg-white dark:hover:bg-gray-800 transition-colors shadow-sm">
+                        <div className="text-gray-500 dark:text-gray-400 text-sm font-bold uppercase tracking-wider mb-2">Total Donations</div>
+                        <div className="font-black text-gray-900 dark:text-white text-4xl">
+                          0
+                        </div>
+                        <div className="text-sm text-gray-500 dark:text-gray-400 mt-2 font-medium">Lives saved through RaktaSetu</div>
+                      </div>
+                      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 hover:bg-white dark:hover:bg-gray-800 transition-colors shadow-sm">
+                        <div className="text-gray-500 dark:text-gray-400 text-sm font-bold uppercase tracking-wider mb-2">Last Active</div>
+                        <div className="font-black text-gray-900 dark:text-white text-3xl flex items-center gap-2">
+                          <Clock className="w-6 h-6 text-primary-red" /> Today
+                        </div>
                       </div>
                     </div>
-                  </div>
-
-                  <div>
-                    <h3 className="font-bold text-gray-900 dark:text-white text-lg mb-3">About the Donor</h3>
-                    <p className="text-gray-600 dark:text-gray-300 leading-relaxed font-medium">
-                      {selectedDonor.name} is a registered blood donor on RaktaSetu, committed to saving lives. 
-                      They are currently marked as available for donations in the <strong className="text-gray-900 dark:text-white">{selectedDonor.donorProfile?.city || "Chandigarh"}</strong> area. 
-                      Contact them securely through our platform for emergency requirements.
-                    </p>
                   </div>
                 </div>
               </div>
             </motion.div>
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center text-center p-8 bg-[url('https://res.cloudinary.com/demo/image/upload/v1642683935/pattern-bg.png')] dark:opacity-10 opacity-80 mix-blend-multiply dark:mix-blend-screen transition-opacity">
-              <div className="w-24 h-24 bg-red-50 dark:bg-gray-900 text-primary-red rounded-full flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(255,42,42,0.15)]">
-                <Search className="w-10 h-10" />
-              </div>
-              <h2 className="text-3xl font-black text-gray-900 dark:text-white tracking-tight">Select a Donor</h2>
-              <p className="text-gray-500 dark:text-gray-400 max-w-sm mt-3 font-medium text-lg leading-relaxed">Click on any donor card from the list to view their full profile, donation history, and contact details.</p>
+            <div className="flex-1 flex flex-col items-center justify-center text-center p-8 relative overflow-hidden">
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-tr from-red-500/5 via-red-500/10 to-transparent dark:from-red-500/10 dark:via-red-500/5 rounded-full blur-3xl -z-10"></div>
               
-              <div className="grid grid-cols-2 gap-6 mt-12 w-full max-w-md">
-                <div className="bg-white dark:bg-gray-900 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800">
-                  <div className="text-4xl font-black text-gray-900 dark:text-white mb-2">{initialDonors.length}</div>
-                  <div className="text-sm font-bold uppercase tracking-wider text-primary-red">Available Donors</div>
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="max-w-md w-full flex flex-col items-center z-10"
+              >
+                <div className="w-32 h-32 bg-gradient-to-br from-red-50 to-red-100 dark:from-gray-800 dark:to-gray-900 text-primary-red rounded-[2.5rem] flex items-center justify-center mb-8 shadow-2xl border border-white dark:border-gray-800 rotate-3 hover:rotate-0 transition-transform duration-300">
+                  <Search className="w-14 h-14" />
                 </div>
-                <div className="bg-white dark:bg-gray-900 p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800">
-                  <div className="text-4xl font-black text-gray-900 dark:text-white mb-2">100%</div>
-                  <div className="text-sm font-bold uppercase tracking-wider text-green-500">Verified Profiles</div>
+                <h2 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight mb-4">Discover Heroes</h2>
+                <p className="text-gray-500 dark:text-gray-400 font-medium text-lg leading-relaxed mb-10">
+                  Select a donor from the list to view their complete profile, check their availability, and unlock their contact details for emergency needs.
+                </p>
+                
+                <div className="grid grid-cols-2 gap-4 w-full">
+                  <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 hover:scale-105 transition-transform cursor-default">
+                    <div className="text-4xl font-black text-gray-900 dark:text-white mb-2">{initialDonors.length}</div>
+                    <div className="text-sm font-bold uppercase tracking-wider text-primary-red">Total Donors</div>
+                  </div>
+                  <div className="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 hover:scale-105 transition-transform cursor-default">
+                    <div className="text-4xl font-black text-gray-900 dark:text-white mb-2">100%</div>
+                    <div className="text-sm font-bold uppercase tracking-wider text-green-500">Verified</div>
+                  </div>
                 </div>
-              </div>
+              </motion.div>
             </div>
           )}
         </div>

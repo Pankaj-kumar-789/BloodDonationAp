@@ -19,14 +19,22 @@ export default async function InventoryPage() {
   });
 
   const bloodGroups = ["A_POS", "A_NEG", "B_POS", "B_NEG", "AB_POS", "AB_NEG", "O_POS", "O_NEG"];
+  const donationTypes = ["BLOOD", "PLATELETS", "PLASMA"];
 
   // Map inventory data or default to 0
-  const inventoryMap = new Map(profile?.inventory.map(i => [i.bloodGroup, i.units]));
-  const currentInventory = bloodGroups.map(bg => ({
-    group: bg,
-    label: bg.replace("_POS", "+").replace("_NEG", "-"),
-    units: inventoryMap.get(bg as any) || 0
-  }));
+  const currentInventory = [];
+  
+  for (const type of donationTypes) {
+    for (const bg of bloodGroups) {
+      const item = profile?.inventory.find(i => i.bloodGroup === bg && i.donationType === type);
+      currentInventory.push({
+        group: bg,
+        label: bg.replace("_POS", "+").replace("_NEG", "-"),
+        units: item?.units || 0,
+        type: type
+      });
+    }
+  }
 
   const totalUnits = currentInventory.reduce((acc, curr) => acc + curr.units, 0);
 

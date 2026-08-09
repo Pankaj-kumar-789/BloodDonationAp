@@ -11,14 +11,23 @@ export default async function BloodBankDashboard({ session }: { session: any }) 
   });
 
   const bloodGroups = ["A_POS", "A_NEG", "B_POS", "B_NEG", "AB_POS", "AB_NEG", "O_POS", "O_NEG"];
+  const donationTypes = ["BLOOD", "PLATELETS", "PLASMA"];
 
-  // Map inventory data or default to 0
-  const inventoryMap = new Map(profile?.inventory.map(i => [i.bloodGroup, i.units]));
-  const currentInventory = bloodGroups.map(bg => ({
-    group: bg,
-    label: bg.replace("_POS", "+").replace("_NEG", "-"),
-    units: inventoryMap.get(bg as any) || 0
-  }));
+  const currentInventory = [];
+  
+  for (const type of donationTypes) {
+    for (const bg of bloodGroups) {
+      const item = profile?.inventory.find(i => i.bloodGroup === bg && i.donationType === type);
+      if (item?.units && item.units > 0) {
+        currentInventory.push({
+          group: `${bg}-${type}`,
+          label: bg.replace("_POS", "+").replace("_NEG", "-"),
+          units: item.units,
+          type: type
+        });
+      }
+    }
+  }
 
   const totalUnits = currentInventory.reduce((acc, curr) => acc + curr.units, 0);
 
@@ -59,7 +68,7 @@ export default async function BloodBankDashboard({ session }: { session: any }) 
             </div>
             <div className="text-center relative z-10">
               <div className="text-4xl font-black text-gray-900 tracking-tight">{item.units}</div>
-              <div className="text-xs text-gray-400 font-bold uppercase tracking-widest mt-1">Units</div>
+              <div className="text-xs text-gray-400 font-bold uppercase tracking-widest mt-1">Units {item.type === "BLOOD" ? "Blood" : item.type === "PLATELETS" ? "Platelets" : "Plasma"}</div>
             </div>
           </div>
         ))}
