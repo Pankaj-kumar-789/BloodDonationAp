@@ -4,6 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 enum Role {
@@ -23,6 +24,12 @@ enum BloodGroup {
   AB_NEG
   O_POS
   O_NEG
+}
+
+enum DonationType {
+  BLOOD
+  PLATELETS
+  PLASMA
 }
 
 enum RequestStatus {
@@ -80,6 +87,7 @@ model DonorProfile {
   contactFee      Float      @default(0.0) // Additional fee set by donor
   isVerified      Boolean    @default(false)
   rating          Float      @default(0.0)
+  donationTypes   DonationType[] @default([BLOOD])
   
   donationHistory DonationHistory[]
   contactUnlocks  ContactUnlock[]   @relation("DonorContactUnlocked")
@@ -116,10 +124,11 @@ model BloodInventory {
   bloodBankId  String
   bloodBank    BloodBankProfile @relation(fields: [bloodBankId], references: [id], onDelete: Cascade)
   bloodGroup   BloodGroup
+  donationType DonationType @default(BLOOD)
   units        Int              @default(0)
   updatedAt    DateTime         @updatedAt
   
-  @@unique([bloodBankId, bloodGroup])
+  @@unique([bloodBankId, bloodGroup, donationType])
 }
 
 model BloodRequest {
@@ -134,6 +143,7 @@ model BloodRequest {
   requiredBefore  DateTime
   isEmergency     Boolean       @default(false)
   status          RequestStatus @default(PENDING)
+  donationType    DonationType  @default(BLOOD)
   
   creatorId       String
   creator         User          @relation("CreatedRequests", fields: [creatorId], references: [id])
@@ -153,6 +163,7 @@ model DonationHistory {
   date          DateTime
   hospital      String
   units         Int
+  donationType  DonationType @default(BLOOD)
   createdAt     DateTime     @default(now())
 }
 
