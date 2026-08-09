@@ -1,8 +1,8 @@
 import { prisma } from './src/lib/prisma';
-import bcrypt from 'bcryptjs';
+import { hashPassword } from './src/lib/hash';
 
 async function main() {
-  const hashedPassword = await bcrypt.hash('admin123', 10);
+  const hashedPassword = hashPassword('admin123');
 
   const admin = await prisma.user.upsert({
     where: { email: 'admin@raktasetu.com' },
