@@ -239,7 +239,7 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
 
       <div className="mt-8">
         <h2 className="text-xl font-bold text-gray-900 mb-4">Pending Verifications</h2>
-        <div className="bg-white rounded-xl border border-gray-100 overflow-hidden shadow-sm">
+        <div className="bg-white rounded-xl border border-gray-100 overflow-x-auto shadow-sm">
           <table className="w-full text-left text-sm text-gray-600">
             <thead className="bg-gray-50 border-b border-gray-100 text-gray-700">
               <tr>
