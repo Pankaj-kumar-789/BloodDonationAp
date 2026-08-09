@@ -19,21 +19,12 @@ export async function updateProfileAction(formData: FormData) {
     
     let imageUrl = undefined;
 
-    // Handle image upload locally
+    // Handle image upload by converting to base64
     if (image && image.size > 0) {
       const bytes = await image.arrayBuffer();
       const buffer = Buffer.from(bytes);
-      
-      const uploadsDir = path.join(process.cwd(), "public/uploads");
-      if (!existsSync(uploadsDir)) {
-        await mkdir(uploadsDir, { recursive: true });
-      }
-      
-      const uniqueName = `${session.user.id}-${Date.now()}-${image.name.replace(/[^a-zA-Z0-9.-]/g, "")}`;
-      const filePath = path.join(uploadsDir, uniqueName);
-      
-      await writeFile(filePath, buffer);
-      imageUrl = `/uploads/${uniqueName}`;
+      const mimeType = image.type || 'image/jpeg';
+      imageUrl = `data:${mimeType};base64,${buffer.toString('base64')}`;
     }
 
     // Update core User details
