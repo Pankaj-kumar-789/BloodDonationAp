@@ -1,7 +1,7 @@
 import { PrismaClient, BloodGroup } from '@prisma/client';
 import { Pool } from 'pg';
 import { PrismaPg } from '@prisma/adapter-pg';
-import bcrypt from 'bcryptjs';
+import { hashPassword } from '../src/lib/hash';
 import dotenv from 'dotenv';
 import path from 'path';
 
@@ -14,7 +14,7 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   console.log('Seeding database with mock data...');
 
-  const passwordHash = await bcrypt.hash('password123', 10);
+  const passwordHash = hashPassword('password123');
 
   // 1. Create a Standard User (Recipient)
   const user = await prisma.user.upsert({
