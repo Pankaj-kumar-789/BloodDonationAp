@@ -14,7 +14,7 @@ const prisma = new PrismaClient({ adapter });
 async function main() {
   console.log('Seeding database with mock data...');
 
-  const passwordHash = hashPassword('password123');
+  const passwordHash = await hashPassword('password123');
 
   // 1. Create a Standard User (Recipient)
   const user = await prisma.user.upsert({

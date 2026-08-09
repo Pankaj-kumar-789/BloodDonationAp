@@ -4,7 +4,7 @@ import { hashPassword } from "@/lib/hash";
 
 export async function GET() {
   try {
-    const hashedPassword = hashPassword('admin123');
+    const hashedPassword = await hashPassword('admin123');
 
     const admin = await prisma.user.upsert({
       where: { email: 'admin@raktasetu.com' },
