@@ -3,15 +3,17 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Activity, Eye, EyeOff } from "lucide-react";
-import { loginAction } from "@/app/actions/auth";
+import { signIn } from "next-auth/react";
 import logo from "@/assets/logo.png";
 import banner from "@/assets/hero-banner.png";
 import { useTheme } from "next-themes";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
   
   const [mounted, setMounted] = useState(false);
   const { resolvedTheme } = useTheme();
@@ -25,15 +27,31 @@ export default function LoginPage() {
     setLoading(true);
 
     const formData = new FormData(e.currentTarget);
-    formData.append("redirectTo", "/dashboard"); // We'll have a role-based redirect later, for now /dashboard
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
     
-    const result = await loginAction(formData);
-    
-    if (result?.error) {
-      setError(result.error);
+    try {
+      const result = await signIn("credentials", {
+        redirect: false,
+        email,
+        password,
+      });
+      
+      if (result?.error) {
+        setError("Invalid email or password.");
+        setLoading(false);
+      } else if (result?.ok) {
+        router.push("/dashboard");
+        router.refresh();
+      } else {
+        setError("An unexpected error occurred.");
+        setLoading(false);
+      }
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("Failed to connect to the server.");
       setLoading(false);
     }
-    // If successful, NextAuth will automatically redirect
   };
 
   return (
