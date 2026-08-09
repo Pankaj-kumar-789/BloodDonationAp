@@ -59,7 +59,7 @@ export async function updateProfileAction(formData: FormData) {
       const contactFee = contactFeeRaw ? parseFloat(contactFeeRaw.toString()) : undefined;
       
       const donationTypesRaw = formData.getAll("donationTypes") as DonationType[];
-      const donationTypes = donationTypesRaw.length > 0 ? donationTypesRaw : ["BLOOD"];
+      const donationTypes = (donationTypesRaw.length > 0 ? donationTypesRaw : ["BLOOD"]) as DonationType[];
 
       if (bloodGroup || city || state || isAvailableRaw !== null || contactFee !== undefined) {
         await prisma.donorProfile.upsert({
