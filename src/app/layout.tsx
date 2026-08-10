@@ -39,7 +39,7 @@ export default async function RootLayout({
       className={`${inter.variable} h-full antialiased`}
       suppressHydrationWarning
     >
-      <body className="min-h-[100dvh] flex bg-background text-foreground overflow-hidden">
+      <body className="min-h-[100dvh] flex bg-background text-foreground overflow-hidden" suppressHydrationWarning>
         <Providers session={session}>
           <Sidebar session={session} />
           <div className="flex-1 flex flex-col min-w-0 h-[100dvh] overflow-y-auto">
