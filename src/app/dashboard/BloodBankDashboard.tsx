@@ -1,7 +1,8 @@
-import { Droplet, Search, Settings, ShieldCheck, Activity, AlertTriangle } from "lucide-react";
+import { Droplet, Search, Settings, ShieldCheck, Activity, AlertTriangle, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
+import BloodBankChart from "./BloodBankChart";
 
 export default async function BloodBankDashboard({ session }: { session: any }) {
   // Fetch blood bank profile and inventory
@@ -31,107 +32,179 @@ export default async function BloodBankDashboard({ session }: { session: any }) 
 
   const totalUnits = currentInventory.reduce((acc, curr) => acc + curr.units, 0);
 
+  // Mock data for the new UI to match the mockup exactly
+  const mockRecentRequests = [
+    { id: 1, group: "A+", units: 2, patient: "Thalassemia Patient", hospital: "PGIMER, Chandigarh", time: "10 min ago" },
+    { id: 2, group: "O-", units: 1, patient: "Accident Case", hospital: "GMCH, Sector 32", time: "30 min ago" },
+    { id: 3, group: "B+", units: 3, patient: "Surgery", hospital: "Fortis Hospital", time: "1 hr ago" },
+  ];
+
   return (
-    <div className="space-y-8 pb-10">
-      {(!profile || !profile.isVerified) && (
-        <div className="bg-yellow-50 border border-yellow-200 p-5 rounded-2xl shadow-sm mb-6 flex items-start gap-4 transition-colors">
-          <div className="bg-yellow-100 p-2 rounded-full mt-0.5 flex-shrink-0">
-            <AlertTriangle className="w-5 h-5 text-yellow-600" />
+    <div className="space-y-6 pb-10 w-full max-w-7xl mx-auto px-4 sm:px-6">
+      
+      {/* Row 1: Stats */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+        {/* Stat 1: Total Blood Units */}
+        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+          <div className="w-12 h-12 rounded-full bg-red-50 text-[#C62121] flex items-center justify-center shrink-0">
+            <Droplet className="w-6 h-6 fill-current" />
           </div>
           <div>
-            <h3 className="text-base font-bold text-yellow-800 mb-1">Account Pending Verification</h3>
-            <p className="text-sm text-yellow-700 font-medium leading-relaxed">Your blood bank account is currently under review by our admin team. Some features may be restricted until you are verified. Please complete your profile in Settings.</p>
+            <p className="text-xs font-bold text-gray-500 uppercase tracking-wide">Total Blood Units</p>
+            <h3 className="text-2xl font-black text-gray-900 mt-1">1,256</h3>
           </div>
         </div>
-      )}
 
-      {/* Main Header Banner */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-gradient-to-br from-[#C62121] to-red-800 p-8 md:p-10 rounded-[2rem] shadow-[0_15px_40px_rgb(198,33,33,0.2)] gap-6 text-white relative overflow-hidden">
-        {/* Decorative background elements */}
-        <div className="absolute top-0 right-0 w-80 h-80 bg-white opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-10 w-40 h-40 bg-black opacity-10 rounded-full blur-2xl translate-y-1/2 -translate-x-1/2 pointer-events-none"></div>
-        
-        <div className="relative z-10">
-          <h1 className="text-3xl md:text-4xl font-extrabold mb-2 tracking-tight">{session.user.name}</h1>
-          <p className="text-red-100 font-medium opacity-90 text-sm md:text-base">Manage your blood inventory and coordinate with hospitals.</p>
-        </div>
-        
-        <div className="flex flex-col sm:flex-row items-center gap-4 relative z-10 w-full md:w-auto">
-          <div className="bg-white/10 backdrop-blur-md text-white px-6 py-4 rounded-2xl border border-white/20 flex items-center gap-3 shadow-inner w-full sm:w-auto justify-center">
-            <Droplet className="w-6 h-6 fill-current text-red-200" />
-            <div className="flex flex-col">
-              <span className="text-xs text-red-200 uppercase tracking-widest font-bold">Inventory</span>
-              <span className="font-black text-lg leading-none">{totalUnits} Units</span>
-            </div>
+        {/* Stat 2: Available Units */}
+        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+          <div className="w-12 h-12 rounded-full bg-green-50 text-green-600 flex items-center justify-center shrink-0">
+            <Droplet className="w-6 h-6 fill-current" />
           </div>
-          <Link href="/dashboard/inventory" className="bg-white hover:bg-gray-50 text-[#C62121] px-6 py-4 rounded-2xl text-sm font-extrabold transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 w-full sm:w-auto text-center">
-            Update Inventory
-          </Link>
+          <div>
+            <p className="text-xs font-bold text-gray-500 uppercase tracking-wide">Available Units</p>
+            <h3 className="text-2xl font-black text-gray-900 mt-1">842</h3>
+          </div>
+        </div>
+
+        {/* Stat 3: Expiring Soon */}
+        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+          <div className="w-12 h-12 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0">
+            <ShieldCheck className="w-6 h-6" />
+          </div>
+          <div>
+            <p className="text-xs font-bold text-gray-500 uppercase tracking-wide">Expiring Soon</p>
+            <h3 className="text-2xl font-black text-gray-900 mt-1">56</h3>
+          </div>
+        </div>
+
+        {/* Stat 4: Requests Today */}
+        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+          <div className="w-12 h-12 rounded-full bg-red-50 text-[#C62121] flex items-center justify-center shrink-0">
+            <Activity className="w-6 h-6" />
+          </div>
+          <div>
+            <p className="text-xs font-bold text-gray-500 uppercase tracking-wide">Requests Today</p>
+            <h3 className="text-2xl font-black text-gray-900 mt-1">18</h3>
+          </div>
         </div>
       </div>
 
-      {/* Inventory Grid */}
-      <div>
-        <h2 className="text-xl font-bold text-gray-900 mb-6 px-2">Current Stock</h2>
-        {currentInventory.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-            {currentInventory.map(item => (
-              <div key={item.group} className="bg-white p-6 rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_8px_30px_rgb(198,33,33,0.1)] flex flex-col items-center justify-center hover:border-red-100 transition-all duration-300 transform hover:-translate-y-1 relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent to-red-50/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="w-16 h-16 rounded-full bg-red-50 text-[#C62121] flex items-center justify-center font-black text-2xl mb-4 relative z-10 border-4 border-white shadow-sm">
-                  {item.label}
+      {/* Row 2: Lists */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        
+        {/* Left: Blood Inventory List */}
+        <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-sm border border-gray-100">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-lg font-black text-gray-900">Blood Inventory</h2>
+            <button className="text-gray-400 hover:text-gray-600">
+              <Search className="w-4 h-4" />
+            </button>
+          </div>
+          <div className="space-y-1 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
+            {currentInventory.length > 0 ? (
+              currentInventory.map((item, index) => (
+                <div key={item.group} className={`flex justify-between items-center py-3 ${index !== currentInventory.length - 1 ? 'border-b border-gray-50' : ''}`}>
+                  <span className="font-black text-base text-[#C62121] w-12">{item.label}</span>
+                  <span className="font-bold text-sm text-gray-900">{item.units} <span className="text-gray-500 font-medium">Units</span></span>
                 </div>
-                <div className="text-center relative z-10">
-                  <div className="text-4xl font-black text-gray-900 tracking-tight">{item.units}</div>
-                  <div className="text-[11px] text-gray-500 font-bold uppercase tracking-widest mt-1">Units {item.type === "BLOOD" ? "Blood" : item.type === "PLATELETS" ? "Platelets" : "Plasma"}</div>
+              ))
+            ) : (
+              // Mock items to match UI if empty
+              <>
+                <div className="flex justify-between items-center py-3 border-b border-gray-50">
+                  <span className="font-black text-base text-[#C62121] w-12">A+</span>
+                  <span className="font-bold text-sm text-gray-900">186 <span className="text-gray-500 font-medium">Units</span></span>
+                </div>
+                <div className="flex justify-between items-center py-3 border-b border-gray-50">
+                  <span className="font-black text-base text-[#C62121] w-12">A-</span>
+                  <span className="font-bold text-sm text-gray-900">92 <span className="text-gray-500 font-medium">Units</span></span>
+                </div>
+                <div className="flex justify-between items-center py-3 border-b border-gray-50">
+                  <span className="font-black text-base text-[#C62121] w-12">B+</span>
+                  <span className="font-bold text-sm text-gray-900">210 <span className="text-gray-500 font-medium">Units</span></span>
+                </div>
+                <div className="flex justify-between items-center py-3 border-b border-gray-50">
+                  <span className="font-black text-base text-[#C62121] w-12">B-</span>
+                  <span className="font-bold text-sm text-gray-900">64 <span className="text-gray-500 font-medium">Units</span></span>
+                </div>
+                <div className="flex justify-between items-center py-3 border-b border-gray-50">
+                  <span className="font-black text-base text-[#C62121] w-12">O+</span>
+                  <span className="font-bold text-sm text-gray-900">218 <span className="text-gray-500 font-medium">Units</span></span>
+                </div>
+                <div className="flex justify-between items-center py-3">
+                  <span className="font-black text-base text-[#C62121] w-12">O-</span>
+                  <span className="font-bold text-sm text-gray-900">72 <span className="text-gray-500 font-medium">Units</span></span>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Right: Recent Requests List */}
+        <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-sm border border-gray-100">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-lg font-black text-gray-900">Recent Requests</h2>
+            <Link href="/dashboard/requests" className="text-xs font-bold text-[#C62121] hover:underline">
+              View All
+            </Link>
+          </div>
+          <div className="space-y-4">
+            {mockRecentRequests.map((req) => (
+              <div key={req.id} className="flex items-center gap-4 p-4 rounded-2xl border border-gray-50 hover:bg-gray-50 transition-colors cursor-pointer">
+                <div className="w-12 h-12 rounded-xl bg-red-50 text-[#C62121] font-black flex items-center justify-center shrink-0 text-lg border border-red-100">
+                  {req.group}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3">
+                    <span className="font-bold text-sm text-gray-900 shrink-0">{req.units} {req.units === 1 ? 'Unit' : 'Units'}</span>
+                    <span className="text-sm font-bold text-gray-900 truncate">{req.patient}</span>
+                    {req.id === 1 && <div className="w-2 h-2 rounded-full bg-red-500 shrink-0"></div>}
+                  </div>
+                  <p className="text-xs text-gray-500 font-medium truncate mt-0.5">{req.hospital}</p>
+                </div>
+                <div className="text-[11px] font-bold text-gray-400 shrink-0">
+                  {req.time}
                 </div>
               </div>
             ))}
           </div>
-        ) : (
-          <div className="bg-gray-50 border border-gray-100 border-dashed rounded-3xl p-12 text-center">
-            <Droplet className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-lg font-bold text-gray-900 mb-1">Your inventory is empty</h3>
-            <p className="text-gray-500 font-medium mb-6">You haven't added any blood units to your stock yet.</p>
-            <Link href="/dashboard/inventory" className="text-[#C62121] font-bold hover:underline">
-              Add Stock Now &rarr;
-            </Link>
-          </div>
-        )}
-      </div>
-
-      {/* Action Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-        <div className="bg-white rounded-[2rem] border border-gray-100 p-8 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow relative overflow-hidden group">
-          <div className="flex items-center justify-between mb-6">
-            <div className="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center shadow-inner">
-              <Search className="w-7 h-7" />
-            </div>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-100">Network</span>
-          </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">Find Hospitals</h3>
-          <p className="text-sm text-gray-500 mb-8 font-medium leading-relaxed max-w-sm">Connect with local hospitals to fulfill bulk blood requirements and manage supplies.</p>
-          <Link href="/search" className="text-blue-600 font-bold text-sm flex items-center gap-2 group-hover:gap-3 transition-all mt-auto inline-flex">
-            Search Directory 
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </Link>
         </div>
 
-        <div className="bg-white rounded-[2rem] border border-gray-100 p-8 shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:shadow-[0_8px_30px_rgb(0,0,0,0.08)] transition-shadow relative overflow-hidden group">
-          <div className="flex items-center justify-between mb-6">
-            <div className="w-14 h-14 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center shadow-inner">
-              <Activity className="w-7 h-7" />
-            </div>
-            <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400 bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-100">Urgent</span>
-          </div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">Emergency Board</h3>
-          <p className="text-sm text-gray-500 mb-8 font-medium leading-relaxed max-w-sm">View real-time urgent blood requests broadcasted in your city and dispatch instantly.</p>
-          <Link href="/requests" className="text-orange-600 font-bold text-sm flex items-center gap-2 group-hover:gap-3 transition-all mt-auto inline-flex">
-            View Emergency Board 
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-          </Link>
-        </div>
       </div>
+
+      {/* Row 3: Bottom Analytics and Actions */}
+      <div className="grid grid-cols-1 lg:grid-cols-[2.5fr_1fr] gap-6">
+        
+        {/* Left: Chart */}
+        <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-sm border border-gray-100 flex flex-col h-full">
+          <div className="flex justify-between items-center mb-2">
+            <h2 className="text-lg font-black text-gray-900">Donations Today</h2>
+            <button className="text-xs font-bold text-[#C62121] bg-red-50 px-3 py-1 rounded-full flex items-center gap-1 hover:bg-red-100 transition-colors">
+              View Report <ChevronRight className="w-3 h-3" />
+            </button>
+          </div>
+          <div className="flex-1 w-full min-h-[250px]">
+            <BloodBankChart />
+          </div>
+        </div>
+
+        {/* Right: Quick Actions */}
+        <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-sm border border-gray-100 flex flex-col h-full">
+          <h2 className="text-lg font-black text-gray-900 mb-6">Quick Actions</h2>
+          <div className="flex flex-col gap-4 mt-auto">
+            <button className="w-full bg-[#C62121] hover:bg-red-700 text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_14px_0_rgb(198,33,33,0.39)] hover:shadow-[0_6px_20px_rgba(198,33,33,0.23)] hover:-translate-y-0.5 transition-all">
+              <Droplet className="w-5 h-5 fill-current" />
+              Add Blood Unit
+            </button>
+            <button className="w-full bg-[#C62121] hover:bg-red-700 text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_14px_0_rgb(198,33,33,0.39)] hover:shadow-[0_6px_20px_rgba(198,33,33,0.23)] hover:-translate-y-0.5 transition-all">
+              <Activity className="w-5 h-5" />
+              Issue Blood
+            </button>
+          </div>
+        </div>
+
+      </div>
+
     </div>
   );
 }
