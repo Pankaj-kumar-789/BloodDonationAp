@@ -1,3 +1,10 @@
+if (!process.env.AUTH_SECRET) {
+  process.env.AUTH_SECRET = "super-secret-jwt-key-for-development-only";
+}
+if (!process.env.AUTH_URL) {
+  process.env.AUTH_URL = "https://blood-donation-ap.vercel.app";
+}
+
 import NextAuth from "next-auth"
 import Credentials from "next-auth/providers/credentials"
 import { prisma } from "@/lib/prisma"

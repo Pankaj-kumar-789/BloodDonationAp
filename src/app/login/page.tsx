@@ -56,24 +56,24 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row bg-background">
-      {/* Left side - Banner Image */}
-      <div className="hidden lg:flex lg:w-1/2 relative bg-gray-50 border-r border-gray-100 dark:border-gray-800">
-        <div className="absolute inset-0 bg-gradient-to-tr from-light-red to-white dark:to-gray-900 opacity-20 pointer-events-none"></div>
-        <div className="absolute inset-0 p-12 flex flex-col justify-between">
-          <div>
+      {/* Top/Left side - Banner Image */}
+      <div className="flex h-48 lg:h-auto lg:w-1/2 relative bg-gray-50 border-b lg:border-b-0 lg:border-r border-gray-100 dark:border-gray-800 shrink-0">
+        <div className="absolute inset-0 bg-gradient-to-tr from-light-red to-white dark:to-gray-900 opacity-20 pointer-events-none z-10"></div>
+        <div className="absolute inset-0 p-6 lg:p-12 flex flex-col justify-between z-20">
+          <div className="hidden lg:block">
             <Link href="/">
               <img src={logo.src} alt="RaktaSetu Logo" className="h-12 w-auto object-contain mix-blend-multiply" />
             </Link>
           </div>
-          <div>
-            <h2 className="text-4xl font-bold text-gray-900 dark:text-white mb-4 drop-shadow-md">Save Lives Today.</h2>
-            <p className="text-lg text-gray-800 dark:text-gray-200 max-w-md font-medium drop-shadow-md">Join thousands of donors and hospitals connecting instantly to save lives in critical moments.</p>
+          <div className="mt-auto lg:mt-0">
+            <h2 className="text-2xl lg:text-4xl font-bold text-white lg:text-gray-900 dark:text-white mb-2 lg:mb-4 drop-shadow-lg">Save Lives Today.</h2>
+            <p className="text-sm lg:text-lg text-white lg:text-gray-800 dark:text-gray-200 max-w-md font-medium drop-shadow-lg hidden sm:block">Join thousands of donors and hospitals connecting instantly to save lives in critical moments.</p>
           </div>
         </div>
         <img 
           src={banner.src} 
           alt="Blood Donation Banner" 
-          className="w-full h-full object-cover object-center"
+          className="w-full h-full object-cover object-center brightness-75 lg:brightness-100"
         />
       </div>
 
