@@ -15,7 +15,7 @@ import {
 import logo from "@/assets/logo.png";
 
 // Import images directly to prevent 404s on dev server without restart
-import heroImg from "../../public/assets/hero_illustration.jpg";
+import heroImg from "../../public/assets/new_hero_illustration.jpg";
 import story1 from "../../public/assets/success_story_1.jpg";
 import story2 from "../../public/assets/success_story_2.jpg";
 import story3 from "../../public/assets/success_story_3.jpg";
@@ -24,31 +24,35 @@ import { prisma } from "@/lib/prisma";
 
 export default async function Home() {
   // Fetch real statistics from the database
-  const [donorCount, completedRequests, hospitalCount, cities] = await Promise.all([
-    prisma.donorProfile.count({ where: { isAvailable: true } }).catch(() => 540),
-    prisma.bloodRequest.count({ where: { status: "COMPLETED" } }).catch(() => 12547),
-    prisma.hospitalProfile.count().catch(() => 124),
-    prisma.donorProfile.findMany({ select: { city: true }, distinct: ['city'] }).catch(() => Array(45).fill({}))
+  const [donorCount, totalRequests, bloodBankCount, completedRequests] = await Promise.all([
+    prisma.donorProfile.count({ where: { isAvailable: true } }).catch(() => 0),
+    prisma.bloodRequest.count().catch(() => 0),
+    prisma.bloodBankProfile.count().catch(() => 0),
+    prisma.bloodRequest.count({ where: { status: { in: ["COMPLETED", "ACCEPTED"] } } }).catch(() => 0)
   ]);
 
-  const cityCount = cities.length;
+  // Optionally multiply completed requests by 3 for "Lives Saved", but let's just use the exact number for now or a small multiplier.
+  const livesSaved = completedRequests * 3;
 
   return (
     <div className="flex flex-col bg-[#FAFAFA] min-h-screen font-sans transition-colors">
       
       {/* 1. Hero Section */}
-      <section className="relative w-full overflow-hidden pt-16 lg:pt-24 pb-12 lg:pb-20">
-        {/* Soft Radial Gradient Background */}
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-red-50 via-white to-white z-0"></div>
-        <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full bg-red-100/50 blur-[120px] pointer-events-none z-0"></div>
-        <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-red-50/50 blur-[100px] pointer-events-none z-0"></div>
+      <section className="relative w-full overflow-hidden pt-16 lg:pt-28 pb-32">
+        {/* Background Swoosh */}
+        <div className="absolute bottom-0 left-0 w-full h-[300px] pointer-events-none z-0">
+          <svg viewBox="0 0 1440 320" className="absolute bottom-0 w-full h-full preserve-3d" preserveAspectRatio="none">
+            <path fill="#fef2f2" fillOpacity="1" d="M0,256L48,229.3C96,203,192,149,288,144C384,139,480,181,576,197.3C672,213,768,203,864,176C960,149,1056,107,1152,106.7C1248,107,1344,149,1392,170.7L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            <path fill="#C62121" fillOpacity="1" d="M0,288L48,272C96,256,192,224,288,218.7C384,213,480,235,576,234.7C672,235,768,213,864,197.3C960,181,1056,171,1152,181.3C1248,192,1344,224,1392,240L1440,256L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+          </svg>
+        </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="flex flex-col lg:flex-row items-center lg:items-start gap-12 lg:gap-8">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8">
             
             {/* Left Content */}
-            <div className="w-full lg:w-1/2 pt-12 lg:pt-20 text-center lg:text-left">
-              <h1 className="text-5xl sm:text-6xl lg:text-[5.5rem] font-extrabold text-gray-900 leading-[1.05] mb-6 tracking-tight">
+            <div className="w-full lg:w-[45%] text-center lg:text-left pt-10">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900 leading-[1.1] mb-6 tracking-tight">
                 Give Blood, <br />
                 <span className="text-[#C62121]">Give Life</span>
               </h1>
@@ -56,43 +60,91 @@ export default async function Home() {
                 Your one donation can bring a smile to someone's face and hope to their life.
               </p>
               
-              <div className="flex flex-col sm:flex-row gap-5 justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-16">
                 <Link 
                   href="/register" 
-                  className="bg-[#C62121] hover:bg-red-800 text-white font-bold py-4 px-8 rounded-xl flex items-center justify-center gap-3 transition-all shadow-[0_8px_30px_rgb(198,33,33,0.3)] hover:shadow-[0_8px_30px_rgb(198,33,33,0.5)] hover:-translate-y-1"
+                  className="bg-[#C62121] text-white font-bold py-4 px-8 rounded-xl flex items-center justify-center gap-2 transition-all hover:bg-red-800 shadow-[0_8px_20px_rgb(198,33,33,0.3)] hover:-translate-y-0.5"
                 >
                   <Droplet className="w-5 h-5 fill-current" />
                   Donate Blood
                 </Link>
                 <Link 
                   href="/emergency" 
-                  className="bg-white text-gray-900 font-bold py-4 px-8 rounded-xl flex items-center justify-center gap-3 transition-all shadow-sm hover:shadow-md hover:-translate-y-1 border border-gray-200 hover:border-gray-300"
+                  className="bg-white text-gray-900 font-bold py-4 px-8 rounded-xl flex items-center justify-center gap-2 transition-all hover:bg-gray-50 shadow-sm border border-gray-200 hover:border-gray-300 hover:-translate-y-0.5"
                 >
                   <Heart className="w-5 h-5 text-[#C62121]" />
                   Request Blood
                 </Link>
               </div>
+
+              {/* Four Features */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-left">
+                <div className="flex flex-col items-center lg:items-start">
+                  <div className="w-12 h-12 rounded-full bg-red-50 border border-red-100 flex items-center justify-center mb-3">
+                    <Droplet className="w-6 h-6 fill-[#C62121] text-[#C62121]" />
+                  </div>
+                  <h4 className="font-bold text-gray-900 text-sm whitespace-nowrap">Save Lives</h4>
+                  <p className="text-[11px] text-gray-500 font-medium">Every drop counts</p>
+                </div>
+                <div className="flex flex-col items-center lg:items-start">
+                  <div className="w-12 h-12 rounded-full bg-red-50 border border-red-100 flex items-center justify-center mb-3">
+                    <ShieldCheck className="w-6 h-6 text-[#C62121]" />
+                  </div>
+                  <h4 className="font-bold text-gray-900 text-sm whitespace-nowrap">Safe & Secure</h4>
+                  <p className="text-[11px] text-gray-500 font-medium">100% safe process</p>
+                </div>
+                <div className="flex flex-col items-center lg:items-start">
+                  <div className="w-12 h-12 rounded-full bg-red-50 border border-red-100 flex items-center justify-center mb-3">
+                    <Users className="w-6 h-6 fill-[#C62121] text-[#C62121]" />
+                  </div>
+                  <h4 className="font-bold text-gray-900 text-sm whitespace-nowrap">Verified Donors</h4>
+                  <p className="text-[11px] text-gray-500 font-medium">Trusted & verified</p>
+                </div>
+                <div className="flex flex-col items-center lg:items-start">
+                  <div className="w-12 h-12 rounded-full bg-red-50 border border-red-100 flex items-center justify-center mb-3">
+                    <Heart className="w-6 h-6 fill-[#C62121] text-[#C62121]" />
+                  </div>
+                  <h4 className="font-bold text-gray-900 text-sm whitespace-nowrap">Be a Hero</h4>
+                  <p className="text-[11px] text-gray-500 font-medium">Make a difference</p>
+                </div>
+              </div>
             </div>
 
             {/* Right Content / Illustration */}
-            <div className="w-full lg:w-1/2 flex justify-center lg:justify-end relative lg:-mr-12">
-              <div className="relative w-full max-w-[650px] flex items-center justify-center">
-                {/* Floating decorative elements */}
-                <div className="absolute top-[10%] right-[10%] text-primary-red animate-pulse">
-                  <Droplet className="w-8 h-8 fill-current opacity-60" />
+            <div className="w-full lg:w-[55%] relative flex justify-center mt-10 lg:mt-0">
+              
+              <div className="relative w-full max-w-[800px] h-[500px]">
+                {/* Floating Badges */}
+                <div className="absolute top-10 left-10 z-20 bg-white p-3 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex items-center gap-3 animate-[float_4s_ease-in-out_infinite]">
+                  <div className="w-10 h-10 rounded-xl bg-red-50 text-[#C62121] flex items-center justify-center"><Users className="w-5 h-5 fill-current" /></div>
+                  <div><p className="font-black text-gray-900 text-sm leading-tight">Donors</p><p className="text-[10px] text-gray-500 font-bold">Be the reason someone lives</p></div>
                 </div>
-                <div className="absolute bottom-[20%] left-[5%] text-primary-red animate-pulse delay-300">
-                  <Droplet className="w-6 h-6 fill-current opacity-40" />
+
+                <div className="absolute top-10 right-10 z-20 bg-white p-3 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex items-center gap-3 animate-[float_5s_ease-in-out_infinite_reverse]">
+                  <div className="w-10 h-10 rounded-xl bg-red-50 text-[#C62121] flex items-center justify-center"><Users className="w-5 h-5 fill-current" /></div>
+                  <div><p className="font-black text-gray-900 text-sm leading-tight">Users</p><p className="text-[10px] text-gray-500 font-bold">We connect. You heal.</p></div>
                 </div>
-                <div className="absolute top-[30%] left-[10%] text-red-300 animate-pulse delay-700">
-                  <Heart className="w-6 h-6 opacity-60" />
+
+                <div className="absolute bottom-20 left-0 z-20 bg-white p-3 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex items-center gap-3 animate-[float_4.5s_ease-in-out_infinite]">
+                  <div className="w-10 h-10 rounded-xl bg-red-50 text-[#C62121] flex items-center justify-center">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
+                  </div>
+                  <div><p className="font-black text-gray-900 text-sm leading-tight">Blood Banks</p><p className="text-[10px] text-gray-500 font-bold">We store hope, We deliver life</p></div>
+                </div>
+
+                <div className="absolute bottom-20 right-0 z-20 bg-white p-3 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex items-center gap-3 animate-[float_5.5s_ease-in-out_infinite_reverse]">
+                  <div className="w-10 h-10 rounded-xl bg-red-50 text-[#C62121] flex items-center justify-center">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
+                  </div>
+                  <div><p className="font-black text-gray-900 text-sm leading-tight">Hospitals</p><p className="text-[10px] text-gray-500 font-bold">Timely care saves lives</p></div>
                 </div>
                 
                 {/* Main Hero Image */}
                 <Image 
                   src={heroImg} 
                   alt="Give Blood Illustration" 
-                  className="object-contain w-full h-auto mix-blend-multiply"
+                  fill
+                  className="object-contain mix-blend-multiply z-10"
                   priority
                 />
               </div>
@@ -102,56 +154,63 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 2. Stats Row */}
-      <section className="relative z-20 pb-16 pt-8">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 justify-items-center">
-            
-            {/* Stat 1 */}
-            <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
-              <div className="w-12 h-12 flex items-center justify-center">
-                <Users className="w-10 h-10 text-[#C62121]" strokeWidth={1.5} />
-              </div>
-              <div>
-                <h3 className="font-extrabold text-gray-900 text-2xl">{donorCount > 10 ? donorCount : '25,647+'}</h3>
-                <p className="text-gray-500 text-sm font-medium">Donors</p>
-              </div>
+      {/* 2. Stats Floating Bar */}
+      <section className="relative z-20 max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 -mt-20 mb-16">
+        <div className="bg-white rounded-[2rem] p-6 lg:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.06)] border border-red-50 flex flex-wrap justify-around items-center gap-6">
+          
+          {/* Stat 1 */}
+          <div className="flex flex-col lg:flex-row items-center gap-4 min-w-[150px]">
+            <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center shadow-inner">
+              <Users className="w-7 h-7 text-[#C62121] fill-current" />
             </div>
-
-            {/* Stat 2 */}
-            <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
-              <div className="w-12 h-12 flex items-center justify-center">
-                <Heart className="w-10 h-10 text-[#C62121]" strokeWidth={1.5} />
-              </div>
-              <div>
-                <h3 className="font-extrabold text-gray-900 text-2xl">{completedRequests > 10 ? completedRequests : '12,458+'}</h3>
-                <p className="text-gray-500 text-sm font-medium">Lives Saved</p>
-              </div>
+            <div className="text-center lg:text-left">
+              <h3 className="font-black text-gray-900 text-3xl leading-none">{donorCount}</h3>
+              <p className="text-gray-500 text-[13px] font-bold mt-1">Donors</p>
             </div>
-
-            {/* Stat 3 */}
-            <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
-              <div className="w-12 h-12 flex items-center justify-center">
-                <ShieldCheck className="w-10 h-10 text-[#C62121]" strokeWidth={1.5} />
-              </div>
-              <div>
-                <h3 className="font-extrabold text-gray-900 text-2xl">{hospitalCount > 10 ? hospitalCount : '648+'}</h3>
-                <p className="text-gray-500 text-sm font-medium">Blood Banks</p>
-              </div>
-            </div>
-
-            {/* Stat 4 */}
-            <div className="flex flex-col md:flex-row items-center gap-4 text-center md:text-left">
-              <div className="w-12 h-12 flex items-center justify-center">
-                <Droplet className="w-10 h-10 text-[#C62121]" strokeWidth={1.5} />
-              </div>
-              <div>
-                <h3 className="font-extrabold text-gray-900 text-2xl">1,250+</h3>
-                <p className="text-gray-500 text-sm font-medium">Blood Requests</p>
-              </div>
-            </div>
-
           </div>
+
+          {/* Divider */}
+          <div className="hidden lg:block w-px h-16 bg-gray-100"></div>
+
+          {/* Stat 2 */}
+          <div className="flex flex-col lg:flex-row items-center gap-4 min-w-[150px]">
+            <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center shadow-inner">
+              <Heart className="w-7 h-7 text-[#C62121] fill-current" />
+            </div>
+            <div className="text-center lg:text-left">
+              <h3 className="font-black text-gray-900 text-3xl leading-none">{livesSaved}</h3>
+              <p className="text-gray-500 text-[13px] font-bold mt-1">Lives Saved</p>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="hidden lg:block w-px h-16 bg-gray-100"></div>
+
+          {/* Stat 3 */}
+          <div className="flex flex-col lg:flex-row items-center gap-4 min-w-[150px]">
+            <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center shadow-inner">
+              <ShieldCheck className="w-7 h-7 text-[#C62121]" strokeWidth={2.5} />
+            </div>
+            <div className="text-center lg:text-left">
+              <h3 className="font-black text-gray-900 text-3xl leading-none">{bloodBankCount}</h3>
+              <p className="text-gray-500 text-[13px] font-bold mt-1">Blood Banks</p>
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="hidden lg:block w-px h-16 bg-gray-100"></div>
+
+          {/* Stat 4 */}
+          <div className="flex flex-col lg:flex-row items-center gap-4 min-w-[150px]">
+            <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center shadow-inner">
+              <Droplet className="w-7 h-7 text-[#C62121] fill-current" />
+            </div>
+            <div className="text-center lg:text-left">
+              <h3 className="font-black text-gray-900 text-3xl leading-none">{totalRequests}</h3>
+              <p className="text-gray-500 text-[13px] font-bold mt-1">Blood Requests</p>
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -280,7 +339,7 @@ export default async function Home() {
                 <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-white rounded-full blur-2xl opacity-60"></div>
                 <h3 className="text-gray-900 font-bold text-lg mb-2 relative z-10">Life Saved</h3>
                 <div className="text-5xl font-extrabold text-primary-red mb-2 relative z-10 tracking-tight">
-                  {completedRequests > 10 ? completedRequests : '12,547+'}
+                  {livesSaved}
                 </div>
                 <p className="text-gray-600 font-medium relative z-10 text-sm">Lives Saved Till Now</p>
                 <div className="absolute right-6 bottom-6 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">

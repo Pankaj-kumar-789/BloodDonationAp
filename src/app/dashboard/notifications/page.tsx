@@ -6,7 +6,7 @@ import NotificationsClient from "@/components/NotificationsClient";
 export default async function NotificationsPage() {
   const session = await auth();
   if (!session?.user?.id) {
-    redirect("/auth/login");
+    redirect("/login");
   }
 
   const notifications = await prisma.notification.findMany({

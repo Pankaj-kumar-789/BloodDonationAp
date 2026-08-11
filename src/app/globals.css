@@ -19,7 +19,15 @@
   --color-success-green: var(--success-green);
   --color-warning-orange: var(--warning-orange);
   
+  --animate-float: float 4s ease-in-out infinite;
+
   --font-sans: var(--font-inter);
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
 }
 
 @media (prefers-color-scheme: dark) {

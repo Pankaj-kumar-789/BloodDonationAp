@@ -137,6 +137,71 @@ export default function Navbar({ session, unreadCount = 0 }: { session: any, unr
               <Link href="/dashboard" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
                 Dashboard
               </Link>
+              {session.user?.role === "USER" && (
+                <>
+                  <Link href="/dashboard/requests" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                    My Requests
+                  </Link>
+                  <Link href="/dashboard/blood-banks" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                    Blood Banks
+                  </Link>
+                  <Link href="/dashboard/hospitals" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                    Hospitals
+                  </Link>
+                </>
+              )}
+              {session.user?.role === "DONOR" && (
+                <>
+                  <Link href="/dashboard/donations" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                    My Donations
+                  </Link>
+                  <Link href="/dashboard/appointments" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                    My Appointments
+                  </Link>
+                  <Link href="/dashboard/certificates" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                    My Certificates
+                  </Link>
+                  <Link href="/dashboard/requests" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                    Requests
+                  </Link>
+                </>
+              )}
+              {session.user?.role === "BLOOD_BANK" && (
+                <>
+                  <Link href="/dashboard/requests" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                    Manage Requests
+                  </Link>
+                  <Link href="/dashboard/donors" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                    Donor Management
+                  </Link>
+                  <Link href="/dashboard/inventory" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                    Blood Inventory
+                  </Link>
+                  <Link href="/dashboard/donations" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                    Donations
+                  </Link>
+                  <Link href="/dashboard/reports" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                    Reports
+                  </Link>
+                </>
+              )}
+              {session.user?.role === "HOSPITAL" && (
+                <>
+
+                  <Link href="/dashboard/requests" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                    My Requests
+                  </Link>
+                  <Link href="/dashboard/inventory" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                    Blood Inventory
+                  </Link>
+                  <Link href="/dashboard/donors" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                    Donor Management
+                  </Link>
+                  <Link href="/dashboard/reports" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                    Reports
+                  </Link>
+                </>
+              )}
               {session.user?.role === "ADMIN" && (
                 <Link href="/dashboard/admin" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
                   Admin Panel

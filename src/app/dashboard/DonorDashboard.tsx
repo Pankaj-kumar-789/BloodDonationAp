@@ -1,179 +1,277 @@
-import { Activity, Clock, ShieldCheck, MapPin, Calendar } from "lucide-react";
+import { 
+  Heart, 
+  Calendar, 
+  Droplet, 
+  Shield, 
+  MapPin, 
+  ChevronDown
+} from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
-import AcceptRequestButton from "@/components/AcceptRequestButton";
-import AvailabilityToggleClient from "@/components/AvailabilityToggleClient";
 import PageTransition from "@/components/PageTransition";
+import promoImg from "../../../public/assets/donor_promo.jpg";
 
 export default async function DonorDashboard({ session }: { session: any }) {
-  // Fetch donor's profile
   const profile = await prisma.donorProfile.findUnique({
-    where: { userId: session.user.id }
+    where: { userId: session.user.id },
+    include: {
+      donationHistory: {
+        orderBy: { date: "desc" },
+        take: 3
+      }
+    }
   });
 
-  // Fetch all pending emergency requests nationwide
   const city = profile?.city || "";
   
-  // We fetch all pending requests and sort them in JS/Prisma so local ones appear first
-  const allRequests = await prisma.bloodRequest.findMany({
-    where: { status: "PENDING" },
+  const localRequests = await prisma.bloodRequest.findMany({
+    where: { status: "PENDING", city: city },
     orderBy: { createdAt: "desc" },
-    take: 10 // Increased limit to show more nationwide activity
+    take: 3
   });
 
-  // Sort locally: Donor's city first, then by date
-  const localRequests = allRequests.sort((a, b) => {
-    const aIsLocal = a.city.toLowerCase() === city.toLowerCase();
-    const bIsLocal = b.city.toLowerCase() === city.toLowerCase();
-    if (aIsLocal && !bIsLocal) return -1;
-    if (!aIsLocal && bIsLocal) return 1;
-    return 0; // If both are local or both are not, keep the original date sort
-  }).slice(0, 5); // Take top 5 for the dashboard
+  // Calculate stats
+  // Wait, the real DB might not have many donations. Let's make sure it defaults gracefully.
+  const totalDonations = profile?.donationHistory.length || 0;
+  const livesImpacted = totalDonations * 3;
+  
+  let nextEligibleDateStr = "Eligible Now";
+  if (profile?.lastDonation) {
+    const nextDate = new Date(profile.lastDonation);
+    nextDate.setDate(nextDate.getDate() + 90);
+    if (nextDate > new Date()) {
+      nextEligibleDateStr = nextDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+    }
+  }
+
+  const bloodGroupStr = profile?.bloodGroup?.replace("_POS", "+").replace("_NEG", "-") || "Not Set";
+
+  // Badges logic
+  const hasLifeSaver = totalDonations >= 1;
+  const hasRegularDonor = totalDonations >= 3;
+  const hasHeroDonor = totalDonations >= 10;
+  
+  // Upcoming Drive (using DonationDrive as a proxy for Appointments since we don't have Appointments yet)
+  const upcomingDrive = await prisma.donationDrive.findFirst({
+    where: { city: city, status: "UPCOMING" },
+    orderBy: { date: "asc" }
+  });
 
   return (
-    <PageTransition className="space-y-8 max-w-6xl mx-auto pb-10">
-      {/* Premium Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-gray-900 text-white p-8 md:p-10 rounded-[2rem] shadow-xl relative overflow-hidden gap-6 border border-gray-800">
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary-red/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
-        <div className="relative z-10">
-          <h1 className="text-3xl md:text-4xl font-black tracking-tight mb-2">Donation Control Center</h1>
-          <p className="text-gray-400 text-base md:text-lg font-medium">Manage your availability and help save lives in your area.</p>
-        </div>
-        <div className="flex flex-col items-start md:items-end gap-2 bg-white/10 backdrop-blur-md px-6 py-4 rounded-2xl border border-white/10 shadow-sm relative z-10 w-full md:w-auto">
-          <span className="text-xs font-bold text-gray-300 uppercase tracking-widest">My Availability</span>
-          <AvailabilityToggleClient initialIsAvailable={profile?.isAvailable ?? true} />
+    <PageTransition className="space-y-6 max-w-7xl mx-auto pb-10 mt-4">
+      
+      {/* Header */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-8 rounded-[2rem] shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100">
+        <div>
+           <h1 className="text-3xl md:text-[2rem] font-bold text-gray-900 mb-2">Welcome, {session.user.name} <span className="inline-block animate-wave">👋</span></h1>
+           <p className="text-gray-500 font-medium text-[15px]">Thank you for being a hero. Every drop counts!</p>
         </div>
       </div>
 
-      {/* Main Status Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className={`text-white border-0 shadow-xl rounded-[2rem] overflow-hidden relative group transition-all duration-500 hover:-translate-y-1 ${profile?.isAvailable ? 'bg-gradient-to-br from-primary-red to-red-700 shadow-red-200/50' : 'bg-gradient-to-br from-gray-800 to-gray-900 shadow-gray-200/50'}`}>
-          <div className="absolute inset-0 bg-[url('https://res.cloudinary.com/demo/image/upload/v1642683935/pattern-bg.png')] opacity-10 mix-blend-overlay"></div>
-          <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-white/10 rounded-full blur-3xl group-hover:bg-white/20 transition-colors"></div>
-          
-          <CardContent className="p-8 md:p-10 relative z-10 h-full flex flex-col justify-between">
+      {/* Stats Row */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+         {/* Total Donations */}
+         <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-5">
+            <div className="w-[52px] h-[52px] rounded-full bg-red-50 flex items-center justify-center shrink-0 border border-red-100/50">
+               <Droplet className="w-6 h-6 text-primary-red fill-primary-red/10" strokeWidth={2} />
+            </div>
             <div>
-              <div className="flex justify-between items-start mb-10">
-                <div className={`w-16 h-16 backdrop-blur-md rounded-2xl flex items-center justify-center shadow-inner border ${profile?.isAvailable ? 'bg-white/20 border-white/30' : 'bg-white/10 border-white/10'}`}>
-                  <ShieldCheck className="w-8 h-8 text-white" />
-                </div>
-                <div className="text-right flex flex-col items-end">
-                  <div className="text-xs text-white/70 font-bold uppercase tracking-widest mb-1">Blood Group</div>
-                  <div className="text-5xl font-black tracking-tighter drop-shadow-md flex items-center gap-3">
-                    {profile?.bloodGroup?.replace("_POS", "+").replace("_NEG", "-") || "Not Set"}
+               <p className="text-[13px] font-bold text-gray-400 mb-1">Total Donations</p>
+               <h3 className="text-2xl font-black text-gray-900 leading-none">{totalDonations.toString().padStart(2, '0')}</h3>
+            </div>
+         </div>
+         
+         {/* Lives Impacted */}
+         <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-5">
+            <div className="w-[52px] h-[52px] rounded-full bg-red-50 flex items-center justify-center shrink-0 border border-red-100/50">
+               <Heart className="w-6 h-6 text-primary-red fill-primary-red" />
+            </div>
+            <div>
+               <p className="text-[13px] font-bold text-gray-400 mb-1">Lives Impacted</p>
+               <h3 className="text-2xl font-black text-gray-900 leading-none">{livesImpacted}+</h3>
+            </div>
+         </div>
+         
+         {/* Next Eligible Date */}
+         <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-5">
+            <div className="w-[52px] h-[52px] rounded-full bg-blue-50/50 flex items-center justify-center shrink-0 border border-blue-100/50">
+               <Calendar className="w-6 h-6 text-blue-600" />
+            </div>
+            <div>
+               <p className="text-[13px] font-bold text-gray-400 mb-1">Next Eligible Date</p>
+               <h3 className="text-[20px] font-black text-gray-900 leading-none whitespace-nowrap">{nextEligibleDateStr}</h3>
+            </div>
+         </div>
+         
+         {/* Blood Group */}
+         <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-5">
+            <div className="w-[52px] h-[52px] rounded-full bg-red-50 flex items-center justify-center shrink-0 border border-red-100/50">
+               <Droplet className="w-6 h-6 text-primary-red fill-primary-red/10" strokeWidth={2} />
+            </div>
+            <div>
+               <p className="text-[13px] font-bold text-gray-400 mb-1">Blood Group</p>
+               <h3 className="text-2xl font-black text-gray-900 leading-none">{bloodGroupStr}</h3>
+            </div>
+         </div>
+      </div>
+
+      {/* Grid Row 1 (3 Columns) */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        {/* Upcoming Appointment / Drive */}
+        <div className="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+          <h3 className="text-[17px] font-bold text-gray-900 mb-6">Upcoming Drive Near You</h3>
+          {upcomingDrive ? (
+            <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
+               <div className="flex justify-between items-start mb-6">
+                  <div>
+                     <h4 className="font-bold text-gray-900 text-lg mb-1">{upcomingDrive.date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</h4>
+                     <p className="text-sm text-gray-500 font-medium truncate max-w-[150px]">{upcomingDrive.location}</p>
                   </div>
-                  {profile && profile.rating > 0 && (
-                    <div className="mt-2 flex items-center gap-1 bg-white/20 backdrop-blur-sm px-3 py-1 rounded-full border border-white/20">
-                      <span className="text-yellow-400">★</span>
-                      <span className="text-sm font-bold text-white">{profile.rating.toFixed(1)} Rating</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-              <h3 className="font-bold text-2xl md:text-3xl mb-3 tracking-tight">
-                {profile?.isAvailable ? "Ready to Donate?" : "Currently Unavailable"}
-              </h3>
-              <p className="text-white/80 text-sm md:text-base leading-relaxed max-w-sm font-medium">
-                {profile?.isAvailable 
-                  ? "Your profile is active. Local hospitals can contact you during critical emergencies to save lives."
-                  : "You are marked as unavailable. Hospitals will not be able to contact you for emergency donations."}
-              </p>
+                  <div className="text-right">
+                     <h4 className="font-bold text-gray-900 text-lg">{upcomingDrive.date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</h4>
+                  </div>
+               </div>
+               <div className="flex gap-4 mt-8">
+                  <Link href={`/dashboard/donations`} className="flex-1 bg-white border border-red-100 text-primary-red text-center font-bold py-3 rounded-2xl hover:bg-red-50 transition-colors text-[13px] shadow-sm">View Details</Link>
+               </div>
             </div>
-          </CardContent>
-        </Card>
-
-        <Card className="rounded-[2rem] border border-gray-100 shadow-sm hover:shadow-xl hover:border-gray-200 transition-all duration-500 transform hover:-translate-y-1 bg-white">
-          <CardContent className="p-8 md:p-10 h-full flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-10">
-                <div className="w-16 h-16 bg-gray-50 text-gray-700 rounded-2xl flex items-center justify-center shadow-inner border border-gray-100">
-                  <Activity className="w-8 h-8" />
-                </div>
-                <span className="text-xs font-bold text-gray-400 uppercase tracking-widest">History</span>
-              </div>
-              <h3 className="text-2xl md:text-3xl font-black text-gray-900 mb-3 tracking-tight">My Donations</h3>
-              <p className="text-gray-500 leading-relaxed font-medium">
-                Track your donation history and see the real-world impact you've made in your community.
-              </p>
+          ) : (
+            <div className="bg-gray-50 rounded-3xl p-6 text-center border border-gray-100 border-dashed h-[180px] flex flex-col items-center justify-center">
+              <p className="text-gray-400 font-medium text-sm">No upcoming drives in your city.</p>
             </div>
-            <div className="mt-8 flex flex-col sm:flex-row gap-3">
-              <Link href="/dashboard/history" className="flex-1 inline-flex items-center justify-center bg-gray-900 hover:bg-black text-white font-bold py-4 px-6 rounded-xl transition-all shadow-md hover:shadow-lg group">
-                View History <span className="ml-2 group-hover:translate-x-1 transition-transform">&rarr;</span>
-              </Link>
-              <Link href="/dashboard/messages" className="flex-1 inline-flex items-center justify-center bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 font-bold py-4 px-6 rounded-xl transition-all shadow-sm hover:shadow-md group">
-                Messages
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Emergency Requests Section */}
-      <div className="pt-6">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
-          <h2 className="text-2xl md:text-3xl font-black text-gray-900 tracking-tight">Emergency Requests</h2>
-          <div className="flex items-center gap-2 text-sm font-bold text-primary-red bg-red-50 border border-red-100 px-4 py-2.5 rounded-xl shadow-sm">
-            <MapPin className="w-4 h-4" /> {city || "Your Area"}
+          )}
+        </div>
+        
+        {/* Donation History */}
+        <div className="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex flex-col">
+          <div className="flex justify-between items-center mb-6">
+             <h3 className="text-[17px] font-bold text-gray-900">Donation History</h3>
+             <Link href="/dashboard/history" className="text-gray-300 hover:text-gray-600 transition-colors"><ChevronDown className="w-5 h-5"/></Link>
+          </div>
+          
+          <div className="flex-1 flex flex-col justify-center space-y-5 py-2">
+             {profile?.donationHistory && profile.donationHistory.length > 0 ? (
+               profile.donationHistory.map((history, idx) => (
+                 <div key={history.id}>
+                   <div className="flex items-center gap-5">
+                      <div className="w-[42px] h-[42px] rounded-2xl bg-red-50 flex items-center justify-center shrink-0 border border-red-100/50">
+                         <Droplet className="w-5 h-5 text-primary-red fill-primary-red/10" strokeWidth={2} />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                         <h4 className="font-bold text-gray-900 text-[14px] mb-0.5">{history.date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</h4>
+                         <p className="text-[12px] font-medium text-gray-500 truncate">{history.hospital}</p>
+                      </div>
+                   </div>
+                   {idx < profile.donationHistory.length - 1 && <hr className="border-gray-50 mt-5" />}
+                 </div>
+               ))
+             ) : (
+               <div className="text-center py-4">
+                 <p className="text-gray-400 font-medium text-sm">No donations recorded yet.</p>
+               </div>
+             )}
           </div>
         </div>
         
-        {localRequests.length > 0 ? (
-          <div className="space-y-5">
-            {localRequests.map(req => (
-              <div key={req.id} className="bg-white rounded-3xl border border-gray-100 p-6 md:p-8 shadow-sm hover:shadow-md transition-all group relative overflow-hidden flex flex-col lg:flex-row justify-between gap-6">
-                <div className="absolute inset-y-0 left-0 w-2 bg-gradient-to-b from-red-400 to-primary-red opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                
-                <div className="flex items-start gap-5 md:gap-6">
-                  <div className="w-16 h-16 md:w-20 md:h-20 bg-red-50 rounded-2xl flex flex-col items-center justify-center border border-red-100 shrink-0 shadow-sm group-hover:scale-105 transition-transform">
-                    <span className="text-primary-red font-black text-2xl md:text-3xl leading-none">{req.bloodGroup.replace('_POS', '+').replace('_NEG', '-')}</span>
-                  </div>
-                  <div>
-                    <div className="flex flex-wrap items-center gap-3 mb-2">
-                      <h3 className="text-gray-900 font-black text-xl md:text-2xl tracking-tight">{req.patientName}</h3>
-                      {req.isEmergency && (
-                        <span className="px-2.5 py-1 rounded-md text-[10px] md:text-xs font-bold uppercase tracking-widest bg-red-100 text-red-700 border border-red-200 shadow-sm">Emergency</span>
-                      )}
-                    </div>
-                    <div className="text-base text-gray-700 mb-5 font-semibold flex items-center gap-2">
-                      <MapPin className="w-4 h-4 text-primary-red" /> {req.hospital}, {req.city}
-                    </div>
-                    <div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 font-medium">
-                      <span className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-100">
-                        <Activity className="w-4 h-4 text-gray-400" /> {req.units} Units Needed
-                      </span>
-                      <span className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-100">
-                        <Calendar className="w-4 h-4 text-gray-400" /> Needed by: {new Date(req.requiredBefore).toLocaleDateString()}
-                      </span>
-                    </div>
-                    {req.description && (
-                      <div className="mt-5 text-sm text-gray-700 bg-orange-50/50 p-4 md:p-5 rounded-2xl border border-orange-100/50 leading-relaxed italic font-medium">
-                        "{req.description}"
+        {/* My Badges */}
+        <div className="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+          <h3 className="text-[17px] font-bold text-gray-900 mb-8">My Badges</h3>
+          <div className="flex justify-between items-center h-full pb-10 px-2">
+             {/* Badge 1 */}
+             <div className="flex flex-col items-center">
+                <div className={`w-[72px] h-[72px] flex items-center justify-center relative mb-4 transition-all duration-500 ${hasLifeSaver ? '' : 'grayscale opacity-30 blur-[1px]'}`}>
+                   <Shield className="w-[60px] h-[60px] text-orange-500 fill-orange-500 absolute drop-shadow-md" strokeWidth={1} />
+                   <Shield className="w-[46px] h-[46px] text-[#C62121] fill-[#C62121] absolute z-10" strokeWidth={1} />
+                   <Droplet className="w-[20px] h-[20px] text-white fill-white absolute z-20" strokeWidth={1} />
+                </div>
+                <p className="font-bold text-gray-900 text-[13px] mb-1">Life Saver</p>
+                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wide">(1+ Donations)</p>
+             </div>
+             
+             {/* Badge 2 */}
+             <div className="flex flex-col items-center">
+                <div className={`w-[72px] h-[72px] flex items-center justify-center relative mb-4 transition-all duration-500 ${hasRegularDonor ? '' : 'grayscale opacity-30 blur-[1px]'}`}>
+                   <Shield className="w-[60px] h-[60px] text-orange-500 fill-orange-500 absolute drop-shadow-md" strokeWidth={1} />
+                   <Shield className="w-[46px] h-[46px] text-[#C62121] fill-[#C62121] absolute z-10" strokeWidth={1} />
+                   <Droplet className="w-[20px] h-[20px] text-white fill-white absolute z-20" strokeWidth={1} />
+                </div>
+                <p className="font-bold text-gray-900 text-[13px] mb-1">Regular Donor</p>
+                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wide">(3+ Donations)</p>
+             </div>
+             
+             {/* Badge 3 */}
+             <div className="flex flex-col items-center">
+                <div className={`w-[72px] h-[72px] flex items-center justify-center relative mb-4 transition-all duration-500 ${hasHeroDonor ? '' : 'grayscale opacity-30 blur-[1px]'}`}>
+                   <Shield className="w-[60px] h-[60px] text-orange-500 fill-orange-500 absolute drop-shadow-md" strokeWidth={1} />
+                   <Shield className="w-[46px] h-[46px] text-[#C62121] fill-[#C62121] absolute z-10" strokeWidth={1} />
+                   <Droplet className="w-[20px] h-[20px] text-white fill-white absolute z-20" strokeWidth={1} />
+                </div>
+                <p className="font-bold text-gray-900 text-[13px] mb-1">Hero Donor</p>
+                <p className="text-[10px] text-gray-400 font-bold uppercase tracking-wide">(10+ Donations)</p>
+             </div>
+          </div>
+        </div>
+        
+      </div>
+
+      {/* Grid Row 2 (2 Columns: Requests 2/3, Promo 1/3) */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        {/* Blood Requests Near You */}
+        <div className="lg:col-span-2 bg-white rounded-[2rem] p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+          <div className="flex justify-between items-center mb-6">
+             <h3 className="text-[17px] font-bold text-gray-900">Blood Requests Near You</h3>
+             <Link href="/dashboard/requests" className="text-sm font-bold text-primary-red hover:text-red-800">View All</Link>
+          </div>
+          
+          <div className="space-y-2">
+             {localRequests.length > 0 ? (
+               localRequests.map((req, idx) => (
+                 <div key={req.id}>
+                   <div className="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 hover:bg-gray-50 rounded-2xl transition-colors border border-transparent hover:border-gray-100 gap-4">
+                      <div className="flex items-center gap-6 min-w-0">
+                         <div className="w-[46px] h-[46px] bg-red-50 text-primary-red font-black flex items-center justify-center rounded-2xl text-[17px] shrink-0 border border-red-100/50">
+                            {req.bloodGroup.replace("_POS", "+").replace("_NEG", "-")}
+                         </div>
+                         <div className="w-16 shrink-0">
+                            <p className="font-bold text-gray-900 text-[14px]">{req.units} {req.units === 1 ? 'Unit' : 'Units'}</p>
+                         </div>
+                         <div className="w-56 shrink-0">
+                            <p className="font-bold text-gray-900 text-[14px] truncate mb-0.5">{req.patientName}</p>
+                            <p className="text-[12px] text-gray-500 font-medium truncate">{req.hospital}</p>
+                         </div>
+                         <div className="hidden md:flex items-center gap-1.5 text-gray-400 text-[12px] font-bold shrink-0">
+                            <MapPin className="w-3.5 h-3.5" /> {req.city}
+                         </div>
                       </div>
-                    )}
-                  </div>
-                </div>
-                
-                <div className="flex flex-col justify-center shrink-0 border-t lg:border-t-0 lg:border-l border-gray-100 pt-6 lg:pt-0 lg:pl-8 mt-4 lg:mt-0">
-                  <AcceptRequestButton requestId={req.id} />
-                  <div className="text-center mt-3 text-xs text-gray-400 font-medium tracking-wide leading-relaxed">
-                    Your contact details<br/>will be securely shared
-                  </div>
-                </div>
-              </div>
-            ))}
+                      <Link href={`/dashboard/requests`} className="bg-primary-red hover:bg-red-800 text-white font-bold py-2.5 px-8 rounded-xl text-[13px] transition-colors shadow-sm text-center shrink-0">
+                         Help Now
+                      </Link>
+                   </div>
+                   {idx < localRequests.length - 1 && <hr className="border-gray-50 mx-4" />}
+                 </div>
+               ))
+             ) : (
+               <div className="bg-gray-50 rounded-2xl p-8 text-center border border-gray-100 border-dashed">
+                  <p className="text-gray-400 font-medium text-sm">No active emergency requests in your area.</p>
+               </div>
+             )}
           </div>
-        ) : (
-          <div className="bg-gray-50/50 rounded-[2rem] border-2 border-dashed border-gray-200 p-12 md:p-20 text-center shadow-sm">
-            <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm border border-gray-100">
-              <ShieldCheck className="w-10 h-10 text-gray-400" />
-            </div>
-            <h3 className="text-xl md:text-2xl font-black text-gray-900 mb-3 tracking-tight">No Urgent Requests</h3>
-            <p className="text-gray-500 max-w-md mx-auto font-medium leading-relaxed">
-              There are currently no pending emergency requests nationwide. Rest assured, we'll notify you the moment someone needs your help locally.
-            </p>
+        </div>
+        
+        {/* Promotional Box */}
+        <div className="bg-red-50/40 rounded-[2rem] p-8 border border-red-100/60 shadow-[0_2px_10px_rgba(0,0,0,0.02)] relative overflow-hidden flex flex-col items-center text-center">
+          <h3 className="text-[20px] font-black text-gray-900 mb-4 relative z-10 leading-tight">Keep Donating, Keep Inspiring!</h3>
+          <p className="text-[14px] font-medium text-gray-600 mb-1 relative z-10 leading-relaxed">Your donation can save up to 3 lives.</p>
+          <p className="text-[14px] font-medium text-gray-600 relative z-10 leading-relaxed">Be a reason for someone's heartbeat.</p>
+          
+          <div className="mt-8 relative z-10 mix-blend-multiply w-[200px] h-[180px]">
+             <Image src={promoImg} alt="Keep Donating" fill className="object-contain" priority />
           </div>
-        )}
+        </div>
+        
       </div>
     </PageTransition>
   );

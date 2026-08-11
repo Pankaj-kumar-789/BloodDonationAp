@@ -44,6 +44,13 @@ enum PaymentStatus {
   FAILED
 }
 
+enum DriveStatus {
+  UPCOMING
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
 model User {
   id            String    @id @default(cuid())
   name          String
@@ -102,6 +109,7 @@ model HospitalProfile {
   city        String
   state       String
   isVerified  Boolean  @default(false)
+  inventory   HospitalInventory[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -114,6 +122,7 @@ model BloodBankProfile {
   state       String
   isVerified  Boolean  @default(false)
   inventory   BloodInventory[]
+  donationDrives DonationDrive[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
@@ -128,6 +137,18 @@ model BloodInventory {
   updatedAt    DateTime         @updatedAt
   
   @@unique([bloodBankId, bloodGroup, donationType])
+}
+
+model HospitalInventory {
+  id           String           @id @default(cuid())
+  hospitalId   String
+  hospital     HospitalProfile  @relation(fields: [hospitalId], references: [id], onDelete: Cascade)
+  bloodGroup   BloodGroup
+  donationType DonationType @default(BLOOD)
+  units        Int              @default(0)
+  updatedAt    DateTime         @updatedAt
+  
+  @@unique([hospitalId, bloodGroup, donationType])
 }
 
 model BloodRequest {
@@ -164,6 +185,21 @@ model DonationHistory {
   units         Int
   donationType  DonationType @default(BLOOD)
   createdAt     DateTime     @default(now())
+}
+
+model DonationDrive {
+  id            String    @id @default(cuid())
+  bloodBankId   String
+  bloodBank     BloodBankProfile @relation(fields: [bloodBankId], references: [id], onDelete: Cascade)
+  name          String
+  date          DateTime
+  location      String
+  city          String
+  status        DriveStatus @default(UPCOMING)
+  expectedDonors Int?
+  unitsCollected Int      @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Transaction {

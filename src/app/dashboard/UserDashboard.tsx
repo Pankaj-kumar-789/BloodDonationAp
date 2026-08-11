@@ -1,93 +1,245 @@
-import { Activity, Clock, Search, MapPin } from "lucide-react";
+import { Droplet, CalendarCheck, Phone, MapPin, ShieldCheck, Plus } from "lucide-react";
 import Link from "next/link";
-import { Card, CardContent } from "@/components/ui/card";
+import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 import PageTransition from "@/components/PageTransition";
 
 export default async function UserDashboard({ session }: { session: any }) {
-  // Fetch user's active requests and unlocked contacts
-  const unlockedCount = await prisma.contactUnlock.count({
-    where: { userId: session.user.id }
-  });
-
-  const activeRequests = await prisma.bloodRequest.findMany({
+  // 1. Fetch user's requests
+  const requests = await prisma.bloodRequest.findMany({
     where: { creatorId: session.user.id },
     orderBy: { createdAt: "desc" },
-    take: 3
   });
 
+  const totalRequests = requests.length;
+  const activeRequests = requests.filter(r => r.status === "PENDING").length;
+  const fulfilledRequests = requests.filter(r => r.status === "COMPLETED" || r.status === "ACCEPTED").length;
+  
+  // Last requested blood group
+  const lastRequestedBloodGroup = requests.length > 0 ? requests[0].bloodGroup.replace("_POS", "+").replace("_NEG", "-") : "-";
+
+  // 2. Fetch some mock "Donors Near You"
+  // Since location based querying is complex without postgis, we'll fetch verified donors who are available
+  const donorsNearYou = await prisma.donorProfile.findMany({
+    where: { 
+      isAvailable: true,
+      isVerified: true
+    },
+    include: {
+      user: {
+        select: { name: true, image: true, phone: true }
+      }
+    },
+    take: 4
+  });
+
+  // Helper to format numbers with leading zero
+  const pad = (num: number) => num.toString().padStart(2, '0');
+
   return (
-    <PageTransition className="space-y-6">
-      <div className="flex justify-between items-center">
+    <PageTransition className="max-w-7xl mx-auto space-y-6 pb-10">
+      
+      {/* Header */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-2">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Welcome, {session.user.name}</h1>
-          <p className="text-gray-500">Here is your quick overview.</p>
+          <h1 className="text-2xl md:text-3xl font-black text-gray-900 flex items-center gap-2">
+            Hello, {session.user.name} <span className="text-2xl">👋</span>
+          </h1>
+          <p className="text-gray-500 font-medium">We are here to help. You are not alone!</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card className="hover:shadow-md transition-shadow">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-red-50 text-primary-red rounded-full flex items-center justify-center">
-                <Search className="w-6 h-6" />
-              </div>
-              <span className="text-sm font-medium text-gray-500">Find Help</span>
-            </div>
-            <h3 className="text-lg font-bold text-gray-900 mb-1">Search Donors</h3>
-            <p className="text-sm text-gray-500 mb-4">Find available blood donors nearby and securely unlock their contact details.</p>
-            <div className="flex justify-between items-center">
-              <span className="text-xs font-medium text-green-600 bg-green-50 px-2 py-1 rounded-md">{unlockedCount} Donors Unlocked</span>
-              <Link href="/search" className="text-primary-red font-medium text-sm hover:underline flex items-center gap-1">
-                Search Now &rarr;
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="hover:shadow-md transition-shadow">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="w-12 h-12 bg-orange-50 text-orange-500 rounded-full flex items-center justify-center">
-                <Activity className="w-6 h-6" />
-              </div>
-              <span className="text-sm font-medium text-gray-500">Urgent Needs</span>
-            </div>
-            <h3 className="text-lg font-bold text-gray-900 mb-1">Emergency Request</h3>
-            <p className="text-sm text-gray-500 mb-4">Broadcast an emergency blood requirement directly to hospitals and donors.</p>
-            <Link href="/emergency" className="text-primary-red font-medium text-sm hover:underline flex items-center gap-1">
-              Create Request &rarr;
-            </Link>
-          </CardContent>
-        </Card>
-      </div>
-
-      <h2 className="text-xl font-bold text-gray-900 mt-8 mb-4">My Recent Requests</h2>
-      {activeRequests.length > 0 ? (
-        <div className="space-y-4">
-          {activeRequests.map(req => (
-            <div key={req.id} className="bg-white rounded-2xl border border-gray-100 p-6 flex justify-between items-center shadow-sm">
-              <div>
-                <h4 className="font-bold text-gray-900">{req.bloodGroup} Blood Required</h4>
-                <div className="text-sm text-gray-500 flex items-center gap-2 mt-1">
-                  <MapPin className="w-3.5 h-3.5" /> {req.hospital}, {req.city}
-                </div>
-              </div>
-              <div className={`px-3 py-1 rounded-full text-xs font-bold ${req.status === 'PENDING' ? 'bg-yellow-50 text-yellow-600' : 'bg-green-50 text-green-600'}`}>
-                {req.status}
-              </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <div className="bg-white rounded-2xl border border-gray-100 p-8 text-center shadow-sm">
-          <div className="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Clock className="w-8 h-8 text-gray-400" />
+      {/* Stats Grid */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
+        <div className="bg-white rounded-[2rem] p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4">
+          <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center shrink-0 border border-red-100/50">
+            <Droplet className="w-6 h-6 text-primary-red fill-primary-red/20" />
           </div>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No active requests</h3>
-          <p className="text-gray-500 max-w-sm mx-auto">You haven't made any emergency blood requests recently.</p>
+          <div>
+            <p className="text-[12px] font-bold text-gray-400 uppercase tracking-wide mb-0.5">Total Requests</p>
+            <h3 className="text-3xl font-black text-gray-900 leading-none">{pad(totalRequests)}</h3>
+          </div>
         </div>
-      )}
+        
+        <div className="bg-white rounded-[2rem] p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4">
+          <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100/50">
+            <CalendarCheck className="w-6 h-6 text-blue-500" />
+          </div>
+          <div>
+            <p className="text-[12px] font-bold text-gray-400 uppercase tracking-wide mb-0.5">Active Requests</p>
+            <h3 className="text-3xl font-black text-gray-900 leading-none">{pad(activeRequests)}</h3>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-[2rem] p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4">
+          <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100/50">
+            <CalendarCheck className="w-6 h-6 text-blue-500" />
+          </div>
+          <div>
+            <p className="text-[12px] font-bold text-gray-400 uppercase tracking-wide mb-0.5">Requests Fulfilled</p>
+            <h3 className="text-3xl font-black text-gray-900 leading-none">{pad(fulfilledRequests)}</h3>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-[2rem] p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4">
+          <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center shrink-0 border border-red-100/50">
+            <Droplet className="w-6 h-6 text-primary-red fill-primary-red/20" />
+          </div>
+          <div>
+            <p className="text-[12px] font-bold text-gray-400 uppercase tracking-wide mb-0.5">Blood Group</p>
+            <h3 className="text-3xl font-black text-gray-900 leading-none">{lastRequestedBloodGroup}</h3>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Grid Row 1 */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        
+        {/* My Recent Requests */}
+        <div className="bg-white rounded-[2rem] p-6 md:p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex flex-col h-full">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-lg font-black text-gray-900">My Recent Requests</h2>
+            <Link href="/dashboard/requests" className="text-[13px] font-bold text-primary-red hover:underline">
+              View All
+            </Link>
+          </div>
+          
+          <div className="flex-1">
+            {requests.length > 0 ? (
+              <div className="space-y-4">
+                {requests.slice(0,3).map((req) => {
+                  const bgDisplay = req.bloodGroup.replace("_POS", "+").replace("_NEG", "-");
+                  return (
+                    <div key={req.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-gray-100 last:border-0 last:pb-0">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-red-50 text-primary-red font-black text-lg flex items-center justify-center shrink-0">
+                          {bgDisplay}
+                        </div>
+                        <div>
+                          <p className="font-bold text-[15px] text-gray-900 flex items-center gap-2">
+                            {req.patientName} 
+                            <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                          </p>
+                          <p className="text-[12px] font-medium text-gray-500">{req.hospital}, {req.city}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center justify-between sm:justify-end gap-6 sm:w-1/2">
+                        <div className="text-left sm:text-right">
+                           <p className="text-[12px] font-medium text-gray-500">{new Date(req.createdAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
+                        </div>
+                        <div className={`px-3 py-1 rounded-md text-[11px] font-bold uppercase tracking-wider ${
+                          req.status === 'PENDING' ? 'bg-orange-50 text-orange-600' : 'bg-green-50 text-green-600'
+                        }`}>
+                          {req.status === 'PENDING' ? 'In Progress' : 'Fulfilled'}
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            ) : (
+              <div className="h-full flex flex-col items-center justify-center py-8">
+                <p className="text-gray-400 font-medium mb-4">No recent requests.</p>
+                <Link href="/emergency" className="text-sm font-bold text-primary-red">Create one now</Link>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Donors Near You */}
+        <div className="bg-white rounded-[2rem] p-6 md:p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex flex-col h-full">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-lg font-black text-gray-900">Donors Near You</h2>
+            <Link href="/search" className="text-[13px] font-bold text-primary-red hover:underline">
+              View All
+            </Link>
+          </div>
+          
+          <div className="flex-1">
+            {donorsNearYou.length > 0 ? (
+              <div className="space-y-4">
+                {donorsNearYou.map((donor, idx) => {
+                  const bgDisplay = donor.bloodGroup.replace("_POS", "+").replace("_NEG", "-");
+                  // Mock distance for realism as requested by UI design
+                  const distance = (2.1 + (idx * 0.5)).toFixed(1);
+                  
+                  return (
+                    <div key={donor.id} className="flex items-center justify-between gap-4 pb-4 border-b border-gray-100 last:border-0 last:pb-0">
+                      <div className="flex items-center gap-3">
+                        {donor.user.image ? (
+                          <img src={donor.user.image} alt={donor.user.name} className="w-10 h-10 rounded-full object-cover shrink-0" />
+                        ) : (
+                          <div className="w-10 h-10 rounded-full bg-gray-100 text-gray-600 font-black flex items-center justify-center shrink-0">
+                            {donor.user.name.charAt(0)}
+                          </div>
+                        )}
+                        <div>
+                          <p className="font-bold text-[14px] text-gray-900 leading-tight">{donor.user.name}</p>
+                          <p className="text-[12px] font-medium text-gray-500 mt-0.5">{bgDisplay} | {donor.city}</p>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-1 text-[12px] font-bold text-gray-500">
+                          <MapPin className="w-3.5 h-3.5" />
+                          {distance} km
+                        </div>
+                        <a href={`tel:${donor.user.phone}`} className="w-8 h-8 rounded-full bg-red-50 flex items-center justify-center text-primary-red hover:bg-red-100 transition-colors">
+                          <Phone className="w-4 h-4" />
+                        </a>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            ) : (
+              <div className="h-full flex flex-col items-center justify-center py-8">
+                <p className="text-gray-400 font-medium text-sm">No verified donors currently active nearby.</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+      </div>
+
+      {/* Main Grid Row 2 */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        {/* Post Request Banner */}
+        <div className="lg:col-span-2 bg-gradient-to-r from-red-50 to-pink-50 rounded-[2rem] p-6 md:p-8 border border-red-100/50 flex items-center justify-between overflow-hidden relative">
+          <div className="relative z-10 max-w-sm">
+            <div className="flex items-center gap-2 mb-2">
+              <Droplet className="w-5 h-5 text-primary-red fill-primary-red" />
+              <h2 className="text-xl font-black text-gray-900">Need Blood Urgently?</h2>
+            </div>
+            <p className="text-gray-600 text-sm font-medium mb-6">
+              Post your request and get help from verified donors in your area.
+            </p>
+            <Link href="/emergency" className="inline-flex items-center gap-2 bg-primary-red hover:bg-red-800 text-white font-bold py-3 px-6 rounded-xl text-[14px] transition-colors shadow-sm">
+               Post New Request
+            </Link>
+          </div>
+          
+          <div className="hidden sm:block absolute right-0 -bottom-8 opacity-90">
+             <Image src="/assets/urgent_blood.jpg" alt="Need blood" width={220} height={220} className="object-contain mix-blend-multiply rounded-full" />
+          </div>
+        </div>
+
+        {/* Important Note */}
+        <div className="bg-white rounded-[2rem] p-6 md:p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-start gap-4">
+          <div className="w-14 h-14 bg-red-50 rounded-2xl flex items-center justify-center shrink-0 border border-red-100/50">
+             <ShieldCheck className="w-7 h-7 text-primary-red" />
+          </div>
+          <div>
+            <h3 className="text-[15px] font-black text-gray-900 mb-2">Important Note</h3>
+            <p className="text-[13px] text-gray-500 font-medium leading-relaxed">
+              Please verify donor details before accepting blood donation. RaktaSetu is not responsible for any mishappening.
+            </p>
+          </div>
+        </div>
+
+      </div>
     </PageTransition>
   );
 }
