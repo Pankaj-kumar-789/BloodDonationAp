@@ -1,4 +1,4 @@
-import { Droplet, Search, Settings, ShieldCheck, Activity, AlertTriangle, ChevronRight } from "lucide-react";
+import { Droplet, Search, Settings, ShieldCheck, Activity, AlertTriangle, ChevronRight, FileX } from "lucide-react";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import { prisma } from "@/lib/prisma";
@@ -62,12 +62,20 @@ export default async function BloodBankDashboard({ session }: { session: any }) 
   };
 
   return (
-    <div className="space-y-6 pb-10 w-full max-w-7xl mx-auto px-4 sm:px-6">
+    <div className="space-y-6 pb-10 w-full max-w-7xl mx-auto mt-4 px-4 sm:px-6">
       
+      {/* Header */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-8 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100">
+        <div>
+           <h1 className="text-3xl md:text-[2rem] font-bold text-gray-900 mb-2">Welcome, {session.user.name} <span className="inline-block animate-wave">👋</span></h1>
+           <p className="text-gray-500 font-medium text-[15px]">Manage your inventory and save lives.</p>
+        </div>
+      </div>
+
       {/* Row 1: Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {/* Stat 1: Total Overall Units */}
-        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
           <div className="w-12 h-12 rounded-full bg-red-50 text-[#C62121] flex items-center justify-center shrink-0">
             <Droplet className="w-6 h-6 fill-current" />
           </div>
@@ -78,7 +86,7 @@ export default async function BloodBankDashboard({ session }: { session: any }) 
         </div>
 
         {/* Stat 2: Whole Blood */}
-        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
           <div className="w-12 h-12 rounded-full bg-red-50 text-[#C62121] flex items-center justify-center shrink-0">
             <Droplet className="w-6 h-6 fill-current" />
           </div>
@@ -89,7 +97,7 @@ export default async function BloodBankDashboard({ session }: { session: any }) 
         </div>
 
         {/* Stat 3: Platelets */}
-        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
           <div className="w-12 h-12 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0">
             <Activity className="w-6 h-6" />
           </div>
@@ -100,7 +108,7 @@ export default async function BloodBankDashboard({ session }: { session: any }) 
         </div>
 
         {/* Stat 4: Plasma */}
-        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
+        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
           <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">
             <Droplet className="w-6 h-6" />
           </div>
@@ -115,7 +123,7 @@ export default async function BloodBankDashboard({ session }: { session: any }) 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Left: Blood Inventory List */}
-        <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-sm border border-gray-100">
+        <div className="bg-white rounded-2xl p-6 md:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-lg font-black text-gray-900">Blood Inventory</h2>
             <Link href="/dashboard/inventory" className="text-gray-400 hover:text-[#C62121] transition-colors">
@@ -132,9 +140,11 @@ export default async function BloodBankDashboard({ session }: { session: any }) 
               ))
             ) : (
               // Empty State
-              <div className="text-center py-10">
-                 <p className="text-gray-400 font-medium mb-4">No blood units in inventory.</p>
-                 <Link href="/dashboard/inventory" className="text-sm font-bold text-[#C62121] hover:underline">
+              <div className="bg-gray-50 rounded-2xl p-6 text-center border border-gray-100 border-dashed flex flex-col items-center justify-center mt-4">
+                 <FileX className="w-10 h-10 text-gray-300 mb-3 mx-auto" strokeWidth={1.5} />
+                 <p className="text-gray-600 font-bold text-[14px]">No Inventory</p>
+                 <p className="text-gray-400 font-medium text-[12px] mt-1 mb-4">No blood units currently in inventory.</p>
+                 <Link href="/dashboard/inventory" className="text-sm font-bold text-[#C62121] bg-red-50 hover:bg-red-100 transition-colors px-4 py-2 rounded-xl">
                    Update Inventory
                  </Link>
               </div>
@@ -143,7 +153,7 @@ export default async function BloodBankDashboard({ session }: { session: any }) 
         </div>
 
         {/* Right: Recent Requests List */}
-        <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-sm border border-gray-100">
+        <div className="bg-white rounded-2xl p-6 md:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-lg font-black text-gray-900">Recent Requests</h2>
             <Link href="/dashboard/requests" className="text-xs font-bold text-[#C62121] hover:underline">
@@ -169,8 +179,10 @@ export default async function BloodBankDashboard({ session }: { session: any }) 
                 </div>
               </div>
             )) : (
-              <div className="text-center py-10 text-gray-400 font-medium">
-                 No pending requests found.
+              <div className="bg-gray-50 rounded-2xl p-10 text-center border border-gray-100 border-dashed flex flex-col items-center justify-center h-full min-h-[220px]">
+                 <FileX className="w-10 h-10 text-gray-300 mb-3 mx-auto" strokeWidth={1.5} />
+                 <p className="text-gray-600 font-bold text-[15px]">No Pending Requests</p>
+                 <p className="text-gray-400 font-medium text-[13px] mt-1">There are no new blood requests right now.</p>
               </div>
             )}
           </div>
@@ -182,7 +194,7 @@ export default async function BloodBankDashboard({ session }: { session: any }) 
       <div className="grid grid-cols-1 lg:grid-cols-[2.5fr_1fr] gap-6">
         
         {/* Left: Chart */}
-        <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-sm border border-gray-100 flex flex-col h-full">
+        <div className="bg-white rounded-2xl p-6 md:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 flex flex-col h-full hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
           <div className="flex justify-between items-center mb-2">
             <h2 className="text-lg font-black text-gray-900">Donations Today</h2>
             <button className="text-xs font-bold text-[#C62121] bg-red-50 px-3 py-1 rounded-full flex items-center gap-1 hover:bg-red-100 transition-colors">
@@ -195,14 +207,14 @@ export default async function BloodBankDashboard({ session }: { session: any }) 
         </div>
 
         {/* Right: Quick Actions */}
-        <div className="bg-white rounded-[2rem] p-6 md:p-8 shadow-sm border border-gray-100 flex flex-col h-full">
+        <div className="bg-white rounded-2xl p-6 md:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 flex flex-col h-full">
           <h2 className="text-lg font-black text-gray-900 mb-6">Quick Actions</h2>
           <div className="flex flex-col gap-4 mt-auto">
-            <Link href="/dashboard/inventory" className="w-full bg-[#C62121] hover:bg-red-700 text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_14px_0_rgb(198,33,33,0.39)] hover:shadow-[0_6px_20px_rgba(198,33,33,0.23)] hover:-translate-y-0.5 transition-all">
+            <Link href="/dashboard/inventory" className="w-full bg-gradient-to-r from-[#C62121] to-[#e53e3e] hover:brightness-110 text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_14px_0_rgb(198,33,33,0.39)] hover:shadow-[0_6px_20px_rgba(198,33,33,0.23)] hover:-translate-y-0.5 transition-all">
               <Droplet className="w-5 h-5 fill-current" />
               Add Blood Unit
             </Link>
-            <Link href="/dashboard/inventory" className="w-full bg-[#C62121] hover:bg-red-700 text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_14px_0_rgb(198,33,33,0.39)] hover:shadow-[0_6px_20px_rgba(198,33,33,0.23)] hover:-translate-y-0.5 transition-all">
+            <Link href="/dashboard/inventory" className="w-full bg-gradient-to-r from-[#C62121] to-[#e53e3e] hover:brightness-110 text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_14px_0_rgb(198,33,33,0.39)] hover:shadow-[0_6px_20px_rgba(198,33,33,0.23)] hover:-translate-y-0.5 transition-all">
               <Activity className="w-5 h-5" />
               Issue Blood
             </Link>
