@@ -22,19 +22,9 @@ import { logoutAction } from "@/app/actions/auth";
 export default function Sidebar({ session }: { session: any }) {
   const [isExpanded, setIsExpanded] = useState(true);
   const pathname = usePathname();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    // Auto-collapse on small screens
-    if (window.innerWidth < 1024) {
-      setIsExpanded(false);
-    }
-  }, []);
 
   // Don't show sidebar on auth pages or homepage
   if (pathname === "/" || pathname === "/login" || pathname === "/register" || pathname === "/forgot-password") return null;
-  if (!mounted) return null;
 
   const menuItems: Array<{name: string, icon: any, path: string, exact?: boolean, badge?: number}> = [
     { name: "Find Donors", icon: <Search className="w-5 h-5" />, path: "/search" },

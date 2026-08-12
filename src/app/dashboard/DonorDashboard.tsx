@@ -4,7 +4,9 @@ import {
   Droplet, 
   Shield, 
   MapPin, 
-  ChevronDown
+  ChevronDown,
+  CalendarX,
+  FileX
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -62,7 +64,7 @@ export default async function DonorDashboard({ session }: { session: any }) {
     <PageTransition className="space-y-6 max-w-7xl mx-auto pb-10 mt-4">
       
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-8 rounded-[2rem] shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-8 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100">
         <div>
            <h1 className="text-3xl md:text-[2rem] font-bold text-gray-900 mb-2">Welcome, {session.user.name} <span className="inline-block animate-wave">👋</span></h1>
            <p className="text-gray-500 font-medium text-[15px]">Thank you for being a hero. Every drop counts!</p>
@@ -72,7 +74,7 @@ export default async function DonorDashboard({ session }: { session: any }) {
       {/* Stats Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
          {/* Total Donations */}
-         <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-5">
+         <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-5 hover:-translate-y-1 hover:shadow-lg transition-all">
             <div className="w-[52px] h-[52px] rounded-full bg-red-50 flex items-center justify-center shrink-0 border border-red-100/50">
                <Droplet className="w-6 h-6 text-primary-red fill-primary-red/10" strokeWidth={2} />
             </div>
@@ -83,7 +85,7 @@ export default async function DonorDashboard({ session }: { session: any }) {
          </div>
          
          {/* Lives Impacted */}
-         <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-5">
+         <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-5 hover:-translate-y-1 hover:shadow-lg transition-all">
             <div className="w-[52px] h-[52px] rounded-full bg-red-50 flex items-center justify-center shrink-0 border border-red-100/50">
                <Heart className="w-6 h-6 text-primary-red fill-primary-red" />
             </div>
@@ -94,7 +96,7 @@ export default async function DonorDashboard({ session }: { session: any }) {
          </div>
          
          {/* Next Eligible Date */}
-         <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-5">
+         <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-5 hover:-translate-y-1 hover:shadow-lg transition-all">
             <div className="w-[52px] h-[52px] rounded-full bg-blue-50/50 flex items-center justify-center shrink-0 border border-blue-100/50">
                <Calendar className="w-6 h-6 text-blue-600" />
             </div>
@@ -105,7 +107,7 @@ export default async function DonorDashboard({ session }: { session: any }) {
          </div>
          
          {/* Blood Group */}
-         <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-5">
+         <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-5 hover:-translate-y-1 hover:shadow-lg transition-all">
             <div className="w-[52px] h-[52px] rounded-full bg-red-50 flex items-center justify-center shrink-0 border border-red-100/50">
                <Droplet className="w-6 h-6 text-primary-red fill-primary-red/10" strokeWidth={2} />
             </div>
@@ -120,7 +122,7 @@ export default async function DonorDashboard({ session }: { session: any }) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Upcoming Appointment / Drive */}
-        <div className="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+        <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
           <h3 className="text-[17px] font-bold text-gray-900 mb-6">Upcoming Drive Near You</h3>
           {upcomingDrive ? (
             <div className="bg-white rounded-3xl p-6 border border-gray-100 shadow-[0_4px_20px_rgba(0,0,0,0.03)]">
@@ -138,14 +140,16 @@ export default async function DonorDashboard({ session }: { session: any }) {
                </div>
             </div>
           ) : (
-            <div className="bg-gray-50 rounded-3xl p-6 text-center border border-gray-100 border-dashed h-[180px] flex flex-col items-center justify-center">
-              <p className="text-gray-400 font-medium text-sm">No upcoming drives in your city.</p>
+            <div className="bg-gray-50 rounded-2xl p-6 text-center border border-gray-100 border-dashed h-[180px] flex flex-col items-center justify-center">
+              <CalendarX className="w-10 h-10 text-gray-300 mb-3 mx-auto" strokeWidth={1.5} />
+              <p className="text-gray-600 font-bold text-[14px]">No Upcoming Drives</p>
+              <p className="text-gray-400 font-medium text-[12px] mt-1 max-w-[200px]">There are no scheduled drives in your city yet.</p>
             </div>
           )}
         </div>
         
         {/* Donation History */}
-        <div className="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex flex-col">
+        <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex flex-col">
           <div className="flex justify-between items-center mb-6">
              <h3 className="text-[17px] font-bold text-gray-900">Donation History</h3>
              <Link href="/dashboard/history" className="text-gray-300 hover:text-gray-600 transition-colors"><ChevronDown className="w-5 h-5"/></Link>
@@ -168,15 +172,17 @@ export default async function DonorDashboard({ session }: { session: any }) {
                  </div>
                ))
              ) : (
-               <div className="text-center py-4">
-                 <p className="text-gray-400 font-medium text-sm">No donations recorded yet.</p>
+               <div className="bg-gray-50 rounded-2xl p-6 text-center border border-gray-100 border-dashed flex-1 flex flex-col items-center justify-center">
+                 <FileX className="w-10 h-10 text-gray-300 mb-3 mx-auto" strokeWidth={1.5} />
+                 <p className="text-gray-600 font-bold text-[14px]">No History</p>
+                 <p className="text-gray-400 font-medium text-[12px] mt-1">No donations recorded yet.</p>
                </div>
              )}
           </div>
         </div>
         
         {/* My Badges */}
-        <div className="bg-white rounded-[2rem] p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+        <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
           <h3 className="text-[17px] font-bold text-gray-900 mb-8">My Badges</h3>
           <div className="flex justify-between items-center h-full pb-10 px-2">
              {/* Badge 1 */}
@@ -220,7 +226,7 @@ export default async function DonorDashboard({ session }: { session: any }) {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
         {/* Blood Requests Near You */}
-        <div className="lg:col-span-2 bg-white rounded-[2rem] p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+        <div className="lg:col-span-2 bg-white rounded-2xl p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
           <div className="flex justify-between items-center mb-6">
              <h3 className="text-[17px] font-bold text-gray-900">Blood Requests Near You</h3>
              <Link href="/dashboard/requests" className="text-sm font-bold text-primary-red hover:text-red-800">View All</Link>
@@ -254,21 +260,56 @@ export default async function DonorDashboard({ session }: { session: any }) {
                  </div>
                ))
              ) : (
-               <div className="bg-gray-50 rounded-2xl p-8 text-center border border-gray-100 border-dashed">
-                  <p className="text-gray-400 font-medium text-sm">No active emergency requests in your area.</p>
-               </div>
+                <div className="bg-gray-50 rounded-2xl p-10 text-center border border-gray-100 border-dashed flex flex-col items-center justify-center">
+                  <Heart className="w-10 h-10 text-gray-300 mb-3 mx-auto" strokeWidth={1.5} />
+                  <p className="text-gray-600 font-bold text-[15px]">No Active Requests</p>
+                  <p className="text-gray-400 font-medium text-[13px] mt-1">There are no emergency blood requests in your area right now.</p>
+                </div>
              )}
           </div>
         </div>
         
         {/* Promotional Box */}
-        <div className="bg-red-50/40 rounded-[2rem] p-8 border border-red-100/60 shadow-[0_2px_10px_rgba(0,0,0,0.02)] relative overflow-hidden flex flex-col items-center text-center">
-          <h3 className="text-[20px] font-black text-gray-900 mb-4 relative z-10 leading-tight">Keep Donating, Keep Inspiring!</h3>
-          <p className="text-[14px] font-medium text-gray-600 mb-1 relative z-10 leading-relaxed">Your donation can save up to 3 lives.</p>
-          <p className="text-[14px] font-medium text-gray-600 relative z-10 leading-relaxed">Be a reason for someone's heartbeat.</p>
+        <div className="bg-gradient-to-b from-[#FFF5F5] to-[#FFE5E5] rounded-2xl p-8 border border-red-100 shadow-sm relative overflow-hidden flex flex-col items-center text-center hover:-translate-y-1 hover:shadow-lg transition-all">
           
-          <div className="mt-8 relative z-10 mix-blend-multiply w-[200px] h-[180px]">
-             <Image src={promoImg} alt="Keep Donating" fill className="object-contain" priority />
+          {/* Subtle background decorative elements */}
+          <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+            <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-red-200/50 rounded-full blur-3xl"></div>
+            <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-red-200/50 rounded-full blur-3xl"></div>
+          </div>
+
+          <div className="relative z-10 flex flex-col items-center w-full">
+            {/* Top Heart Icon */}
+            <div className="mb-4">
+               <Heart className="w-5 h-5 text-primary-red fill-primary-red drop-shadow-sm" />
+            </div>
+
+            <h3 className="text-[26px] sm:text-[30px] font-black text-gray-900 mb-4 leading-[1.1]">
+              Keep Donating,<br/>
+              <span className="text-[#C62121]">Keep Inspiring!</span>
+            </h3>
+            
+            {/* Decorative Divider */}
+            <div className="flex items-center gap-2 mb-5 opacity-70">
+               <div className="h-px w-12 bg-gradient-to-r from-transparent to-red-300"></div>
+               <Heart className="w-2.5 h-2.5 text-primary-red fill-primary-red" />
+               <div className="h-px w-12 bg-gradient-to-l from-transparent to-red-300"></div>
+            </div>
+
+            <p className="text-[14px] font-medium text-gray-700 mb-1 leading-relaxed">
+              Your donation can <span className="text-[#C62121] font-bold">save up to 3 lives</span>.
+            </p>
+            <p className="text-[14px] font-medium text-gray-700 mb-6 leading-relaxed">
+              Be a reason for <span className="text-[#C62121] font-bold">someone's heartbeat</span>.
+            </p>
+            
+            <div className="relative mix-blend-multiply w-[200px] h-[200px] mb-8 drop-shadow-xl">
+               <Image src={promoImg} alt="Keep Donating" fill className="object-contain" priority />
+            </div>
+
+            <Link href="/dashboard/donations" className="bg-[#C62121] hover:bg-red-800 text-white px-8 py-3 rounded-full font-bold text-[13px] tracking-wide flex items-center gap-2 shadow-md transition-colors w-full sm:w-auto justify-center">
+              <Heart className="w-4 h-4 fill-white" /> DONATE BLOOD, SAVE LIVES
+            </Link>
           </div>
         </div>
         

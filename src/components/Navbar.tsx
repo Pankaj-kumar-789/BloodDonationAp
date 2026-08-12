@@ -5,6 +5,7 @@ import { Menu, X, User, Moon, Sun } from "lucide-react";
 import { useState, useEffect } from "react";
 import { logoutAction } from "@/app/actions/auth";
 import { useTheme } from "next-themes";
+import { motion, AnimatePresence } from "framer-motion";
 
 import logo from "@/assets/logo.png";
 import NotificationBell from "@/components/NotificationBell";
@@ -124,14 +125,22 @@ export default function Navbar({ session, unreadCount = 0 }: { session: any, unr
       </div>
 
       {/* Mobile Menu */}
-      {isOpen && (
-        <div className="md:hidden bg-white border-b border-gray-100 px-4 pt-2 pb-4 space-y-1 shadow-lg">
-          <Link href="/search" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
-            Find Donors
-          </Link>
-          <Link href="/emergency" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
-            Emergency Request
-          </Link>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden bg-white border-b border-gray-100 shadow-lg overflow-hidden"
+          >
+            <div className="px-4 pt-2 pb-4 space-y-1">
+              <Link href="/search" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-[#C62121] hover:bg-red-50 transition-colors">
+                Find Donors
+              </Link>
+              <Link href="/emergency" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-[#C62121] hover:bg-red-50 transition-colors">
+                Emergency Request
+              </Link>
           {session ? (
              <>
               <Link href="/dashboard" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
@@ -210,22 +219,30 @@ export default function Navbar({ session, unreadCount = 0 }: { session: any, unr
               <Link href="/dashboard/settings" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
                 Settings
               </Link>
-              <button onClick={() => { setIsOpen(false); logoutAction(); }} className="w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+              <button 
+                onClick={() => {
+                  logoutAction();
+                  setIsOpen(false);
+                }}
+                className="block w-full text-left px-3 py-2 rounded-md text-base font-bold text-gray-700 hover:text-[#C62121] hover:bg-red-50 transition-colors"
+              >
                 Log out
               </button>
-             </>
+            </>
           ) : (
             <>
-              <Link href="/login" className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+              <Link href="/login" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-[#C62121] hover:bg-red-50 transition-colors">
                 Log in
               </Link>
-              <Link href="/register" className="block px-3 py-2 rounded-md text-base font-medium text-primary-red hover:bg-red-50 mt-2">
+              <Link href="/register" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-[#C62121] hover:bg-red-50 mt-2 transition-colors">
                 Join Now
               </Link>
             </>
           )}
-        </div>
-      )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }
