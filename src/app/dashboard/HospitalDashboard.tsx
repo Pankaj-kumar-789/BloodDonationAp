@@ -1,4 +1,4 @@
-import { Activity, CalendarCheck, Droplet, Building2, Plus, ArrowDownToLine, Droplets } from "lucide-react";
+import { Activity, CalendarCheck, Droplet, Building2, Plus, ArrowDownToLine, Droplets, FileX, Heart } from "lucide-react";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import PageTransition from "@/components/PageTransition";
@@ -98,18 +98,18 @@ export default async function HospitalDashboard({ session }: { session: any }) {
     <PageTransition className="max-w-7xl mx-auto space-y-6 pb-10">
       
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-2">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-8 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 mb-6 mt-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-black text-gray-900 flex items-center gap-2">
-            Welcome, {session.user.name} <span className="text-2xl">👋</span>
+          <h1 className="text-2xl md:text-3xl font-black text-gray-900 flex items-center gap-2 mb-2">
+            Welcome, {session.user.name} <span className="text-3xl inline-block animate-wave">👋</span>
           </h1>
-          <p className="text-gray-500 font-medium">Manage blood requests and inventory seamlessly.</p>
+          <p className="text-gray-500 font-medium text-[15px]">Manage blood requests and inventory seamlessly.</p>
         </div>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
-        <div className="bg-white rounded-[2rem] p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4">
+        <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
           <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center shrink-0 border border-red-100/50">
             <Activity className="w-6 h-6 text-primary-red" />
           </div>
@@ -119,7 +119,7 @@ export default async function HospitalDashboard({ session }: { session: any }) {
           </div>
         </div>
         
-        <div className="bg-white rounded-[2rem] p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4">
+        <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
           <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100/50">
             <CalendarCheck className="w-6 h-6 text-blue-500" />
           </div>
@@ -129,7 +129,7 @@ export default async function HospitalDashboard({ session }: { session: any }) {
           </div>
         </div>
 
-        <div className="bg-white rounded-[2rem] p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4">
+        <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
           <div className="w-12 h-12 rounded-full bg-orange-50 flex items-center justify-center shrink-0 border border-orange-100/50">
             <Droplets className="w-6 h-6 text-orange-500" />
           </div>
@@ -139,7 +139,7 @@ export default async function HospitalDashboard({ session }: { session: any }) {
           </div>
         </div>
 
-        <div className="bg-white rounded-[2rem] p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4">
+        <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
           <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center shrink-0 border border-red-100/50">
             <Building2 className="w-6 h-6 text-primary-red" />
           </div>
@@ -154,7 +154,7 @@ export default async function HospitalDashboard({ session }: { session: any }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         
         {/* Active Requests */}
-        <div className="bg-white rounded-[2rem] p-6 md:p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex flex-col h-full">
+        <div className="bg-white rounded-2xl p-6 md:p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex flex-col h-full hover:-translate-y-1 hover:shadow-lg transition-all">
           <div className="flex justify-between items-center mb-6">
             <h2 className="text-lg font-black text-gray-900">Active Requests</h2>
             <Link href="/dashboard/requests" className="text-[13px] font-bold text-primary-red hover:underline">
@@ -194,16 +194,18 @@ export default async function HospitalDashboard({ session }: { session: any }) {
                 })}
               </div>
             ) : (
-              <div className="h-full flex flex-col items-center justify-center py-8">
-                <p className="text-gray-400 font-medium mb-4">No active requests.</p>
-                <Link href="/emergency" className="text-sm font-bold text-primary-red">Raise a request</Link>
+              <div className="h-full flex flex-col items-center justify-center py-10 bg-gray-50 rounded-2xl border border-gray-100 border-dashed min-h-[220px]">
+                <FileX className="w-10 h-10 text-gray-300 mb-3" strokeWidth={1.5} />
+                <p className="text-gray-600 font-bold text-[15px]">No Active Requests</p>
+                <p className="text-gray-400 font-medium text-[13px] mt-1 mb-4">You have no active emergency requests.</p>
+                <Link href="/emergency" className="text-sm font-bold text-[#C62121] bg-red-50 hover:bg-red-100 px-4 py-2 rounded-xl transition-colors">Raise a request</Link>
               </div>
             )}
           </div>
         </div>
 
         {/* Blood Inventory (Donut Chart) */}
-        <div className="bg-white rounded-[2rem] p-6 md:p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex flex-col h-full">
+        <div className="bg-white rounded-2xl p-6 md:p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex flex-col h-full hover:-translate-y-1 hover:shadow-lg transition-all">
           <h2 className="text-lg font-black text-gray-900 mb-6">Blood Inventory</h2>
           
           <div className="flex-1 flex flex-col sm:flex-row items-center justify-center gap-8 lg:gap-12 py-4">
@@ -250,7 +252,7 @@ export default async function HospitalDashboard({ session }: { session: any }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Recent Donors */}
-        <div className="bg-white rounded-[2rem] p-6 md:p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] h-full">
+        <div className="bg-white rounded-2xl p-6 md:p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] h-full">
            <h2 className="text-lg font-black text-gray-900 mb-6">Recent Donors</h2>
            <div className="space-y-4">
              {recentDonors.length > 0 ? (
@@ -278,27 +280,27 @@ export default async function HospitalDashboard({ session }: { session: any }) {
                    </div>
                  )
                })
-             ) : (
-               <div className="flex flex-col items-center justify-center py-6">
-                 <p className="text-gray-400 font-medium text-sm">No recent donors.</p>
+              ) : (
+               <div className="flex flex-col items-center justify-center py-10 bg-gray-50 rounded-2xl border border-gray-100 border-dashed h-full min-h-[150px] mt-4">
+                 <Heart className="w-10 h-10 text-gray-300 mb-3" strokeWidth={1.5} />
+                 <p className="text-gray-600 font-bold text-[14px]">No Recent Donors</p>
                </div>
-             )}
+              )}
            </div>
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-white rounded-[2rem] p-6 md:p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] h-full">
+        <div className="bg-white rounded-2xl p-6 md:p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] h-full">
            <h2 className="text-lg font-black text-gray-900 mb-6">Quick Actions</h2>
-           
-           <div className="flex flex-col gap-4">
-             <Link href="/emergency" className="bg-[#C62121] hover:bg-red-800 text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-3 transition-colors shadow-sm w-full group">
+                      <div className="flex flex-col gap-4">
+             <Link href="/emergency" className="bg-gradient-to-r from-[#C62121] to-[#e53e3e] hover:brightness-110 text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_14px_0_rgb(198,33,33,0.39)] hover:shadow-[0_6px_20px_rgba(198,33,33,0.23)] hover:-translate-y-0.5 transition-all w-full group">
                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
                  <Droplet className="w-4 h-4 fill-white" />
                </div>
                Raise New Request
              </Link>
              
-             <Link href="/dashboard/blood-banks" className="bg-[#C62121] hover:bg-red-800 text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-3 transition-colors shadow-sm w-full group">
+             <Link href="/dashboard/blood-banks" className="bg-gradient-to-r from-[#C62121] to-[#e53e3e] hover:brightness-110 text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_14px_0_rgb(198,33,33,0.39)] hover:shadow-[0_6px_20px_rgba(198,33,33,0.23)] hover:-translate-y-0.5 transition-all w-full group">
                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">
                  <ArrowDownToLine className="w-4 h-4" />
                </div>

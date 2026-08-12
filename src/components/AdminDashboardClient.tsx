@@ -53,9 +53,17 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
 
   return (
     <PageTransition className="space-y-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Admin Dashboard</h1>
-        <button className="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-4 py-2 rounded-lg text-sm font-medium">Export Report</button>
+      {/* Header */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-8 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 mb-6 mt-4">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-black text-gray-900 flex items-center gap-2 mb-2">
+            Admin Overview <span className="text-3xl inline-block animate-wave">👋</span>
+          </h1>
+          <p className="text-gray-500 font-medium text-[15px]">Manage platform health and verifications.</p>
+        </div>
+        <button className="bg-gray-900 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:-translate-y-0.5 hover:shadow-lg transition-all mt-4 md:mt-0">
+          Export Report
+        </button>
       </div>
 
       <motion.div 
@@ -65,7 +73,7 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6"
       >
         {/* Total Users Card */}
-        <motion.div variants={itemVariants} className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-3xl p-5 md:p-6 text-white shadow-lg shadow-blue-900/20 relative overflow-hidden group">
+        <motion.div variants={itemVariants} className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl p-5 md:p-6 text-white shadow-md shadow-blue-900/20 relative overflow-hidden group hover:-translate-y-1 hover:shadow-xl transition-all cursor-pointer">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
             <Users className="w-24 h-24" />
           </div>
@@ -84,7 +92,7 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
         </motion.div>
 
         {/* Registered Donors Card */}
-        <motion.div variants={itemVariants} className="bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-3xl p-5 md:p-6 text-white shadow-lg shadow-emerald-900/20 relative overflow-hidden group">
+        <motion.div variants={itemVariants} className="bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-2xl p-5 md:p-6 text-white shadow-md shadow-emerald-900/20 relative overflow-hidden group hover:-translate-y-1 hover:shadow-xl transition-all cursor-pointer">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
             <ShieldCheck className="w-24 h-24" />
           </div>
@@ -103,7 +111,7 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
         </motion.div>
 
         {/* Verified Blood Banks */}
-        <motion.div variants={itemVariants} className="bg-gradient-to-br from-cyan-600 to-blue-700 rounded-3xl p-5 md:p-6 text-white shadow-lg shadow-cyan-900/20 relative overflow-hidden group">
+        <motion.div variants={itemVariants} className="bg-gradient-to-br from-cyan-600 to-blue-700 rounded-2xl p-5 md:p-6 text-white shadow-md shadow-cyan-900/20 relative overflow-hidden group hover:-translate-y-1 hover:shadow-xl transition-all cursor-pointer">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
             <Building className="w-24 h-24" />
           </div>
@@ -122,7 +130,7 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
         </motion.div>
 
         {/* Registered Hospitals */}
-        <motion.div variants={itemVariants} className="bg-gradient-to-br from-teal-500 to-teal-700 rounded-3xl p-5 md:p-6 text-white shadow-lg shadow-teal-900/20 relative overflow-hidden group">
+        <motion.div variants={itemVariants} className="bg-gradient-to-br from-teal-500 to-teal-700 rounded-2xl p-5 md:p-6 text-white shadow-md shadow-teal-900/20 relative overflow-hidden group hover:-translate-y-1 hover:shadow-xl transition-all cursor-pointer">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
             <Stethoscope className="w-24 h-24" />
           </div>
@@ -141,7 +149,7 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
         </motion.div>
 
         {/* Lives Saved Card */}
-        <motion.div variants={itemVariants} className="bg-gradient-to-br from-rose-500 to-red-700 rounded-3xl p-5 md:p-6 text-white shadow-lg shadow-red-900/20 relative overflow-hidden group">
+        <motion.div variants={itemVariants} className="bg-gradient-to-br from-rose-500 to-red-700 rounded-2xl p-5 md:p-6 text-white shadow-md shadow-red-900/20 relative overflow-hidden group hover:-translate-y-1 hover:shadow-xl transition-all cursor-pointer">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
             <Activity className="w-24 h-24" />
           </div>
@@ -160,7 +168,7 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
         </motion.div>
 
         {/* Total Revenue Card */}
-        <motion.div variants={itemVariants} className="bg-gradient-to-br from-violet-600 to-purple-800 rounded-3xl p-5 md:p-6 text-white shadow-lg shadow-purple-900/20 relative overflow-hidden group">
+        <motion.div variants={itemVariants} className="bg-gradient-to-br from-violet-600 to-purple-800 rounded-2xl p-5 md:p-6 text-white shadow-md shadow-purple-900/20 relative overflow-hidden group hover:-translate-y-1 hover:shadow-xl transition-all cursor-pointer">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
             <CreditCard className="w-24 h-24" />
           </div>
@@ -181,7 +189,7 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
 
       {/* Analytics Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-        <div className="bg-white rounded-3xl border border-gray-100 p-6 shadow-sm">
+        <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:-translate-y-1 hover:shadow-lg transition-all">
           <h2 className="text-lg font-bold text-gray-900 mb-6">User Growth (Last 7 Days)</h2>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
@@ -202,7 +210,7 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
           </div>
         </div>
 
-        <div className="bg-white rounded-3xl border border-gray-100 p-6 shadow-sm">
+        <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:-translate-y-1 hover:shadow-lg transition-all">
           <h2 className="text-lg font-bold text-gray-900 mb-6">Blood Group Distribution</h2>
           <div className="h-[300px] w-full flex items-center justify-center">
             {stats.bloodGroupData?.length > 0 ? (
@@ -238,8 +246,8 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
       </div>
 
       <div className="mt-8">
-        <h2 className="text-xl font-bold text-gray-900 mb-4">Pending Verifications</h2>
-        <div className="bg-white rounded-xl border border-gray-100 overflow-x-auto shadow-sm">
+        <h2 className="text-xl font-bold text-gray-900 mb-6">Pending Verifications</h2>
+        <div className="bg-white rounded-2xl border border-gray-100 overflow-x-auto shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
           <table className="w-full text-left text-sm text-gray-600">
             <thead className="bg-gray-50 border-b border-gray-100 text-gray-700">
               <tr>
@@ -276,7 +284,7 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
                       <button 
                         onClick={() => handleVerifyClick(org)}
                         disabled={verifyingId === org.id}
-                        className="text-white bg-primary-red hover:bg-red-600 px-4 py-1.5 rounded-lg font-medium transition-colors disabled:opacity-70 flex items-center gap-2 ml-auto"
+                        className="text-white bg-gradient-to-r from-[#C62121] to-[#e53e3e] hover:brightness-110 px-5 py-2 rounded-xl font-bold transition-all shadow-sm hover:shadow-md hover:-translate-y-0.5 disabled:opacity-70 flex items-center gap-2 ml-auto"
                       >
                         {verifyingId === org.id ? <Loader2 className="w-4 h-4 animate-spin" /> : "Verify"}
                       </button>
