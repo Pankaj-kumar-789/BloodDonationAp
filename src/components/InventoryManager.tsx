@@ -50,7 +50,7 @@ export default function InventoryManager({ initialInventory }: { initialInventor
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {inventory.filter(i => i.type === activeTab).map(item => (
-          <div key={item.group} className="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm flex flex-col items-center relative overflow-hidden group hover:border-red-200 transition-colors">
+          <div key={item.group} className="bg-white rounded-2xl border border-gray-200 p-6 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex flex-col items-center relative overflow-hidden group hover:border-red-200 hover:-translate-y-1 hover:shadow-lg transition-all">
             {loading === `${item.group}-${item.type}` && (
             <div className="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex items-center justify-center">
               <Loader2 className="w-6 h-6 text-primary-red animate-spin" />
@@ -68,13 +68,13 @@ export default function InventoryManager({ initialInventory }: { initialInventor
             <button 
               onClick={() => handleUpdate(item.group, item.units - 1, item.type)}
               disabled={item.units === 0}
-              className="flex-1 bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed text-gray-700 py-3 rounded-xl flex justify-center transition-colors"
+              className="flex-1 bg-gray-100 hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed text-gray-700 py-3 rounded-xl flex justify-center transition-all hover:-translate-y-0.5 hover:shadow-sm"
             >
               <Minus className="w-5 h-5" />
             </button>
             <button 
               onClick={() => handleUpdate(item.group, item.units + 1, item.type)}
-              className="flex-1 bg-red-50 hover:bg-red-100 text-primary-red py-3 rounded-xl flex justify-center transition-colors"
+              className="flex-1 bg-red-50 hover:bg-red-100 text-primary-red py-3 rounded-xl flex justify-center transition-all hover:-translate-y-0.5 hover:shadow-sm"
             >
               <Plus className="w-5 h-5" />
             </button>

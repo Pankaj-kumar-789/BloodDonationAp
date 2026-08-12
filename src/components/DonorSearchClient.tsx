@@ -165,7 +165,7 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
                       variants={itemVariants}
                       key={donor.id} 
                       onClick={() => setSelectedDonorId(donor.id)}
-                      className={`border rounded-2xl p-4 shadow-sm hover:shadow-md transition-all cursor-pointer 
+                      className={`border rounded-2xl p-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer 
                         ${isSelected ? 'border-primary-red ring-1 ring-primary-red bg-red-50/50 ' : 'bg-white  border-gray-100 '} 
                         ${!isAvailable ? 'opacity-75 grayscale-[20%]' : ''}`}
                     >
@@ -265,28 +265,28 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
                 </div>
 
                 <div className="px-6 md:px-10 pb-10">
-                  <div className="flex flex-col md:flex-row justify-between items-start md:items-end relative z-10 mb-8 -mt-20 gap-6">
-                    <div className="flex flex-col sm:flex-row items-start sm:items-end gap-6">
-                      <div className="relative">
+                  <div className="flex flex-col xl:flex-row justify-between items-start xl:items-end relative z-10 mb-8 -mt-16 sm:-mt-20 gap-6 w-full">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-end gap-5 sm:gap-6 flex-1 min-w-0 w-full">
+                      <div className="relative shrink-0">
                         {selectedDonor.image ? (
-                          <img src={selectedDonor.image} alt={selectedDonor.name} className="w-32 h-32 md:w-40 md:h-40 rounded-3xl object-cover border-8 border-white  shadow-xl bg-white " />
+                          <img src={selectedDonor.image} alt={selectedDonor.name} className="w-24 h-24 sm:w-32 sm:h-32 rounded-3xl object-cover border-8 border-white  shadow-xl bg-white " />
                         ) : (
-                          <div className="w-32 h-32 md:w-40 md:h-40 rounded-3xl bg-gray-50  border-8 border-white  shadow-xl flex items-center justify-center text-gray-300  shrink-0">
+                          <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-3xl bg-gray-50  border-8 border-white  shadow-xl flex items-center justify-center text-gray-300  shrink-0">
                             <UserIcon className="w-16 h-16" />
                           </div>
                         )}
                         <div className={`absolute bottom-2 right-2 w-6 h-6 rounded-full border-4 border-white  ${selectedDonor.donorProfile?.isAvailable ?? true ? 'bg-green-500' : 'bg-gray-400'}`}></div>
                       </div>
-                      <div className="mb-2 md:mb-4">
-                        <h2 className="text-3xl md:text-4xl font-black text-gray-900  tracking-tight">{selectedDonor.name}</h2>
-                        <div className="flex items-center text-gray-500  gap-2 mt-2 font-medium text-lg">
-                          <MapPin className="w-5 h-5 text-primary-red" /> 
-                          {selectedDonor.donorProfile?.city || "Chandigarh"}, {selectedDonor.donorProfile?.state || "India"}
+                      <div className="mb-1 sm:mb-2 xl:mb-4 flex-1 min-w-0">
+                        <h2 className="text-2xl sm:text-3xl xl:text-4xl font-black text-gray-900 tracking-tight leading-tight">{selectedDonor.name}</h2>
+                        <div className="flex items-center text-gray-500 gap-2 mt-1 sm:mt-2 font-medium text-base sm:text-lg">
+                          <MapPin className="w-4 h-4 sm:w-5 sm:h-5 text-primary-red shrink-0" /> 
+                          <span className="truncate">{selectedDonor.donorProfile?.city || "Chandigarh"}, {selectedDonor.donorProfile?.state || "India"}</span>
                         </div>
                       </div>
                     </div>
                     
-                    <div className="mb-2 md:mb-4 w-full md:w-auto shrink-0">
+                    <div className="w-full xl:w-auto shrink-0 mt-2 xl:mt-0">
                       {selectedDonor.donorProfile?.isAvailable ?? true ? (
                          isSelectedUnlocked ? (
                            <div className="bg-green-50  text-green-700  px-6 py-3.5 rounded-2xl border border-green-200  flex items-center justify-center md:justify-start gap-2 font-bold shadow-sm text-lg w-full">

@@ -114,7 +114,7 @@ export default function Sidebar({ session }: { session: any }) {
           return (
             <Link key={item.name} href={item.path}>
               <div 
-                className={`flex items-center justify-between py-3.5 px-4 rounded-xl cursor-pointer transition-all mb-1 ${
+                className={`flex items-center ${isExpanded ? 'justify-between px-4' : 'justify-center px-0'} py-3.5 rounded-xl cursor-pointer transition-all mb-1 ${
                   isActive 
                     ? 'bg-[#C62121] text-white font-bold shadow-md shadow-red-200' 
                     : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900 font-semibold'

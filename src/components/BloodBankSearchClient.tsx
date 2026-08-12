@@ -113,7 +113,7 @@ export default function BloodBankSearchClient({ bloodBanks }: { bloodBanks: any[
               const hasStock = totalUnits > 0;
 
               return (
-                <motion.div variants={itemVariants} key={bank.id} className="bg-white  rounded-3xl border border-gray-100  shadow-sm overflow-hidden hover:shadow-lg  transition-all transform hover:-translate-y-1">
+                <motion.div variants={itemVariants} key={bank.id} className="bg-white  rounded-2xl border border-gray-100  shadow-[0_2px_10px_rgba(0,0,0,0.02)] overflow-hidden hover:shadow-lg transition-all transform hover:-translate-y-1">
                   <div className={`p-6 border-b ${hasStock ? 'bg-red-50/30  border-red-50 ' : 'bg-gray-50/50  border-gray-100 '}`}>
                     <div className="flex justify-between items-start">
                       <div className="flex items-center gap-3">

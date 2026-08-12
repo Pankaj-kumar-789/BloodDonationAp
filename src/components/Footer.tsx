@@ -73,16 +73,16 @@ export default function Footer() {
           
           {/* Emergency Card */}
           <div className="md:col-span-4 lg:col-span-3">
-            <div className="bg-gradient-to-b from-red-50 to-white p-6 rounded-2xl border border-red-100 shadow-sm shadow-red-50 relative overflow-hidden group">
-              <div className="absolute -right-4 -top-4 w-24 h-24 bg-red-100 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
-              <h3 className="font-bold text-gray-900 mb-2 relative z-10 flex items-center gap-2">
-                <Activity className="w-5 h-5 text-primary-red animate-pulse" />
+            <div className="bg-gradient-to-br from-[#C62121] to-[#991b1b] p-6 md:p-8 rounded-2xl border border-red-800 shadow-[0_10px_30px_rgba(198,33,33,0.2)] relative overflow-hidden group hover:-translate-y-1 transition-all">
+              <div className="absolute -right-4 -top-4 w-32 h-32 bg-white rounded-full opacity-10 group-hover:scale-150 transition-transform duration-700 pointer-events-none"></div>
+              <h3 className="font-black text-white mb-2 relative z-10 flex items-center gap-2 text-lg">
+                <Activity className="w-5 h-5 text-white animate-pulse" />
                 Need blood urgently?
               </h3>
-              <p className="text-sm text-gray-600 mb-5 relative z-10 leading-relaxed">
+              <p className="text-sm text-red-100 mb-6 relative z-10 leading-relaxed font-medium">
                 Create an emergency request and notify nearby donors and hospitals instantly.
               </p>
-              <Link href="/emergency" className="relative z-10 block w-full text-center bg-primary-red hover:bg-red-700 text-white font-bold py-3 rounded-xl transition-all shadow-md shadow-red-200 transform hover:-translate-y-0.5">
+              <Link href="/emergency" className="relative z-10 block w-full text-center bg-white hover:bg-gray-50 text-[#C62121] font-black py-3.5 rounded-xl transition-all shadow-md transform hover:-translate-y-0.5">
                 Create Request
               </Link>
             </div>

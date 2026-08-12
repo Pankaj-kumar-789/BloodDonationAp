@@ -37,7 +37,7 @@ export default async function ManageRequestsPage() {
 
         <div className="space-y-4">
           {requests.length > 0 ? requests.map((req) => (
-            <div key={req.id} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-all flex flex-col md:flex-row gap-6 md:items-center justify-between">
+            <div key={req.id} className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:shadow-lg hover:-translate-y-1 transition-all flex flex-col md:flex-row gap-6 md:items-center justify-between">
               
               <div className="flex items-center gap-6">
                 <div className="w-16 h-16 rounded-2xl bg-red-50 text-[#C62121] font-black flex items-center justify-center text-xl border border-red-100 shadow-inner shrink-0">

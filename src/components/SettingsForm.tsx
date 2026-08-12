@@ -46,7 +46,7 @@ export function SettingsForm({ user, profile }: { user: any, profile: any }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-8">
       {/* Profile Image Section */}
-      <div className="flex flex-col sm:flex-row items-center gap-6 p-6 bg-white border border-gray-100 rounded-3xl shadow-sm">
+      <div className="flex flex-col sm:flex-row items-center gap-6 p-6 bg-white border border-gray-100 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:-translate-y-0.5 hover:shadow-md transition-all">
         <div className="relative group cursor-pointer" onClick={handleImageClick}>
           <div className="w-24 h-24 rounded-full overflow-hidden bg-gray-100 border-4 border-white shadow-md flex items-center justify-center">
             {imagePreview ? (
@@ -78,7 +78,7 @@ export function SettingsForm({ user, profile }: { user: any, profile: any }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Basic Info */}
-        <div className="space-y-5 bg-white border border-gray-100 p-6 rounded-3xl shadow-sm">
+        <div className="space-y-5 bg-white border border-gray-100 p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:-translate-y-0.5 hover:shadow-md transition-all">
           <h3 className="font-bold text-gray-900 border-b border-gray-50 pb-4">Basic Information</h3>
           
           <div>
@@ -100,7 +100,7 @@ export function SettingsForm({ user, profile }: { user: any, profile: any }) {
 
         {/* Role Specific Info */}
         {(user.role === "DONOR" || user.role === "HOSPITAL" || user.role === "BLOOD_BANK") && (
-          <div className="space-y-5 bg-white border border-gray-100 p-6 rounded-3xl shadow-sm relative overflow-hidden">
+          <div className="space-y-5 bg-white border border-gray-100 p-6 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:-translate-y-0.5 hover:shadow-md transition-all relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-red-50 rounded-full blur-3xl -mr-10 -mt-10 opacity-50"></div>
             <h3 className="font-bold text-gray-900 border-b border-gray-50 pb-4 relative z-10">
               {user.role === "DONOR" ? "Donor Details" : user.role === "HOSPITAL" ? "Hospital Details" : "Blood Bank Details"}
@@ -179,7 +179,7 @@ export function SettingsForm({ user, profile }: { user: any, profile: any }) {
         <button 
           type="submit" 
           disabled={loading}
-          className="bg-primary-red hover:bg-red-700 text-white font-medium py-3 px-8 rounded-xl transition-colors shadow-md shadow-red-200 flex items-center gap-2"
+          className="bg-primary-red hover:bg-red-700 text-white font-medium py-3 px-8 rounded-xl transition-all shadow-md shadow-red-200 hover:shadow-lg hover:-translate-y-0.5 flex items-center gap-2"
         >
           {loading && <Loader2 className="w-5 h-5 animate-spin" />}
           {loading ? "Saving Changes..." : "Save Changes"}
