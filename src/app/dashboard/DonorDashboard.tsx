@@ -10,7 +10,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/prisma";
 import PageTransition from "@/components/PageTransition";
-import promoImg from "../../../public/assets/donor_promo.jpg";
+import promoImg from "../../../public/assets/hd_donor_promo.jpg";
 
 export default async function DonorDashboard({ session }: { session: any }) {
   const profile = await prisma.donorProfile.findUnique({
