@@ -8,6 +8,11 @@ export default async function DashboardPage() {
   const session = await auth();
   const role = session?.user?.role;
   
+  if (role === "ADMIN") {
+    const { redirect } = await import("next/navigation");
+    redirect("/dashboard/admin");
+  }
+  
   if (role === "DONOR") return <DonorDashboard session={session} />;
   if (role === "HOSPITAL") return <HospitalDashboard session={session} />;
   if (role === "BLOOD_BANK") return <BloodBankDashboard session={session} />;

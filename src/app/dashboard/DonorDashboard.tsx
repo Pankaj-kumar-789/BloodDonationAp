@@ -70,7 +70,7 @@ export default async function DonorDashboard({ session }: { session: any }) {
       </div>
 
       {/* Stats Row */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
          {/* Total Donations */}
          <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-5">
             <div className="w-[52px] h-[52px] rounded-full bg-red-50 flex items-center justify-center shrink-0 border border-red-100/50">

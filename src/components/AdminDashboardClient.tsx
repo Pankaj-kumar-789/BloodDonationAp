@@ -62,118 +62,118 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
         variants={containerVariants}
         initial="hidden"
         animate="show"
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6"
       >
         {/* Total Users Card */}
-        <motion.div variants={itemVariants} className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-3xl p-6 text-white shadow-lg shadow-blue-900/20 relative overflow-hidden group">
+        <motion.div variants={itemVariants} className="bg-gradient-to-br from-blue-600 to-blue-800 rounded-3xl p-5 md:p-6 text-white shadow-lg shadow-blue-900/20 relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
             <Users className="w-24 h-24" />
           </div>
           <div className="relative z-10">
             <div className="flex justify-between items-center mb-4">
-              <p className="text-blue-100 font-medium">Total Users</p>
+              <p className="text-blue-100 font-medium text-sm md:text-base whitespace-nowrap">Total Users</p>
               <div className="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
                 <Users className="w-5 h-5 text-white" />
               </div>
             </div>
-            <h3 className="text-4xl font-black mb-1">{stats.totalUsers?.toLocaleString() || 0}</h3>
-            <p className="text-sm text-blue-200 flex items-center gap-1 font-medium">
-              <span className="text-white bg-white/20 px-1.5 py-0.5 rounded text-xs">Platform</span> Active
+            <h3 className="text-3xl md:text-4xl font-black mb-1">{stats.totalUsers?.toLocaleString() || 0}</h3>
+            <p className="text-xs md:text-sm text-blue-200 flex items-center gap-1 font-medium">
+              <span className="text-white bg-white/20 px-1.5 py-0.5 rounded text-[10px] md:text-xs">Platform</span> Active
             </p>
           </div>
         </motion.div>
 
         {/* Registered Donors Card */}
-        <motion.div variants={itemVariants} className="bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-3xl p-6 text-white shadow-lg shadow-emerald-900/20 relative overflow-hidden group">
+        <motion.div variants={itemVariants} className="bg-gradient-to-br from-emerald-500 to-emerald-700 rounded-3xl p-5 md:p-6 text-white shadow-lg shadow-emerald-900/20 relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
             <ShieldCheck className="w-24 h-24" />
           </div>
           <div className="relative z-10">
             <div className="flex justify-between items-center mb-4">
-              <p className="text-emerald-100 font-medium">Registered Donors</p>
+              <p className="text-emerald-100 font-medium text-sm md:text-base whitespace-nowrap">Registered Donors</p>
               <div className="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
                 <ShieldCheck className="w-5 h-5 text-white" />
               </div>
             </div>
-            <h3 className="text-4xl font-black mb-1">{stats.totalDonors?.toLocaleString() || 0}</h3>
-            <p className="text-sm text-emerald-200 flex items-center gap-1 font-medium">
-              <span className="text-white bg-white/20 px-1.5 py-0.5 rounded text-xs">Ready</span> to donate
+            <h3 className="text-3xl md:text-4xl font-black mb-1">{stats.totalDonors?.toLocaleString() || 0}</h3>
+            <p className="text-xs md:text-sm text-emerald-200 flex items-center gap-1 font-medium">
+              <span className="text-white bg-white/20 px-1.5 py-0.5 rounded text-[10px] md:text-xs">Ready</span> to donate
             </p>
           </div>
         </motion.div>
 
         {/* Verified Blood Banks */}
-        <motion.div variants={itemVariants} className="bg-gradient-to-br from-cyan-600 to-blue-700 rounded-3xl p-6 text-white shadow-lg shadow-cyan-900/20 relative overflow-hidden group">
+        <motion.div variants={itemVariants} className="bg-gradient-to-br from-cyan-600 to-blue-700 rounded-3xl p-5 md:p-6 text-white shadow-lg shadow-cyan-900/20 relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
             <Building className="w-24 h-24" />
           </div>
           <div className="relative z-10">
             <div className="flex justify-between items-center mb-4">
-              <p className="text-cyan-100 font-medium">Verified Blood Banks</p>
+              <p className="text-cyan-100 font-medium text-sm md:text-base whitespace-nowrap">Verified Blood Banks</p>
               <div className="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
                 <Building className="w-5 h-5 text-white" />
               </div>
             </div>
-            <h3 className="text-4xl font-black mb-1">{stats.verifiedBloodBanks?.toLocaleString() || 0}</h3>
-            <p className="text-sm text-cyan-200 flex items-center gap-1 font-medium">
-              <span className="text-white bg-white/20 px-1.5 py-0.5 rounded text-xs">Trusted</span> partners
+            <h3 className="text-3xl md:text-4xl font-black mb-1">{stats.verifiedBloodBanks?.toLocaleString() || 0}</h3>
+            <p className="text-xs md:text-sm text-cyan-200 flex items-center gap-1 font-medium">
+              <span className="text-white bg-white/20 px-1.5 py-0.5 rounded text-[10px] md:text-xs">Trusted</span> partners
             </p>
           </div>
         </motion.div>
 
         {/* Registered Hospitals */}
-        <motion.div variants={itemVariants} className="bg-gradient-to-br from-teal-500 to-teal-700 rounded-3xl p-6 text-white shadow-lg shadow-teal-900/20 relative overflow-hidden group">
+        <motion.div variants={itemVariants} className="bg-gradient-to-br from-teal-500 to-teal-700 rounded-3xl p-5 md:p-6 text-white shadow-lg shadow-teal-900/20 relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
             <Stethoscope className="w-24 h-24" />
           </div>
           <div className="relative z-10">
             <div className="flex justify-between items-center mb-4">
-              <p className="text-teal-100 font-medium">Registered Hospitals</p>
+              <p className="text-teal-100 font-medium text-sm md:text-base whitespace-nowrap">Registered Hospitals</p>
               <div className="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
                 <Stethoscope className="w-5 h-5 text-white" />
               </div>
             </div>
-            <h3 className="text-4xl font-black mb-1">{stats.registeredHospitals?.toLocaleString() || 0}</h3>
-            <p className="text-sm text-teal-200 flex items-center gap-1 font-medium">
-              <span className="text-white bg-white/20 px-1.5 py-0.5 rounded text-xs">Network</span> hospitals
+            <h3 className="text-3xl md:text-4xl font-black mb-1">{stats.registeredHospitals?.toLocaleString() || 0}</h3>
+            <p className="text-xs md:text-sm text-teal-200 flex items-center gap-1 font-medium">
+              <span className="text-white bg-white/20 px-1.5 py-0.5 rounded text-[10px] md:text-xs">Network</span> hospitals
             </p>
           </div>
         </motion.div>
 
         {/* Lives Saved Card */}
-        <motion.div variants={itemVariants} className="bg-gradient-to-br from-rose-500 to-red-700 rounded-3xl p-6 text-white shadow-lg shadow-red-900/20 relative overflow-hidden group">
+        <motion.div variants={itemVariants} className="bg-gradient-to-br from-rose-500 to-red-700 rounded-3xl p-5 md:p-6 text-white shadow-lg shadow-red-900/20 relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
             <Activity className="w-24 h-24" />
           </div>
           <div className="relative z-10">
             <div className="flex justify-between items-center mb-4">
-              <p className="text-red-100 font-medium">Lives Saved</p>
+              <p className="text-red-100 font-medium text-sm md:text-base whitespace-nowrap">Lives Saved</p>
               <div className="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
                 <Activity className="w-5 h-5 text-white" />
               </div>
             </div>
-            <h3 className="text-4xl font-black mb-1">{stats.livesSaved?.toLocaleString() || 0}</h3>
-            <p className="text-sm text-red-200 flex items-center gap-1 font-medium">
-              <span className="text-white bg-white/20 px-1.5 py-0.5 rounded text-xs">Impact</span> generated
+            <h3 className="text-3xl md:text-4xl font-black mb-1">{stats.livesSaved?.toLocaleString() || 0}</h3>
+            <p className="text-xs md:text-sm text-red-200 flex items-center gap-1 font-medium">
+              <span className="text-white bg-white/20 px-1.5 py-0.5 rounded text-[10px] md:text-xs">Impact</span> generated
             </p>
           </div>
         </motion.div>
 
         {/* Total Revenue Card */}
-        <motion.div variants={itemVariants} className="bg-gradient-to-br from-violet-600 to-purple-800 rounded-3xl p-6 text-white shadow-lg shadow-purple-900/20 relative overflow-hidden group">
+        <motion.div variants={itemVariants} className="bg-gradient-to-br from-violet-600 to-purple-800 rounded-3xl p-5 md:p-6 text-white shadow-lg shadow-purple-900/20 relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-110 transition-transform duration-500">
             <CreditCard className="w-24 h-24" />
           </div>
           <div className="relative z-10">
             <div className="flex justify-between items-center mb-4">
-              <p className="text-purple-100 font-medium">Total Revenue</p>
+              <p className="text-purple-100 font-medium text-sm md:text-base whitespace-nowrap">Total Revenue</p>
               <div className="bg-white/20 p-2 rounded-xl backdrop-blur-sm">
                 <CreditCard className="w-5 h-5 text-white" />
               </div>
             </div>
-            <h3 className="text-4xl font-black mb-1">₹{stats.totalRevenue?.toLocaleString() || 0}</h3>
-            <p className="text-sm text-purple-200 flex items-center gap-1 font-medium">
-              <span className="text-white bg-white/20 px-1.5 py-0.5 rounded text-xs">Updated</span> just now
+            <h3 className="text-3xl md:text-4xl font-black mb-1">₹{stats.totalRevenue?.toLocaleString() || 0}</h3>
+            <p className="text-xs md:text-sm text-purple-200 flex items-center gap-1 font-medium">
+              <span className="text-white bg-white/20 px-1.5 py-0.5 rounded text-[10px] md:text-xs">Updated</span> just now
             </p>
           </div>
         </motion.div>

@@ -42,7 +42,9 @@ export default function Sidebar({ session }: { session: any }) {
   ];
 
   if (session) {
-    menuItems.push({ name: "Dashboard", icon: <LayoutDashboard className="w-5 h-5" />, path: "/dashboard", exact: true });
+    if (session.user.role !== "ADMIN") {
+      menuItems.push({ name: "Dashboard", icon: <LayoutDashboard className="w-5 h-5" />, path: "/dashboard", exact: true });
+    }
     
     if (session.user.role === "DONOR") {
       menuItems.push(
