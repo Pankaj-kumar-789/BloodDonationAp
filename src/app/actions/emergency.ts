@@ -72,9 +72,12 @@ export async function createEmergencyRequestAction(formData: FormData) {
       }
     });
 
-    // Broadcast notification to all local donors
+    // Broadcast notification to all available donors globally (excluding the creator)
     const localDonors = await prisma.donorProfile.findMany({
-      where: { city: { equals: city, mode: "insensitive" }, isAvailable: true },
+      where: { 
+        isAvailable: true,
+        userId: { not: session.user.id }
+      },
       select: { userId: true }
     });
 
