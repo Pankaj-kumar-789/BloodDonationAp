@@ -10,6 +10,17 @@
   --warning-orange: #F59E0B;
 }
 
+:root.dark {
+  --background: #020617; /* Tailwind slate-950 */
+  --foreground: #F8FAFC; /* Tailwind slate-50 */
+  
+  --primary-red: #EF4444; /* Brighter red for dark mode contrast */
+  --light-red: #450a0a; /* Darker red tint for background highlights */
+}
+
+/* Tailwind v4 class-based dark mode config */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

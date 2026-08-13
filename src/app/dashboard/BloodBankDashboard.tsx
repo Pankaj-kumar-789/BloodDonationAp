@@ -65,56 +65,56 @@ export default async function BloodBankDashboard({ session }: { session: any }) 
     <div className="space-y-6 pb-10 w-full max-w-7xl mx-auto mt-4 px-4 sm:px-6">
       
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-8 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 dark:border-slate-800">
         <div>
-           <h1 className="text-3xl md:text-[2rem] font-bold text-gray-900 mb-2">Welcome, {session.user.name} <span className="inline-block animate-wave">👋</span></h1>
-           <p className="text-gray-500 font-medium text-[15px]">Manage your inventory and save lives.</p>
+           <h1 className="text-3xl md:text-[2rem] font-bold text-gray-900 dark:text-white mb-2">Welcome, {session.user.name} <span className="inline-block animate-wave">👋</span></h1>
+           <p className="text-gray-500 dark:text-gray-400 font-medium text-[15px]">Manage your inventory and save lives.</p>
         </div>
       </div>
 
       {/* Row 1: Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {/* Stat 1: Total Overall Units */}
-        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
-          <div className="w-12 h-12 rounded-full bg-red-50 text-[#C62121] flex items-center justify-center shrink-0">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 flex items-center gap-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 dark:border-slate-800 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
+          <div className="w-12 h-12 rounded-full bg-red-50 dark:bg-red-950/50 text-[#C62121] flex items-center justify-center shrink-0 border border-red-100 dark:border-red-900/50">
             <Droplet className="w-6 h-6 fill-current" />
           </div>
           <div>
-            <p className="text-xs font-bold text-gray-500 uppercase tracking-wide">Total Overall</p>
-            <h3 className="text-2xl font-black text-gray-900 mt-1">{totalUnits.toLocaleString()}</h3>
+            <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Total Overall</p>
+            <h3 className="text-2xl font-black text-gray-900 dark:text-white mt-1">{totalUnits.toLocaleString()}</h3>
           </div>
         </div>
 
         {/* Stat 2: Whole Blood */}
-        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
-          <div className="w-12 h-12 rounded-full bg-red-50 text-[#C62121] flex items-center justify-center shrink-0">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 flex items-center gap-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 dark:border-slate-800 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
+          <div className="w-12 h-12 rounded-full bg-red-50 dark:bg-red-950/50 text-[#C62121] flex items-center justify-center shrink-0 border border-red-100 dark:border-red-900/50">
             <Droplet className="w-6 h-6 fill-current" />
           </div>
           <div>
-            <p className="text-xs font-bold text-gray-500 uppercase tracking-wide">Whole Blood</p>
-            <h3 className="text-2xl font-black text-gray-900 mt-1">{totalBloodUnits.toLocaleString()}</h3>
+            <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Whole Blood</p>
+            <h3 className="text-2xl font-black text-gray-900 dark:text-white mt-1">{totalBloodUnits.toLocaleString()}</h3>
           </div>
         </div>
 
         {/* Stat 3: Platelets */}
-        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
-          <div className="w-12 h-12 rounded-full bg-orange-50 text-orange-500 flex items-center justify-center shrink-0">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 flex items-center gap-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 dark:border-slate-800 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
+          <div className="w-12 h-12 rounded-full bg-orange-50 dark:bg-orange-950/50 text-orange-500 flex items-center justify-center shrink-0 border border-orange-100 dark:border-orange-900/50">
             <Activity className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-xs font-bold text-gray-500 uppercase tracking-wide">Platelets</p>
-            <h3 className="text-2xl font-black text-gray-900 mt-1">{totalPlateletsUnits.toLocaleString()}</h3>
+            <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Platelets</p>
+            <h3 className="text-2xl font-black text-gray-900 dark:text-white mt-1">{totalPlateletsUnits.toLocaleString()}</h3>
           </div>
         </div>
 
         {/* Stat 4: Plasma */}
-        <div className="bg-white rounded-2xl p-6 flex items-center gap-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
-          <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center shrink-0">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 flex items-center gap-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 dark:border-slate-800 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
+          <div className="w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-950/50 text-blue-500 flex items-center justify-center shrink-0 border border-blue-100 dark:border-blue-900/50">
             <Droplet className="w-6 h-6" />
           </div>
           <div>
-            <p className="text-xs font-bold text-gray-500 uppercase tracking-wide">Plasma</p>
-            <h3 className="text-2xl font-black text-gray-900 mt-1">{totalPlasmaUnits.toLocaleString()}</h3>
+            <p className="text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wide">Plasma</p>
+            <h3 className="text-2xl font-black text-gray-900 dark:text-white mt-1">{totalPlasmaUnits.toLocaleString()}</h3>
           </div>
         </div>
       </div>
@@ -123,9 +123,9 @@ export default async function BloodBankDashboard({ session }: { session: any }) 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Left: Blood Inventory List */}
-        <div className="bg-white rounded-2xl p-6 md:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 dark:border-slate-800">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-lg font-black text-gray-900">Blood Inventory</h2>
+            <h2 className="text-lg font-black text-gray-900 dark:text-white">Blood Inventory</h2>
             <Link href="/dashboard/inventory" className="text-gray-400 hover:text-[#C62121] transition-colors">
               <Search className="w-4 h-4" />
             </Link>
@@ -133,18 +133,18 @@ export default async function BloodBankDashboard({ session }: { session: any }) 
           <div className="space-y-1 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
             {currentInventory.length > 0 ? (
               currentInventory.map((item, index) => (
-                <div key={item.group} className={`flex justify-between items-center py-3 ${index !== currentInventory.length - 1 ? 'border-b border-gray-50' : ''}`}>
+                <div key={item.group} className={`flex justify-between items-center py-3 ${index !== currentInventory.length - 1 ? 'border-b border-gray-50 dark:border-slate-800' : ''}`}>
                   <span className="font-black text-base text-[#C62121] w-12">{item.label}</span>
-                  <span className="font-bold text-sm text-gray-900">{item.units} <span className="text-gray-500 font-medium">Units</span></span>
+                  <span className="font-bold text-sm text-gray-900 dark:text-white">{item.units} <span className="text-gray-500 dark:text-gray-400 font-medium">Units</span></span>
                 </div>
               ))
             ) : (
               // Empty State
-              <div className="bg-gray-50 rounded-2xl p-6 text-center border border-gray-100 border-dashed flex flex-col items-center justify-center mt-4">
-                 <FileX className="w-10 h-10 text-gray-300 mb-3 mx-auto" strokeWidth={1.5} />
-                 <p className="text-gray-600 font-bold text-[14px]">No Inventory</p>
-                 <p className="text-gray-400 font-medium text-[12px] mt-1 mb-4">No blood units currently in inventory.</p>
-                 <Link href="/dashboard/inventory" className="text-sm font-bold text-[#C62121] bg-red-50 hover:bg-red-100 transition-colors px-4 py-2 rounded-xl">
+              <div className="bg-gray-50 dark:bg-slate-800/50 rounded-2xl p-6 text-center border border-gray-100 dark:border-slate-700 border-dashed flex flex-col items-center justify-center mt-4">
+                 <FileX className="w-10 h-10 text-gray-300 dark:text-gray-600 mb-3 mx-auto" strokeWidth={1.5} />
+                 <p className="text-gray-600 dark:text-gray-400 font-bold text-[14px]">No Inventory</p>
+                 <p className="text-gray-400 dark:text-gray-500 font-medium text-[12px] mt-1 mb-4">No blood units currently in inventory.</p>
+                 <Link href="/dashboard/inventory" className="text-sm font-bold text-[#C62121] bg-red-50 dark:bg-red-950/30 hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors px-4 py-2 rounded-xl">
                    Update Inventory
                  </Link>
               </div>
@@ -153,36 +153,36 @@ export default async function BloodBankDashboard({ session }: { session: any }) 
         </div>
 
         {/* Right: Recent Requests List */}
-        <div className="bg-white rounded-2xl p-6 md:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 dark:border-slate-800">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-lg font-black text-gray-900">Recent Requests</h2>
+            <h2 className="text-lg font-black text-gray-900 dark:text-white">Recent Requests</h2>
             <Link href="/dashboard/requests" className="text-xs font-bold text-[#C62121] hover:underline">
               View All
             </Link>
           </div>
           <div className="space-y-4">
             {recentRequests.length > 0 ? recentRequests.map((req) => (
-              <div key={req.id} className="flex items-center gap-4 p-4 rounded-2xl border border-gray-50 hover:bg-gray-50 transition-colors cursor-pointer">
-                <div className="w-12 h-12 rounded-xl bg-red-50 text-[#C62121] font-black flex items-center justify-center shrink-0 text-lg border border-red-100">
+              <div key={req.id} className="flex items-center gap-4 p-4 rounded-2xl border border-gray-50 dark:border-slate-800 hover:bg-gray-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer">
+                <div className="w-12 h-12 rounded-xl bg-red-50 dark:bg-red-950/50 text-[#C62121] font-black flex items-center justify-center shrink-0 text-lg border border-red-100 dark:border-red-900/50">
                   {req.bloodGroup.replace("_POS", "+").replace("_NEG", "-")}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3">
-                    <span className="font-bold text-sm text-gray-900 shrink-0">{req.units} {req.units === 1 ? 'Unit' : 'Units'}</span>
-                    <span className="text-sm font-bold text-gray-900 truncate">{req.patientName}</span>
-                    {req.isEmergency && <div className="w-2 h-2 rounded-full bg-red-500 shrink-0"></div>}
+                    <span className="font-bold text-sm text-gray-900 dark:text-white shrink-0">{req.units} {req.units === 1 ? 'Unit' : 'Units'}</span>
+                    <span className="text-sm font-bold text-gray-900 dark:text-white truncate">{req.patientName}</span>
+                    {req.isEmergency && <div className="w-2 h-2 rounded-full bg-red-500 shrink-0 glow-red"></div>}
                   </div>
-                  <p className="text-xs text-gray-500 font-medium truncate mt-0.5">{req.hospital}</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 font-medium truncate mt-0.5">{req.hospital}</p>
                 </div>
-                <div className="text-[11px] font-bold text-gray-400 shrink-0">
+                <div className="text-[11px] font-bold text-gray-400 dark:text-gray-500 shrink-0">
                   {getRelativeTime(req.createdAt)}
                 </div>
               </div>
             )) : (
-              <div className="bg-gray-50 rounded-2xl p-10 text-center border border-gray-100 border-dashed flex flex-col items-center justify-center h-full min-h-[220px]">
-                 <FileX className="w-10 h-10 text-gray-300 mb-3 mx-auto" strokeWidth={1.5} />
-                 <p className="text-gray-600 font-bold text-[15px]">No Pending Requests</p>
-                 <p className="text-gray-400 font-medium text-[13px] mt-1">There are no new blood requests right now.</p>
+              <div className="bg-gray-50 dark:bg-slate-800/50 rounded-2xl p-10 text-center border border-gray-100 dark:border-slate-700 border-dashed flex flex-col items-center justify-center h-full min-h-[220px]">
+                 <FileX className="w-10 h-10 text-gray-300 dark:text-gray-600 mb-3 mx-auto" strokeWidth={1.5} />
+                 <p className="text-gray-600 dark:text-gray-400 font-bold text-[15px]">No Pending Requests</p>
+                 <p className="text-gray-400 dark:text-gray-500 font-medium text-[13px] mt-1">There are no new blood requests right now.</p>
               </div>
             )}
           </div>
@@ -194,21 +194,21 @@ export default async function BloodBankDashboard({ session }: { session: any }) 
       <div className="grid grid-cols-1 lg:grid-cols-[2.5fr_1fr] gap-6">
         
         {/* Left: Chart */}
-        <div className="bg-white rounded-2xl p-6 md:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 flex flex-col h-full hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 dark:border-slate-800 flex flex-col h-full hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
           <div className="flex justify-between items-center mb-2">
-            <h2 className="text-lg font-black text-gray-900">Donations Today</h2>
-            <button className="text-xs font-bold text-[#C62121] bg-red-50 px-3 py-1 rounded-full flex items-center gap-1 hover:bg-red-100 transition-colors">
+            <h2 className="text-lg font-black text-gray-900 dark:text-white">Donations Today</h2>
+            <button className="text-xs font-bold text-[#C62121] bg-red-50 dark:bg-red-950/50 px-3 py-1 rounded-full flex items-center gap-1 hover:bg-red-100 dark:hover:bg-red-900/50 transition-colors border border-red-100 dark:border-red-900/50">
               View Report <ChevronRight className="w-3 h-3" />
             </button>
           </div>
-          <div className="flex-1 w-full min-h-[250px]">
+          <div className="flex-1 w-full min-h-[250px] dark:opacity-90 mix-blend-normal">
             <BloodBankChart />
           </div>
         </div>
 
         {/* Right: Quick Actions */}
-        <div className="bg-white rounded-2xl p-6 md:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 flex flex-col h-full">
-          <h2 className="text-lg font-black text-gray-900 mb-6">Quick Actions</h2>
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 dark:border-slate-800 flex flex-col h-full">
+          <h2 className="text-lg font-black text-gray-900 dark:text-white mb-6">Quick Actions</h2>
           <div className="flex flex-col gap-4 mt-auto">
             <Link href="/dashboard/inventory" className="w-full bg-gradient-to-r from-[#C62121] to-[#e53e3e] hover:brightness-110 text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_14px_0_rgb(198,33,33,0.39)] hover:shadow-[0_6px_20px_rgba(198,33,33,0.23)] hover:-translate-y-0.5 transition-all">
               <Droplet className="w-5 h-5 fill-current" />

@@ -98,54 +98,54 @@ export default async function HospitalDashboard({ session }: { session: any }) {
     <PageTransition className="max-w-7xl mx-auto space-y-6 pb-10">
       
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-8 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 mb-6 mt-4">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 dark:border-slate-800 mb-6 mt-4">
         <div>
-          <h1 className="text-2xl md:text-3xl font-black text-gray-900 flex items-center gap-2 mb-2">
+          <h1 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-white flex items-center gap-2 mb-2">
             Welcome, {session.user.name} <span className="text-3xl inline-block animate-wave">👋</span>
           </h1>
-          <p className="text-gray-500 font-medium text-[15px]">Manage blood requests and inventory seamlessly.</p>
+          <p className="text-gray-500 dark:text-gray-400 font-medium text-[15px]">Manage blood requests and inventory seamlessly.</p>
         </div>
       </div>
 
       {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
-        <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
-          <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center shrink-0 border border-red-100/50">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-gray-100 dark:border-slate-800 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
+          <div className="w-12 h-12 rounded-full bg-red-50 dark:bg-red-950/50 flex items-center justify-center shrink-0 border border-red-100/50 dark:border-red-900/50">
             <Activity className="w-6 h-6 text-primary-red" />
           </div>
           <div>
-            <p className="text-[12px] font-bold text-gray-400 uppercase tracking-wide mb-0.5">Active Requests</p>
-            <h3 className="text-3xl font-black text-gray-900 leading-none">{pad(activeRequests.length)}</h3>
+            <p className="text-[12px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wide mb-0.5">Active Requests</p>
+            <h3 className="text-3xl font-black text-gray-900 dark:text-white leading-none">{pad(activeRequests.length)}</h3>
           </div>
         </div>
         
-        <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
-          <div className="w-12 h-12 rounded-full bg-blue-50 flex items-center justify-center shrink-0 border border-blue-100/50">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-gray-100 dark:border-slate-800 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
+          <div className="w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-950/50 flex items-center justify-center shrink-0 border border-blue-100/50 dark:border-blue-900/50">
             <CalendarCheck className="w-6 h-6 text-blue-500" />
           </div>
           <div>
-            <p className="text-[12px] font-bold text-gray-400 uppercase tracking-wide mb-0.5">Fulfilled Requests</p>
-            <h3 className="text-3xl font-black text-gray-900 leading-none">{pad(fulfilledCount)}</h3>
+            <p className="text-[12px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wide mb-0.5">Fulfilled Requests</p>
+            <h3 className="text-3xl font-black text-gray-900 dark:text-white leading-none">{pad(fulfilledCount)}</h3>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
-          <div className="w-12 h-12 rounded-full bg-orange-50 flex items-center justify-center shrink-0 border border-orange-100/50">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-gray-100 dark:border-slate-800 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
+          <div className="w-12 h-12 rounded-full bg-orange-50 dark:bg-orange-950/50 flex items-center justify-center shrink-0 border border-orange-100/50 dark:border-orange-900/50">
             <Droplets className="w-6 h-6 text-orange-500" />
           </div>
           <div>
-            <p className="text-[12px] font-bold text-gray-400 uppercase tracking-wide mb-0.5">Blood Units in Stock</p>
-            <h3 className="text-3xl font-black text-gray-900 leading-none">{totalUnits}</h3>
+            <p className="text-[12px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wide mb-0.5">Blood Units in Stock</p>
+            <h3 className="text-3xl font-black text-gray-900 dark:text-white leading-none">{totalUnits}</h3>
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
-          <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center shrink-0 border border-red-100/50">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-gray-100 dark:border-slate-800 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex items-center gap-4 hover:-translate-y-1 hover:shadow-lg transition-all cursor-pointer">
+          <div className="w-12 h-12 rounded-full bg-red-50 dark:bg-red-950/50 flex items-center justify-center shrink-0 border border-red-100/50 dark:border-red-900/50">
             <Building2 className="w-6 h-6 text-primary-red" />
           </div>
           <div>
-            <p className="text-[12px] font-bold text-gray-400 uppercase tracking-wide mb-0.5">Departments</p>
-            <h3 className="text-3xl font-black text-gray-900 leading-none">12</h3>
+            <p className="text-[12px] font-bold text-gray-400 dark:text-gray-500 uppercase tracking-wide mb-0.5">Departments</p>
+            <h3 className="text-3xl font-black text-gray-900 dark:text-white leading-none">12</h3>
           </div>
         </div>
       </div>
@@ -154,9 +154,9 @@ export default async function HospitalDashboard({ session }: { session: any }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         
         {/* Active Requests */}
-        <div className="bg-white rounded-2xl p-6 md:p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex flex-col h-full hover:-translate-y-1 hover:shadow-lg transition-all">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 border border-gray-100 dark:border-slate-800 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex flex-col h-full hover:-translate-y-1 hover:shadow-lg transition-all">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-lg font-black text-gray-900">Active Requests</h2>
+            <h2 className="text-lg font-black text-gray-900 dark:text-white">Active Requests</h2>
             <Link href="/dashboard/requests" className="text-[13px] font-bold text-primary-red hover:underline">
               View All
             </Link>
@@ -172,45 +172,45 @@ export default async function HospitalDashboard({ session }: { session: any }) {
                   const timeStr = minsAgo < 60 ? `${minsAgo} min ago` : `${Math.floor(minsAgo/60)} hr ago`;
                   
                   return (
-                    <div key={req.id} className="flex items-center justify-between gap-4 pb-4 border-b border-gray-100 last:border-0 last:pb-0">
+                    <div key={req.id} className="flex items-center justify-between gap-4 pb-4 border-b border-gray-100 dark:border-slate-800 last:border-0 last:pb-0">
                       <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-2xl bg-red-50 text-primary-red font-black text-[15px] flex items-center justify-center shrink-0 border border-red-100">
+                        <div className="w-12 h-12 rounded-2xl bg-red-50 dark:bg-red-950/50 text-primary-red font-black text-[15px] flex items-center justify-center shrink-0 border border-red-100 dark:border-red-900/50">
                           {bgDisplay}
                         </div>
-                        <p className="font-bold text-[14px] text-gray-900">{req.units} Units</p>
+                        <p className="font-bold text-[14px] text-gray-900 dark:text-white">{req.units} Units</p>
                       </div>
                       
                       <div className="flex-1 text-center hidden sm:block">
-                        <p className="text-[13px] font-medium text-gray-500 truncate max-w-[200px] mx-auto">
+                        <p className="text-[13px] font-medium text-gray-500 dark:text-gray-400 truncate max-w-[200px] mx-auto">
                           {req.patientName} - {req.isEmergency ? 'Emergency' : 'Standard'}
                         </p>
                       </div>
 
                       <div className="text-right shrink-0">
-                         <p className="text-[12px] font-medium text-gray-400">{timeStr}</p>
+                         <p className="text-[12px] font-medium text-gray-400 dark:text-gray-500">{timeStr}</p>
                       </div>
                     </div>
                   )
                 })}
               </div>
             ) : (
-              <div className="h-full flex flex-col items-center justify-center py-10 bg-gray-50 rounded-2xl border border-gray-100 border-dashed min-h-[220px]">
-                <FileX className="w-10 h-10 text-gray-300 mb-3" strokeWidth={1.5} />
-                <p className="text-gray-600 font-bold text-[15px]">No Active Requests</p>
-                <p className="text-gray-400 font-medium text-[13px] mt-1 mb-4">You have no active emergency requests.</p>
-                <Link href="/emergency" className="text-sm font-bold text-[#C62121] bg-red-50 hover:bg-red-100 px-4 py-2 rounded-xl transition-colors">Raise a request</Link>
+              <div className="h-full flex flex-col items-center justify-center py-10 bg-gray-50 dark:bg-slate-800/50 rounded-2xl border border-gray-100 dark:border-slate-700 border-dashed min-h-[220px]">
+                <FileX className="w-10 h-10 text-gray-300 dark:text-gray-600 mb-3" strokeWidth={1.5} />
+                <p className="text-gray-600 dark:text-gray-400 font-bold text-[15px]">No Active Requests</p>
+                <p className="text-gray-400 dark:text-gray-500 font-medium text-[13px] mt-1 mb-4">You have no active emergency requests.</p>
+                <Link href="/emergency" className="text-sm font-bold text-[#C62121] bg-red-50 dark:bg-red-950/30 hover:bg-red-100 dark:hover:bg-red-900/50 px-4 py-2 rounded-xl transition-colors">Raise a request</Link>
               </div>
             )}
           </div>
         </div>
 
         {/* Blood Inventory (Donut Chart) */}
-        <div className="bg-white rounded-2xl p-6 md:p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex flex-col h-full hover:-translate-y-1 hover:shadow-lg transition-all">
-          <h2 className="text-lg font-black text-gray-900 mb-6">Blood Inventory</h2>
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 border border-gray-100 dark:border-slate-800 shadow-[0_2px_10px_rgba(0,0,0,0.02)] flex flex-col h-full hover:-translate-y-1 hover:shadow-lg transition-all">
+          <h2 className="text-lg font-black text-gray-900 dark:text-white mb-6">Blood Inventory</h2>
           
           <div className="flex-1 flex flex-col sm:flex-row items-center justify-center gap-8 lg:gap-12 py-4">
             {/* Chart */}
-            <div className="relative w-48 h-48">
+            <div className="relative w-48 h-48 dark:opacity-90 mix-blend-normal">
               <svg viewBox="-50 -50 100 100" className="w-full h-full transform -rotate-90">
                 {donutSegments.map((segment, idx) => (
                   <path
@@ -226,7 +226,7 @@ export default async function HospitalDashboard({ session }: { session: any }) {
               {/* Center Text */}
               <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                 <span className="text-[10px] font-bold text-gray-400 uppercase">Total</span>
-                <span className="text-2xl font-black text-gray-900 leading-none my-1">{totalUnits}</span>
+                <span className="text-2xl font-black text-gray-900 dark:text-white leading-none my-1">{totalUnits}</span>
                 <span className="text-[10px] font-bold text-gray-400 uppercase">Units</span>
               </div>
             </div>
@@ -237,9 +237,9 @@ export default async function HospitalDashboard({ session }: { session: any }) {
                 <div key={item.group} className="flex items-center justify-between gap-4 w-24">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: item.color }}></span>
-                    <span className="text-[13px] font-bold text-gray-700">{item.group}</span>
+                    <span className="text-[13px] font-bold text-gray-700 dark:text-gray-300">{item.group}</span>
                   </div>
-                  <span className="text-[13px] font-bold text-gray-900">{item.units}</span>
+                  <span className="text-[13px] font-bold text-gray-900 dark:text-white">{item.units}</span>
                 </div>
               ))}
             </div>
@@ -252,46 +252,46 @@ export default async function HospitalDashboard({ session }: { session: any }) {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
         {/* Recent Donors */}
-        <div className="bg-white rounded-2xl p-6 md:p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] h-full">
-           <h2 className="text-lg font-black text-gray-900 mb-6">Recent Donors</h2>
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 border border-gray-100 dark:border-slate-800 shadow-[0_2px_10px_rgba(0,0,0,0.02)] h-full">
+           <h2 className="text-lg font-black text-gray-900 dark:text-white mb-6">Recent Donors</h2>
            <div className="space-y-4">
              {recentDonors.length > 0 ? (
                recentDonors.map((req) => {
                  if (!req.acceptedBy) return null;
                  const bg = req.acceptedBy.donorProfile?.bloodGroup?.replace("_POS", "+").replace("_NEG", "-") || "-";
                  return (
-                   <div key={req.id} className="flex items-center justify-between gap-4 pb-4 border-b border-gray-100 last:border-0 last:pb-0">
+                   <div key={req.id} className="flex items-center justify-between gap-4 pb-4 border-b border-gray-100 dark:border-slate-800 last:border-0 last:pb-0">
                       <div className="flex items-center gap-4">
                         {req.acceptedBy.image ? (
                           <img src={req.acceptedBy.image} alt={req.acceptedBy.name} className="w-10 h-10 rounded-full object-cover shrink-0" />
                         ) : (
-                          <div className="w-10 h-10 rounded-full bg-gray-100 text-gray-600 font-black flex items-center justify-center shrink-0">
+                          <div className="w-10 h-10 rounded-full bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-300 font-black flex items-center justify-center shrink-0">
                             {req.acceptedBy.name?.charAt(0) || "D"}
                           </div>
                         )}
-                        <p className="font-bold text-[14px] text-gray-900">{req.acceptedBy.name}</p>
+                        <p className="font-bold text-[14px] text-gray-900 dark:text-white">{req.acceptedBy.name}</p>
                       </div>
-                      <div className="w-10 h-10 rounded-xl bg-gray-50 font-bold text-gray-700 flex items-center justify-center text-sm shrink-0">
+                      <div className="w-10 h-10 rounded-xl bg-gray-50 dark:bg-slate-800/50 font-bold text-gray-700 dark:text-gray-300 flex items-center justify-center text-sm shrink-0">
                          {bg}
                       </div>
-                      <p className="text-[12px] font-medium text-gray-400 text-right min-w-[80px]">
+                      <p className="text-[12px] font-medium text-gray-400 dark:text-gray-500 text-right min-w-[80px]">
                         {new Date(req.updatedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                       </p>
                    </div>
                  )
                })
               ) : (
-               <div className="flex flex-col items-center justify-center py-10 bg-gray-50 rounded-2xl border border-gray-100 border-dashed h-full min-h-[150px] mt-4">
-                 <Heart className="w-10 h-10 text-gray-300 mb-3" strokeWidth={1.5} />
-                 <p className="text-gray-600 font-bold text-[14px]">No Recent Donors</p>
+               <div className="flex flex-col items-center justify-center py-10 bg-gray-50 dark:bg-slate-800/50 rounded-2xl border border-gray-100 dark:border-slate-700 border-dashed h-full min-h-[150px] mt-4">
+                 <Heart className="w-10 h-10 text-gray-300 dark:text-gray-600 mb-3" strokeWidth={1.5} />
+                 <p className="text-gray-600 dark:text-gray-400 font-bold text-[14px]">No Recent Donors</p>
                </div>
               )}
            </div>
         </div>
 
         {/* Quick Actions */}
-        <div className="bg-white rounded-2xl p-6 md:p-8 border border-gray-100 shadow-[0_2px_10px_rgba(0,0,0,0.02)] h-full">
-           <h2 className="text-lg font-black text-gray-900 mb-6">Quick Actions</h2>
+        <div className="bg-white dark:bg-slate-900 rounded-2xl p-6 md:p-8 border border-gray-100 dark:border-slate-800 shadow-[0_2px_10px_rgba(0,0,0,0.02)] h-full">
+           <h2 className="text-lg font-black text-gray-900 dark:text-white mb-6">Quick Actions</h2>
                       <div className="flex flex-col gap-4">
              <Link href="/emergency" className="bg-gradient-to-r from-[#C62121] to-[#e53e3e] hover:brightness-110 text-white font-bold py-4 px-6 rounded-2xl flex items-center justify-center gap-3 shadow-[0_4px_14px_0_rgb(198,33,33,0.39)] hover:shadow-[0_6px_20px_rgba(198,33,33,0.23)] hover:-translate-y-0.5 transition-all w-full group">
                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors">

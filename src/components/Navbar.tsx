@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import logo from "@/assets/logo.png";
 import NotificationBell from "@/components/NotificationBell";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Navbar({ session, unreadCount = 0 }: { session: any, unreadCount?: number }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,7 +28,7 @@ export default function Navbar({ session, unreadCount = 0 }: { session: any, unr
   if (isAuthPage || !mounted) return null;
 
   return (
-    <nav className="bg-white border-b border-gray-100 sticky top-0 z-50 shadow-sm transition-colors shrink-0">
+    <nav className="bg-white dark:bg-slate-950 border-b border-gray-100 dark:border-slate-800 sticky top-0 z-50 shadow-sm transition-colors shrink-0">
       <div className="w-full px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20 md:h-24">
           <div className="flex items-center">
@@ -45,44 +46,46 @@ export default function Navbar({ session, unreadCount = 0 }: { session: any, unr
           {/* Desktop Menu - Only visible if Sidebar is NOT visible */}
           {!isSidebarVisible && (
             <div className="hidden md:flex md:items-center md:space-x-8">
-              <Link href="/" className="text-gray-900 hover:text-primary-red font-bold transition-colors border-b-2 border-primary-red pb-1">
+              <Link href="/" className="text-primary-red font-bold">
                 Home
               </Link>
-              <Link href="/donors" className="text-gray-600 hover:text-primary-red font-medium transition-colors">
+              <Link href="/search" className="text-gray-600 dark:text-gray-300 hover:text-primary-red dark:hover:text-primary-red font-medium transition-colors">
                 Donors
               </Link>
-              <Link href="/blood-banks" className="text-gray-600 hover:text-primary-red font-medium transition-colors">
+              <Link href="/blood-banks" className="text-gray-600 dark:text-gray-300 hover:text-primary-red dark:hover:text-primary-red font-medium transition-colors">
                 Blood Banks
               </Link>
-              <Link href="/hospitals" className="text-gray-600 hover:text-primary-red font-medium transition-colors">
+              <Link href="/hospitals" className="text-gray-600 dark:text-gray-300 hover:text-primary-red dark:hover:text-primary-red font-medium transition-colors">
                 Hospitals
               </Link>
-              <Link href="/requests" className="text-gray-600 hover:text-primary-red font-medium transition-colors">
+              <Link href="/requests" className="text-gray-600 dark:text-gray-300 hover:text-primary-red dark:hover:text-primary-red font-medium transition-colors">
                 Requests
               </Link>
-              <Link href="/events" className="text-gray-600 hover:text-primary-red font-medium transition-colors">
+              <Link href="/events" className="text-gray-600 dark:text-gray-300 hover:text-primary-red dark:hover:text-primary-red font-medium transition-colors">
                 Events
               </Link>
-              <Link href="/about" className="text-gray-600 hover:text-primary-red font-medium transition-colors">
+              <Link href="/about" className="text-gray-600 dark:text-gray-300 hover:text-primary-red dark:hover:text-primary-red font-medium transition-colors">
                 About Us
               </Link>
 
               {session ? (
                 <div className="flex items-center gap-4 ml-4">
+                  <ThemeToggle />
                   <NotificationBell initialUnreadCount={unreadCount} />
-                  <Link href="/dashboard" className="text-gray-900 font-medium hover:text-primary-red">
+                  <Link href="/dashboard" className="text-gray-900 dark:text-white font-medium hover:text-primary-red">
                     Dashboard
                   </Link>
                   <button 
                     onClick={() => logoutAction()}
-                    className="bg-gray-100 hover:bg-gray-200:bg-gray-700 text-gray-800 px-4 py-2 rounded-lg font-bold transition-colors"
+                    className="bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-800 dark:text-gray-200 px-4 py-2 rounded-lg font-bold transition-colors"
                   >
                     Log out
                   </button>
                 </div>
               ) : (
                 <div className="flex items-center gap-4 ml-4">
-                  <Link href="/login" className="text-primary-red font-bold border border-primary-red px-5 py-2 rounded-lg hover:bg-red-50:bg-red-900/20 transition-colors">
+                  <ThemeToggle />
+                  <Link href="/login" className="text-primary-red font-bold border border-primary-red px-5 py-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-950 transition-colors">
                     Login
                   </Link>
                   <Link href="/register" className="bg-primary-red hover:bg-red-700 text-white px-5 py-2 rounded-lg font-bold transition-colors shadow-sm">
@@ -101,7 +104,8 @@ export default function Navbar({ session, unreadCount = 0 }: { session: any, unr
             
 
             {session && (
-              <div className="flex items-center">
+              <div className="flex items-center gap-3">
+                <ThemeToggle />
                 <NotificationBell initialUnreadCount={unreadCount} />
               </div>
             )}
@@ -110,13 +114,14 @@ export default function Navbar({ session, unreadCount = 0 }: { session: any, unr
 
           {/* Mobile menu button */}
           <div className="flex items-center md:hidden gap-3">
+            <ThemeToggle />
             {session && (
               <NotificationBell initialUnreadCount={unreadCount} />
             )}
             
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="text-gray-500 hover:text-gray-700 focus:outline-none"
+              className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white focus:outline-none"
             >
               {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
@@ -132,45 +137,47 @@ export default function Navbar({ session, unreadCount = 0 }: { session: any, unr
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
-            className="md:hidden bg-white border-b border-gray-100 shadow-lg overflow-hidden"
+            className="md:hidden bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 shadow-lg overflow-hidden"
           >
             <div className="px-4 pt-2 pb-4 space-y-1">
-              <Link href="/search" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-[#C62121] hover:bg-red-50 transition-colors">
+              <Link href="/search" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-[#C62121] hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors">
                 Find Donors
               </Link>
-              <Link href="/emergency" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-[#C62121] hover:bg-red-50 transition-colors">
+              <Link href="/emergency" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-[#C62121] hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors">
                 Emergency Request
               </Link>
           {session ? (
              <>
-              <Link href="/dashboard" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+              <Link href="/dashboard" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-red hover:bg-gray-50 dark:hover:bg-slate-800">
                 Dashboard
               </Link>
               {session.user?.role === "USER" && (
                 <>
-                  <Link href="/dashboard/requests" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                  <Link href="/dashboard/requests" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-red hover:bg-gray-50 dark:hover:bg-slate-800">
                     My Requests
                   </Link>
-                  <Link href="/dashboard/blood-banks" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                  <Link href="/dashboard/blood-banks" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-red hover:bg-gray-50 dark:hover:bg-slate-800">
                     Blood Banks
                   </Link>
-                  <Link href="/dashboard/hospitals" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                  <Link href="/dashboard/hospitals" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-red hover:bg-gray-50 dark:hover:bg-slate-800">
                     Hospitals
                   </Link>
                 </>
               )}
               {session.user?.role === "DONOR" && (
                 <>
-                  <Link href="/dashboard/donations" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                  <Link href="/dashboard/donations" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-red hover:bg-gray-50 dark:hover:bg-slate-800">
                     My Donations
                   </Link>
-                  <Link href="/dashboard/appointments" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                  <Link href="/dashboard/appointments" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-red hover:bg-gray-50 dark:hover:bg-slate-800">
                     My Appointments
                   </Link>
-                  <Link href="/dashboard/certificates" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
-                    My Certificates
+                  <Link href="/" className="flex flex-col items-start gap-0.5" onClick={() => setIsOpen(false)}>
+              <div className="flex items-center gap-2">
+                <span className="text-2xl font-black tracking-tight text-gray-900 dark:text-white">Rakta<span className="text-primary-red">Setu</span></span>
+              </div>      My Certificates
                   </Link>
-                  <Link href="/dashboard/requests" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-primary-red hover:bg-gray-50">
+                  <Link href="/dashboard/requests" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary-red hover:bg-gray-50 dark:hover:bg-slate-800">
                     Requests
                   </Link>
                 </>

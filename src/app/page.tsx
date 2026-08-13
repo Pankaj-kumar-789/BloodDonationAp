@@ -35,7 +35,7 @@ export default async function Home() {
   const livesSaved = completedRequests * 3;
 
   return (
-    <div className="flex flex-col bg-[#FAFAFA] min-h-screen font-sans transition-colors">
+    <div className="flex flex-col bg-background min-h-screen font-sans transition-colors">
       
       {/* 1. Hero Section */}
       <section className="relative w-full overflow-hidden pt-16 lg:pt-28 pb-32">
@@ -52,9 +52,9 @@ export default async function Home() {
             
             {/* Left Content */}
             <div className="w-full lg:w-[45%] text-center lg:text-left pt-10">
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900 leading-[1.1] mb-6 tracking-tight">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold text-gray-900 dark:text-white leading-[1.1] mb-6 tracking-tight">
                 Give Blood, <br />
-                <span className="text-[#C62121]">Give Life</span>
+                <span className="text-[#C62121] dark:text-red-500">Give Life</span>
               </h1>
               <p className="text-lg sm:text-xl text-gray-500 mb-10 max-w-lg mx-auto lg:mx-0 leading-relaxed font-medium">
                 Your one donation can bring a smile to someone's face and hope to their life.
@@ -80,32 +80,32 @@ export default async function Home() {
               {/* Four Features */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 text-left">
                 <div className="flex flex-col items-center lg:items-start">
-                  <div className="w-12 h-12 rounded-full bg-red-50 border border-red-100 flex items-center justify-center mb-3">
+                  <div className="w-12 h-12 rounded-full bg-red-50 dark:bg-red-950/50 border border-red-100 dark:border-red-900/50 flex items-center justify-center mb-3">
                     <Droplet className="w-6 h-6 fill-[#C62121] text-[#C62121]" />
                   </div>
-                  <h4 className="font-bold text-gray-900 text-sm whitespace-nowrap">Save Lives</h4>
-                  <p className="text-[11px] text-gray-500 font-medium">Every drop counts</p>
+                  <h4 className="font-bold text-gray-900 dark:text-white text-sm whitespace-nowrap">Save Lives</h4>
+                  <p className="text-[11px] text-gray-500 dark:text-gray-400 font-medium">Every drop counts</p>
                 </div>
                 <div className="flex flex-col items-center lg:items-start">
-                  <div className="w-12 h-12 rounded-full bg-red-50 border border-red-100 flex items-center justify-center mb-3">
+                  <div className="w-12 h-12 rounded-full bg-red-50 dark:bg-red-950/50 border border-red-100 dark:border-red-900/50 flex items-center justify-center mb-3">
                     <ShieldCheck className="w-6 h-6 text-[#C62121]" />
                   </div>
-                  <h4 className="font-bold text-gray-900 text-sm whitespace-nowrap">Safe & Secure</h4>
-                  <p className="text-[11px] text-gray-500 font-medium">100% safe process</p>
+                  <h4 className="font-bold text-gray-900 dark:text-white text-sm whitespace-nowrap">Safe & Secure</h4>
+                  <p className="text-[11px] text-gray-500 dark:text-gray-400 font-medium">100% safe process</p>
                 </div>
                 <div className="flex flex-col items-center lg:items-start">
-                  <div className="w-12 h-12 rounded-full bg-red-50 border border-red-100 flex items-center justify-center mb-3">
+                  <div className="w-12 h-12 rounded-full bg-red-50 dark:bg-red-950/50 border border-red-100 dark:border-red-900/50 flex items-center justify-center mb-3">
                     <Users className="w-6 h-6 fill-[#C62121] text-[#C62121]" />
                   </div>
-                  <h4 className="font-bold text-gray-900 text-sm whitespace-nowrap">Verified Donors</h4>
-                  <p className="text-[11px] text-gray-500 font-medium">Trusted & verified</p>
+                  <h4 className="font-bold text-gray-900 dark:text-white text-sm whitespace-nowrap">Verified Donors</h4>
+                  <p className="text-[11px] text-gray-500 dark:text-gray-400 font-medium">Trusted & verified</p>
                 </div>
                 <div className="flex flex-col items-center lg:items-start">
-                  <div className="w-12 h-12 rounded-full bg-red-50 border border-red-100 flex items-center justify-center mb-3">
+                  <div className="w-12 h-12 rounded-full bg-red-50 dark:bg-red-950/50 border border-red-100 dark:border-red-900/50 flex items-center justify-center mb-3">
                     <Heart className="w-6 h-6 fill-[#C62121] text-[#C62121]" />
                   </div>
-                  <h4 className="font-bold text-gray-900 text-sm whitespace-nowrap">Be a Hero</h4>
-                  <p className="text-[11px] text-gray-500 font-medium">Make a difference</p>
+                  <h4 className="font-bold text-gray-900 dark:text-white text-sm whitespace-nowrap">Be a Hero</h4>
+                  <p className="text-[11px] text-gray-500 dark:text-gray-400 font-medium">Make a difference</p>
                 </div>
               </div>
             </div>
@@ -115,28 +115,28 @@ export default async function Home() {
               
               <div className="relative w-full max-w-[800px] h-[500px]">
                 {/* Floating Badges */}
-                <div className="absolute top-10 left-10 z-20 bg-white p-3 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex items-center gap-3 animate-[float_4s_ease-in-out_infinite]">
-                  <div className="w-10 h-10 rounded-xl bg-red-50 text-[#C62121] flex items-center justify-center"><Users className="w-5 h-5 fill-current" /></div>
-                  <div><p className="font-black text-gray-900 text-sm leading-tight">Donors</p><p className="text-[10px] text-gray-500 font-bold">Be the reason someone lives</p></div>
+                <div className="absolute top-10 left-10 z-20 bg-white dark:bg-slate-900 p-3 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex items-center gap-3 animate-[float_4s_ease-in-out_infinite]">
+                  <div className="w-10 h-10 rounded-xl bg-red-50 dark:bg-red-950/50 text-[#C62121] flex items-center justify-center"><Users className="w-5 h-5 fill-current" /></div>
+                  <div><p className="font-black text-gray-900 dark:text-white text-sm leading-tight">Donors</p><p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold">Be the reason someone lives</p></div>
                 </div>
 
-                <div className="absolute top-10 right-10 z-20 bg-white p-3 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex items-center gap-3 animate-[float_5s_ease-in-out_infinite_reverse]">
-                  <div className="w-10 h-10 rounded-xl bg-red-50 text-[#C62121] flex items-center justify-center"><Users className="w-5 h-5 fill-current" /></div>
-                  <div><p className="font-black text-gray-900 text-sm leading-tight">Users</p><p className="text-[10px] text-gray-500 font-bold">We connect. You heal.</p></div>
+                <div className="absolute top-10 right-10 z-20 bg-white dark:bg-slate-900 p-3 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex items-center gap-3 animate-[float_5s_ease-in-out_infinite_reverse]">
+                  <div className="w-10 h-10 rounded-xl bg-red-50 dark:bg-red-950/50 text-[#C62121] flex items-center justify-center"><Users className="w-5 h-5 fill-current" /></div>
+                  <div><p className="font-black text-gray-900 dark:text-white text-sm leading-tight">Users</p><p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold">We connect. You heal.</p></div>
                 </div>
 
-                <div className="absolute bottom-20 left-0 z-20 bg-white p-3 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex items-center gap-3 animate-[float_4.5s_ease-in-out_infinite]">
-                  <div className="w-10 h-10 rounded-xl bg-red-50 text-[#C62121] flex items-center justify-center">
+                <div className="absolute bottom-20 left-0 z-20 bg-white dark:bg-slate-900 p-3 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex items-center gap-3 animate-[float_4.5s_ease-in-out_infinite]">
+                  <div className="w-10 h-10 rounded-xl bg-red-50 dark:bg-red-950/50 text-[#C62121] flex items-center justify-center">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
                   </div>
-                  <div><p className="font-black text-gray-900 text-sm leading-tight">Blood Banks</p><p className="text-[10px] text-gray-500 font-bold">We store hope, We deliver life</p></div>
+                  <div><p className="font-black text-gray-900 dark:text-white text-sm leading-tight">Blood Banks</p><p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold">We store hope, We deliver life</p></div>
                 </div>
 
-                <div className="absolute bottom-20 right-0 z-20 bg-white p-3 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex items-center gap-3 animate-[float_5.5s_ease-in-out_infinite_reverse]">
-                  <div className="w-10 h-10 rounded-xl bg-red-50 text-[#C62121] flex items-center justify-center">
+                <div className="absolute bottom-20 right-0 z-20 bg-white dark:bg-slate-900 p-3 rounded-2xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] flex items-center gap-3 animate-[float_5.5s_ease-in-out_infinite_reverse]">
+                  <div className="w-10 h-10 rounded-xl bg-red-50 dark:bg-red-950/50 text-[#C62121] flex items-center justify-center">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="16" height="20" x="4" y="2" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
                   </div>
-                  <div><p className="font-black text-gray-900 text-sm leading-tight">Hospitals</p><p className="text-[10px] text-gray-500 font-bold">Timely care saves lives</p></div>
+                  <div><p className="font-black text-gray-900 dark:text-white text-sm leading-tight">Hospitals</p><p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold">Timely care saves lives</p></div>
                 </div>
                 
                 {/* Main Hero Image */}
@@ -156,58 +156,58 @@ export default async function Home() {
 
       {/* 2. Stats Floating Bar */}
       <section className="relative z-20 max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 -mt-20 mb-16">
-        <div className="bg-white rounded-[2rem] p-6 lg:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.06)] border border-red-50 flex flex-wrap justify-around items-center gap-6">
+        <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-6 lg:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.06)] border border-red-50 dark:border-slate-800 flex flex-wrap justify-around items-center gap-6">
           
           {/* Stat 1 */}
           <div className="flex flex-col lg:flex-row items-center gap-4 min-w-[150px]">
-            <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center shadow-inner">
+            <div className="w-14 h-14 rounded-full bg-red-50 dark:bg-red-950/50 flex items-center justify-center shadow-inner">
               <Users className="w-7 h-7 text-[#C62121] fill-current" />
             </div>
             <div className="text-center lg:text-left">
-              <h3 className="font-black text-gray-900 text-3xl leading-none">{donorCount}</h3>
-              <p className="text-gray-500 text-[13px] font-bold mt-1">Donors</p>
+              <h3 className="font-black text-gray-900 dark:text-white text-3xl leading-none">{donorCount}</h3>
+              <p className="text-gray-500 dark:text-gray-400 text-[13px] font-bold mt-1">Donors</p>
             </div>
           </div>
 
           {/* Divider */}
-          <div className="hidden lg:block w-px h-16 bg-gray-100"></div>
+          <div className="hidden lg:block w-px h-16 bg-gray-100 dark:bg-slate-800"></div>
 
           {/* Stat 2 */}
           <div className="flex flex-col lg:flex-row items-center gap-4 min-w-[150px]">
-            <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center shadow-inner">
+            <div className="w-14 h-14 rounded-full bg-red-50 dark:bg-red-950/50 flex items-center justify-center shadow-inner">
               <Heart className="w-7 h-7 text-[#C62121] fill-current" />
             </div>
             <div className="text-center lg:text-left">
-              <h3 className="font-black text-gray-900 text-3xl leading-none">{livesSaved}</h3>
-              <p className="text-gray-500 text-[13px] font-bold mt-1">Lives Saved</p>
+              <h3 className="font-black text-gray-900 dark:text-white text-3xl leading-none">{livesSaved}</h3>
+              <p className="text-gray-500 dark:text-gray-400 text-[13px] font-bold mt-1">Lives Saved</p>
             </div>
           </div>
 
           {/* Divider */}
-          <div className="hidden lg:block w-px h-16 bg-gray-100"></div>
+          <div className="hidden lg:block w-px h-16 bg-gray-100 dark:bg-slate-800"></div>
 
           {/* Stat 3 */}
           <div className="flex flex-col lg:flex-row items-center gap-4 min-w-[150px]">
-            <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center shadow-inner">
+            <div className="w-14 h-14 rounded-full bg-red-50 dark:bg-red-950/50 flex items-center justify-center shadow-inner">
               <ShieldCheck className="w-7 h-7 text-[#C62121]" strokeWidth={2.5} />
             </div>
             <div className="text-center lg:text-left">
-              <h3 className="font-black text-gray-900 text-3xl leading-none">{bloodBankCount}</h3>
-              <p className="text-gray-500 text-[13px] font-bold mt-1">Blood Banks</p>
+              <h3 className="font-black text-gray-900 dark:text-white text-3xl leading-none">{bloodBankCount}</h3>
+              <p className="text-gray-500 dark:text-gray-400 text-[13px] font-bold mt-1">Blood Banks</p>
             </div>
           </div>
 
           {/* Divider */}
-          <div className="hidden lg:block w-px h-16 bg-gray-100"></div>
+          <div className="hidden lg:block w-px h-16 bg-gray-100 dark:bg-slate-800"></div>
 
           {/* Stat 4 */}
           <div className="flex flex-col lg:flex-row items-center gap-4 min-w-[150px]">
-            <div className="w-14 h-14 rounded-full bg-red-50 flex items-center justify-center shadow-inner">
+            <div className="w-14 h-14 rounded-full bg-red-50 dark:bg-red-950/50 flex items-center justify-center shadow-inner">
               <Droplet className="w-7 h-7 text-[#C62121] fill-current" />
             </div>
             <div className="text-center lg:text-left">
-              <h3 className="font-black text-gray-900 text-3xl leading-none">{totalRequests}</h3>
-              <p className="text-gray-500 text-[13px] font-bold mt-1">Blood Requests</p>
+              <h3 className="font-black text-gray-900 dark:text-white text-3xl leading-none">{totalRequests}</h3>
+              <p className="text-gray-500 dark:text-gray-400 text-[13px] font-bold mt-1">Blood Requests</p>
             </div>
           </div>
 
@@ -217,16 +217,16 @@ export default async function Home() {
       {/* 3. How It Works */}
       <section className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-3xl p-8 lg:p-10 border border-gray-100 transition-colors">
-            <h2 className="text-xl font-bold text-gray-900 mb-8">How It Works</h2>
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 lg:p-10 border border-gray-100 dark:border-slate-800 transition-colors">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-8">How It Works</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-6 relative">
               {/* Step 1 */}
-              <div className="flex items-start gap-4 relative z-10 bg-white transition-colors">
+              <div className="flex items-start gap-4 relative z-10 bg-transparent transition-colors">
                 <div className="w-8 h-8 rounded-full bg-[#C62121] text-white flex items-center justify-center font-bold text-sm shrink-0">1</div>
                 <div className="flex-1">
-                  <h4 className="font-bold text-gray-900 text-sm mb-1">Register</h4>
-                  <p className="text-gray-500 text-xs leading-relaxed max-w-[150px]">Create your account in seconds</p>
+                  <h4 className="font-bold text-gray-900 dark:text-white text-sm mb-1">Register</h4>
+                  <p className="text-gray-500 dark:text-gray-400 text-xs leading-relaxed max-w-[150px]">Create your account in seconds</p>
                 </div>
                 <div className="hidden lg:block absolute top-4 -right-4 text-[#C62121]/30">
                   <ArrowRight className="w-5 h-5" strokeWidth={1.5} />
@@ -234,11 +234,11 @@ export default async function Home() {
               </div>
 
               {/* Step 2 */}
-              <div className="flex items-start gap-4 relative z-10 bg-white transition-colors">
+              <div className="flex items-start gap-4 relative z-10 bg-transparent transition-colors">
                 <div className="w-8 h-8 rounded-full bg-[#C62121] text-white flex items-center justify-center font-bold text-sm shrink-0">2</div>
                 <div className="flex-1">
-                  <h4 className="font-bold text-gray-900 text-sm mb-1">Search</h4>
-                  <p className="text-gray-500 text-xs leading-relaxed max-w-[150px]">Find donors or make a request</p>
+                  <h4 className="font-bold text-gray-900 dark:text-white text-sm mb-1">Search</h4>
+                  <p className="text-gray-500 dark:text-gray-400 text-xs leading-relaxed max-w-[150px]">Find donors or make a request</p>
                 </div>
                 <div className="hidden lg:block absolute top-4 -right-4 text-[#C62121]/30">
                   <ArrowRight className="w-5 h-5" strokeWidth={1.5} />
@@ -246,11 +246,11 @@ export default async function Home() {
               </div>
 
               {/* Step 3 */}
-              <div className="flex items-start gap-4 relative z-10 bg-white transition-colors">
+              <div className="flex items-start gap-4 relative z-10 bg-transparent transition-colors">
                 <div className="w-8 h-8 rounded-full bg-[#C62121] text-white flex items-center justify-center font-bold text-sm shrink-0">3</div>
                 <div className="flex-1">
-                  <h4 className="font-bold text-gray-900 text-sm mb-1">Connect</h4>
-                  <p className="text-gray-500 text-xs leading-relaxed max-w-[150px]">Get connected with verified donors</p>
+                  <h4 className="font-bold text-gray-900 dark:text-white text-sm mb-1">Connect</h4>
+                  <p className="text-gray-500 dark:text-gray-400 text-xs leading-relaxed max-w-[150px]">Get connected with verified donors</p>
                 </div>
                 <div className="hidden lg:block absolute top-4 -right-4 text-[#C62121]/30">
                   <ArrowRight className="w-5 h-5" strokeWidth={1.5} />
@@ -258,11 +258,11 @@ export default async function Home() {
               </div>
 
               {/* Step 4 */}
-              <div className="flex items-start gap-4 relative z-10 bg-white transition-colors">
+              <div className="flex items-start gap-4 relative z-10 bg-transparent transition-colors">
                 <div className="w-8 h-8 rounded-full bg-[#C62121] text-white flex items-center justify-center font-bold text-sm shrink-0">4</div>
                 <div className="flex-1">
-                  <h4 className="font-bold text-gray-900 text-sm mb-1">Save Lives</h4>
-                  <p className="text-gray-500 text-xs leading-relaxed max-w-[150px]">Your help can make a big difference</p>
+                  <h4 className="font-bold text-gray-900 dark:text-white text-sm mb-1">Save Lives</h4>
+                  <p className="text-gray-500 dark:text-gray-400 text-xs leading-relaxed max-w-[150px]">Your help can make a big difference</p>
                 </div>
               </div>
             </div>
@@ -277,11 +277,11 @@ export default async function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
             {/* Recent Success Stories (Left - spans 2 columns) */}
-            <div className="lg:col-span-2 bg-white rounded-[2rem] p-8 lg:p-10 shadow-[0_10px_50px_rgba(0,0,0,0.02)] border border-gray-50 transition-colors">
+            <div className="lg:col-span-2 bg-white dark:bg-slate-900 rounded-[2rem] p-8 lg:p-10 shadow-[0_10px_50px_rgba(0,0,0,0.02)] border border-gray-50 dark:border-slate-800 transition-colors">
               <div className="flex justify-between items-end mb-8">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-2">Recent Success Stories</h2>
-                  <p className="text-gray-500 text-sm">See how your small act of kindness creates a big difference.</p>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Recent Success Stories</h2>
+                  <p className="text-gray-500 dark:text-gray-400 text-sm">See how your small act of kindness creates a big difference.</p>
                 </div>
                 <Link href="#" className="hidden sm:inline-flex bg-primary-red text-white text-sm font-bold py-2.5 px-6 rounded-xl hover:bg-red-800 transition-colors">
                   View All Stories
@@ -290,37 +290,37 @@ export default async function Home() {
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                 {/* Story 1 */}
-                <div className="group border border-gray-100 rounded-2xl overflow-hidden hover:shadow-lg:shadow-[0_0_15px_rgba(255,255,255,0.05)] transition-all duration-300 flex flex-col bg-gray-50/50">
-                  <div className="h-40 w-full relative bg-gray-100 flex-shrink-0">
+                <div className="group border border-gray-100 dark:border-slate-800 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col bg-gray-50/50 dark:bg-slate-950">
+                  <div className="h-40 w-full relative bg-gray-100 dark:bg-slate-800 flex-shrink-0">
                     <Image src={story1} alt="Story 1" fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
                   <div className="p-4 flex-grow">
-                    <p className="text-sm text-gray-700 font-medium leading-relaxed text-center">
-                      <span className="font-bold text-gray-900">Rohit donated blood</span> and helped a child fight Thalassemia.
+                    <p className="text-sm text-gray-700 dark:text-gray-300 font-medium leading-relaxed text-center">
+                      <span className="font-bold text-gray-900 dark:text-white">Rohit donated blood</span> and helped a child fight Thalassemia.
                     </p>
                   </div>
                 </div>
 
                 {/* Story 2 */}
-                <div className="group border border-gray-100 rounded-2xl overflow-hidden hover:shadow-lg:shadow-[0_0_15px_rgba(255,255,255,0.05)] transition-all duration-300 flex flex-col bg-gray-50/50">
-                  <div className="h-40 w-full relative bg-gray-100 flex-shrink-0">
+                <div className="group border border-gray-100 dark:border-slate-800 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col bg-gray-50/50 dark:bg-slate-950">
+                  <div className="h-40 w-full relative bg-gray-100 dark:bg-slate-800 flex-shrink-0">
                     <Image src={story2} alt="Story 2" fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
                   <div className="p-4 flex-grow">
-                    <p className="text-sm text-gray-700 font-medium leading-relaxed text-center">
-                      <span className="font-bold text-gray-900">Anjali's timely donation</span> saved a mother's life.
+                    <p className="text-sm text-gray-700 dark:text-gray-300 font-medium leading-relaxed text-center">
+                      <span className="font-bold text-gray-900 dark:text-white">Anjali's timely donation</span> saved a mother's life.
                     </p>
                   </div>
                 </div>
 
                 {/* Story 3 */}
-                <div className="group border border-gray-100 rounded-2xl overflow-hidden hover:shadow-lg:shadow-[0_0_15px_rgba(255,255,255,0.05)] transition-all duration-300 flex flex-col bg-gray-50/50">
-                  <div className="h-40 w-full relative bg-gray-100 flex-shrink-0">
+                <div className="group border border-gray-100 dark:border-slate-800 rounded-2xl overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col bg-gray-50/50 dark:bg-slate-950">
+                  <div className="h-40 w-full relative bg-gray-100 dark:bg-slate-800 flex-shrink-0">
                     <Image src={story3} alt="Story 3" fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
                   </div>
                   <div className="p-4 flex-grow">
-                    <p className="text-sm text-gray-700 font-medium leading-relaxed text-center">
-                      Blood donation camp by <span className="font-bold text-gray-900">RaktaSetu Volunteers</span>.
+                    <p className="text-sm text-gray-700 dark:text-gray-300 font-medium leading-relaxed text-center">
+                      Blood donation camp by <span className="font-bold text-gray-900 dark:text-white">RaktaSetu Volunteers</span>.
                     </p>
                   </div>
                 </div>
@@ -334,23 +334,23 @@ export default async function Home() {
             <div className="flex flex-col gap-8">
               
               {/* Life Saved Block */}
-              <div className="bg-red-50/50 rounded-[2rem] p-8 flex flex-col justify-center border border-red-100 relative overflow-hidden transition-colors">
+              <div className="bg-red-50/50 dark:bg-red-950/30 rounded-[2rem] p-8 flex flex-col justify-center border border-red-100 dark:border-red-900/50 relative overflow-hidden transition-colors">
                 {/* Decorative blurry spot */}
-                <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-white rounded-full blur-2xl opacity-60"></div>
-                <h3 className="text-gray-900 font-bold text-lg mb-2 relative z-10">Life Saved</h3>
+                <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-white dark:bg-red-500/10 rounded-full blur-2xl opacity-60"></div>
+                <h3 className="text-gray-900 dark:text-white font-bold text-lg mb-2 relative z-10">Life Saved</h3>
                 <div className="text-5xl font-extrabold text-primary-red mb-2 relative z-10 tracking-tight">
                   {livesSaved}
                 </div>
-                <p className="text-gray-600 font-medium relative z-10 text-sm">Lives Saved Till Now</p>
-                <div className="absolute right-6 bottom-6 w-12 h-12 bg-white rounded-full flex items-center justify-center shadow-sm">
+                <p className="text-gray-600 dark:text-gray-400 font-medium relative z-10 text-sm">Lives Saved Till Now</p>
+                <div className="absolute right-6 bottom-6 w-12 h-12 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center shadow-sm">
                   <Heart className="w-6 h-6 text-primary-red fill-primary-red/20" />
                 </div>
               </div>
 
               {/* Mission Block */}
-              <div className="bg-[#FCF9F9] rounded-[2rem] p-8 flex-1 border border-gray-100 flex flex-col relative overflow-hidden transition-colors">
-                <h3 className="text-gray-900 font-bold text-xl mb-4 relative z-10">Be a Part of Our Mission</h3>
-                <p className="text-gray-600 text-sm font-medium leading-relaxed mb-8 relative z-10">
+              <div className="bg-[#FCF9F9] dark:bg-slate-900 rounded-[2rem] p-8 flex-1 border border-gray-100 dark:border-slate-800 flex flex-col relative overflow-hidden transition-colors">
+                <h3 className="text-gray-900 dark:text-white font-bold text-xl mb-4 relative z-10">Be a Part of Our Mission</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm font-medium leading-relaxed mb-8 relative z-10">
                   Join thousands of donors who are making a difference every day.
                 </p>
                 
@@ -372,17 +372,17 @@ export default async function Home() {
       </section>
 
       {/* Footer Section */}
-      <footer className="bg-white border-t border-gray-100 text-gray-600 transition-colors">
+      <footer className="bg-white dark:bg-slate-950 border-t border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-400 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="flex flex-col xl:flex-row justify-between items-center gap-10 xl:gap-8 border-b border-gray-100 pb-10 mb-8">
+          <div className="flex flex-col xl:flex-row justify-between items-center gap-10 xl:gap-8 border-b border-gray-100 dark:border-slate-800 pb-10 mb-8">
             
             {/* Left: Brand */}
             <div className="flex flex-col items-center xl:items-start space-y-4 xl:w-[25%] shrink-0">
               <Link href="/" className="flex items-center gap-3">
                 <Image src={logo} alt="RaktaSetu Logo" width={48} height={48} className="w-12 h-12" />
                 <div>
-                  <h2 className="text-2xl font-black text-gray-900 leading-none">RaktaSetu</h2>
-                  <p className="text-[10px] text-gray-500 font-bold tracking-widest uppercase mt-1">Leave the worry to us</p>
+                  <h2 className="text-2xl font-black text-gray-900 dark:text-white leading-none">RaktaSetu</h2>
+                  <p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold tracking-widest uppercase mt-1">Leave the worry to us</p>
                 </div>
               </Link>
             </div>
@@ -390,43 +390,43 @@ export default async function Home() {
             {/* Middle: Contact Info Row */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-center xl:justify-evenly flex-1 gap-8 lg:gap-10 px-4 xl:px-8">
               <div className="flex items-center gap-4">
-                <div className="w-11 h-11 bg-gray-50 rounded-full flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-5 h-5 text-gray-500" />
+                <div className="w-11 h-11 bg-gray-50 dark:bg-slate-900 rounded-full flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-5 h-5 text-gray-500 dark:text-gray-400" />
                 </div>
                 <div className="text-sm">
-                  <p className="font-bold text-gray-900 mb-0.5">Visit Us</p>
-                  <p className="text-gray-500 whitespace-nowrap">Himachal Pradesh</p>
+                  <p className="font-bold text-gray-900 dark:text-white mb-0.5">Visit Us</p>
+                  <p className="text-gray-500 dark:text-gray-400 whitespace-nowrap">Himachal Pradesh</p>
                 </div>
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="w-11 h-11 bg-gray-50 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-5 h-5 text-gray-500" />
+                <div className="w-11 h-11 bg-gray-50 dark:bg-slate-900 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-5 h-5 text-gray-500 dark:text-gray-400" />
                 </div>
                 <div className="text-sm">
-                  <p className="font-bold text-gray-900 mb-0.5">Email Us</p>
-                  <a href="mailto:pankajsadyal0@gmail.com" className="text-gray-500 hover:text-[#C62121] transition-colors whitespace-nowrap">pankajsadyal0@gmail.com</a>
+                  <p className="font-bold text-gray-900 dark:text-white mb-0.5">Email Us</p>
+                  <a href="mailto:pankajsadyal0@gmail.com" className="text-gray-500 dark:text-gray-400 hover:text-[#C62121] transition-colors whitespace-nowrap">pankajsadyal0@gmail.com</a>
                 </div>
               </div>
 
               <div className="flex items-center gap-4">
-                <div className="w-11 h-11 bg-gray-50 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-5 h-5 text-gray-500" />
+                <div className="w-11 h-11 bg-gray-50 dark:bg-slate-900 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Phone className="w-5 h-5 text-gray-500 dark:text-gray-400" />
                 </div>
                 <div className="text-sm">
-                  <p className="font-bold text-gray-900 mb-0.5">Call Us</p>
-                  <a href="tel:+919876953067" className="text-gray-500 hover:text-[#C62121] transition-colors whitespace-nowrap">+91 98769 53067</a>
+                  <p className="font-bold text-gray-900 dark:text-white mb-0.5">Call Us</p>
+                  <a href="tel:+919876953067" className="text-gray-500 dark:text-gray-400 hover:text-[#C62121] transition-colors whitespace-nowrap">+91 98769 53067</a>
                 </div>
               </div>
             </div>
 
             {/* Right: Actions / Badges */}
             <div className="flex justify-center xl:justify-end xl:w-[25%] shrink-0">
-              <div className="px-5 py-3 border border-gray-100 bg-gray-50 rounded-xl flex items-center gap-3 shadow-sm">
-                <Shield className="w-6 h-6 text-green-600" />
+              <div className="px-5 py-3 border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-900 rounded-xl flex items-center gap-3 shadow-sm">
+                <Shield className="w-6 h-6 text-green-600 dark:text-green-500" />
                 <div>
-                  <p className="font-black text-gray-900 text-sm leading-tight uppercase tracking-wider">Verified & Secured</p>
-                  <p className="text-[9px] text-gray-500 uppercase font-bold tracking-widest mt-0.5">Trusted Platform</p>
+                  <p className="font-black text-gray-900 dark:text-white text-sm leading-tight uppercase tracking-wider">Verified & Secured</p>
+                  <p className="text-[9px] text-gray-500 dark:text-gray-400 uppercase font-bold tracking-widest mt-0.5">Trusted Platform</p>
                 </div>
               </div>
             </div>

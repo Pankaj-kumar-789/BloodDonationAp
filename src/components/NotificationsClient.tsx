@@ -69,19 +69,19 @@ export default function NotificationsClient({ initialNotifications }: { initialN
     <div className="space-y-6 w-full max-w-5xl mx-auto px-4 md:px-0">
       <div className="flex flex-col md:flex-row justify-between md:items-end gap-4 mb-2">
         <div>
-          <h1 className="text-3xl font-black text-gray-900 mb-2">Notifications</h1>
-          <p className="text-gray-500 font-medium">Stay updated with the latest emergency alerts and requests.</p>
+          <h1 className="text-3xl font-black text-gray-900 dark:text-white mb-2 transition-colors">Notifications</h1>
+          <p className="text-gray-500 dark:text-gray-400 font-medium transition-colors">Stay updated with the latest emergency alerts and requests.</p>
         </div>
         <button 
           onClick={handleMarkAsRead} 
           disabled={loading || initialNotifications.length === 0} 
-          className="text-sm font-bold text-primary-red bg-red-50 px-4 py-2 rounded-xl hover:bg-red-100 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="text-sm font-bold text-primary-red bg-red-50 dark:bg-red-950/30 px-4 py-2 rounded-xl hover:bg-red-100 dark:hover:bg-red-950/50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? "Marking..." : "Mark all as read"}
         </button>
       </div>
 
-      <div className="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden p-2">
+      <div className="bg-white dark:bg-slate-900 rounded-[2rem] border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden p-2 transition-colors">
         <motion.div 
           className="flex flex-col gap-2"
           variants={containerVariants}
@@ -96,30 +96,30 @@ export default function NotificationsClient({ initialNotifications }: { initialN
                 key={notif.id} 
                 variants={itemVariants}
                 onClick={() => handleNotificationClick(notif.id, notif.isRead, notif.link)}
-                className={`p-5 rounded-2xl flex gap-5 transition-all duration-300 hover:bg-gray-50 cursor-pointer relative border ${!notif.isRead ? 'bg-red-50/20 border-red-100 shadow-sm' : 'border-transparent'}`}
+                className={`p-5 rounded-2xl flex gap-5 transition-all duration-300 hover:bg-gray-50 dark:hover:bg-slate-800/50 cursor-pointer relative border ${!notif.isRead ? 'bg-red-50/20 dark:bg-red-950/20 border-red-100 dark:border-red-900/30 shadow-sm' : 'border-transparent dark:border-transparent'}`}
               >
                 {!notif.isRead && (
                   <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-10 bg-primary-red rounded-r-full shadow-[0_0_10px_rgba(255,42,42,0.4)]"></div>
                 )}
-                <div className={`w-14 h-14 rounded-2xl ${style.bg} ${style.color} flex items-center justify-center flex-shrink-0 shadow-inner border border-white/50`}>
+                <div className={`w-14 h-14 rounded-2xl ${style.bg} ${style.color} flex items-center justify-center flex-shrink-0 shadow-inner border border-white/50 dark:border-white/5`}>
                   <Icon className="w-7 h-7" />
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex justify-between items-start mb-1 gap-2">
-                    <h4 className={`font-black truncate ${!notif.isRead ? 'text-gray-900' : 'text-gray-700'}`}>{notif.title}</h4>
-                    <span className={`text-xs font-bold whitespace-nowrap px-2 py-1 rounded-md ${!notif.isRead ? 'bg-red-100 text-primary-red' : 'bg-gray-100 text-gray-500'}`}>{formatTime(notif.createdAt)}</span>
+                    <h4 className={`font-black truncate transition-colors ${!notif.isRead ? 'text-gray-900 dark:text-white' : 'text-gray-700 dark:text-gray-300'}`}>{notif.title}</h4>
+                    <span className={`text-xs font-bold whitespace-nowrap px-2 py-1 rounded-md transition-colors ${!notif.isRead ? 'bg-red-100 dark:bg-red-900/40 text-primary-red dark:text-red-400' : 'bg-gray-100 dark:bg-slate-800 text-gray-500 dark:text-gray-400'}`}>{formatTime(notif.createdAt)}</span>
                   </div>
-                  <p className="text-sm font-medium text-gray-500 mt-1 line-clamp-2">{notif.body}</p>
+                  <p className="text-sm font-medium text-gray-500 dark:text-gray-400 mt-1 line-clamp-2 transition-colors">{notif.body}</p>
                 </div>
               </motion.div>
             );
           }) : (
-            <motion.div variants={itemVariants} className="py-20 px-6 text-center flex flex-col items-center justify-center bg-gray-50/50 rounded-2xl border border-dashed border-gray-200 m-4">
-              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mb-6 shadow-sm border border-gray-100">
-                <Bell className="w-10 h-10 text-gray-300" />
+            <motion.div variants={itemVariants} className="py-20 px-6 text-center flex flex-col items-center justify-center bg-gray-50/50 dark:bg-slate-800/50 rounded-2xl border border-dashed border-gray-200 dark:border-slate-700 m-4 transition-colors">
+              <div className="w-24 h-24 bg-white dark:bg-slate-900 rounded-full flex items-center justify-center mb-6 shadow-sm border border-gray-100 dark:border-slate-800 transition-colors">
+                <Bell className="w-10 h-10 text-gray-300 dark:text-gray-600" />
               </div>
-              <h3 className="text-xl font-black text-gray-900 mb-2">All caught up!</h3>
-              <p className="text-gray-500 max-w-sm font-medium">You have no new notifications. When a hospital or donor reaches out, you'll see it here.</p>
+              <h3 className="text-xl font-black text-gray-900 dark:text-white mb-2 transition-colors">All caught up!</h3>
+              <p className="text-gray-500 dark:text-gray-400 max-w-sm font-medium transition-colors">You have no new notifications. When a hospital or donor reaches out, you'll see it here.</p>
             </motion.div>
           )}
         </motion.div>

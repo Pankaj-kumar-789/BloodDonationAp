@@ -81,9 +81,9 @@ export default function Sidebar({ session }: { session: any }) {
       initial={false}
       animate={{ width: isExpanded ? 260 : 80 }}
       transition={{ type: "spring", stiffness: 300, damping: 25 }}
-      className="hidden md:flex flex-col bg-white border-r border-gray-100 h-screen sticky top-0 shrink-0 z-40 transition-colors shadow-sm"
+      className="hidden md:flex flex-col bg-white dark:bg-slate-950 border-r border-gray-100 dark:border-slate-800 h-screen sticky top-0 shrink-0 z-40 transition-colors shadow-sm"
     >
-      <div className="h-20 md:h-24 flex items-center justify-between px-6 border-b border-gray-100">
+      <div className="h-20 md:h-24 flex items-center justify-between px-6 border-b border-gray-100 dark:border-slate-800">
         {isExpanded && (
           <motion.div 
             initial={{ opacity: 0 }}
@@ -99,7 +99,7 @@ export default function Sidebar({ session }: { session: any }) {
         )}
         <button 
           onClick={() => setIsExpanded(!isExpanded)}
-          className={`p-2 rounded-xl bg-gray-50 text-gray-400 hover:text-[#C62121] transition-colors ${!isExpanded ? 'mx-auto' : ''}`}
+          className={`p-2 rounded-xl bg-gray-50 dark:bg-slate-900 text-gray-400 dark:text-gray-500 hover:text-[#C62121] dark:hover:text-red-500 transition-colors ${!isExpanded ? 'mx-auto' : ''}`}
         >
           {isExpanded ? <ChevronLeft className="w-5 h-5" /> : <ChevronRight className="w-5 h-5" />}
         </button>
@@ -116,8 +116,8 @@ export default function Sidebar({ session }: { session: any }) {
               <div 
                 className={`flex items-center ${isExpanded ? 'justify-between px-4' : 'justify-center px-0'} py-3.5 rounded-xl cursor-pointer transition-all mb-1 ${
                   isActive 
-                    ? 'bg-[#C62121] text-white font-bold shadow-md shadow-red-200' 
-                    : 'text-gray-500 hover:bg-gray-50 hover:text-gray-900 font-semibold'
+                    ? 'bg-[#C62121] text-white font-bold shadow-md shadow-red-200 dark:shadow-red-900/20' 
+                    : 'text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-900 hover:text-gray-900 dark:hover:text-white font-semibold'
                 }`}
                 title={!isExpanded ? item.name : ""}
               >
@@ -150,23 +150,23 @@ export default function Sidebar({ session }: { session: any }) {
         {session ? (
           <div className="flex flex-col gap-2">
             {isExpanded && (
-              <div className="flex items-center gap-3 px-3 py-3 mb-2 bg-gray-50 rounded-xl border border-gray-100">
+              <div className="flex items-center gap-3 px-3 py-3 mb-2 bg-gray-50 dark:bg-slate-900 rounded-xl border border-gray-100 dark:border-slate-800">
                 {session.user.image ? (
                   <img src={session.user.image} alt={session.user.name} className="w-10 h-10 rounded-full object-cover shrink-0" />
                 ) : (
-                  <div className="w-10 h-10 rounded-full bg-red-100 text-[#C62121] flex items-center justify-center font-black shrink-0 text-lg">
+                  <div className="w-10 h-10 rounded-full bg-red-100 dark:bg-red-950/50 text-[#C62121] flex items-center justify-center font-black shrink-0 text-lg">
                     {session.user.name?.charAt(0).toUpperCase() || "U"}
                   </div>
                 )}
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-bold text-gray-900 truncate">{session.user.name}</p>
-                  <p className="text-[10px] font-bold text-gray-500 uppercase tracking-wider truncate">{session.user.role.replace("_", " ")}</p>
+                  <p className="text-sm font-bold text-gray-900 dark:text-white truncate">{session.user.name}</p>
+                  <p className="text-[10px] font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider truncate">{session.user.role.replace("_", " ")}</p>
                 </div>
               </div>
             )}
             <button 
               onClick={() => logoutAction()}
-              className={`w-full flex items-center py-3.5 px-4 rounded-xl cursor-pointer text-gray-500 hover:bg-red-50 hover:text-[#C62121] font-semibold transition-all`}
+              className={`w-full flex items-center py-3.5 px-4 rounded-xl cursor-pointer text-gray-500 dark:text-gray-400 hover:bg-red-50 dark:hover:bg-red-950/30 hover:text-[#C62121] dark:hover:text-red-500 font-semibold transition-all`}
               title={!isExpanded ? "Logout" : ""}
             >
               <div className={`shrink-0 ${!isExpanded ? 'mx-auto' : ''}`}>
@@ -179,7 +179,7 @@ export default function Sidebar({ session }: { session: any }) {
           <div className="space-y-2">
             <Link href="/login">
               <div 
-                className={`flex items-center py-3 px-3 rounded-xl cursor-pointer text-gray-500 hover:bg-gray-50 hover:text-gray-900 font-semibold transition-all`}
+                className={`flex items-center py-3 px-3 rounded-xl cursor-pointer text-gray-500 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-slate-900 hover:text-gray-900 dark:hover:text-white font-semibold transition-all`}
                 title={!isExpanded ? "Log in" : ""}
               >
                 <div className={`shrink-0 ${!isExpanded ? 'mx-auto' : ''}`}>
