@@ -54,14 +54,14 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
   return (
     <PageTransition className="space-y-6">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white p-8 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 mb-6 mt-4">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)] border border-gray-100 dark:border-slate-800 mb-6 mt-4 transition-colors">
         <div>
-          <h1 className="text-2xl md:text-3xl font-black text-gray-900 flex items-center gap-2 mb-2">
+          <h1 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-white flex items-center gap-2 mb-2 transition-colors">
             Admin Overview <span className="text-3xl inline-block animate-wave">👋</span>
           </h1>
-          <p className="text-gray-500 font-medium text-[15px]">Manage platform health and verifications.</p>
+          <p className="text-gray-500 dark:text-gray-400 font-medium text-[15px] transition-colors">Manage platform health and verifications.</p>
         </div>
-        <button className="bg-gray-900 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:-translate-y-0.5 hover:shadow-lg transition-all mt-4 md:mt-0">
+        <button className="bg-gray-900 dark:bg-white text-white dark:text-gray-900 px-5 py-2.5 rounded-xl text-sm font-bold shadow-md hover:-translate-y-0.5 hover:shadow-lg transition-all mt-4 md:mt-0">
           Export Report
         </button>
       </div>
@@ -189,8 +189,8 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
 
       {/* Analytics Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
-        <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:-translate-y-1 hover:shadow-lg transition-all">
-          <h2 className="text-lg font-bold text-gray-900 mb-6">User Growth (Last 7 Days)</h2>
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 p-6 md:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:-translate-y-1 hover:shadow-lg transition-all">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-6 transition-colors">User Growth (Last 7 Days)</h2>
           <div className="h-[300px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={stats.userGrowthData || []} margin={{ top: 5, right: 30, left: 0, bottom: 5 }}>
@@ -198,7 +198,7 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
                 <XAxis dataKey="date" axisLine={false} tickLine={false} tick={{fill: '#6b7280', fontSize: 12}} dy={10} />
                 <YAxis axisLine={false} tickLine={false} tick={{fill: '#6b7280', fontSize: 12}} dx={-10} />
                 <RechartsTooltip 
-                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                  contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)', backgroundColor: 'var(--tooltip-bg, #fff)' }}
                   cursor={{stroke: '#f3f4f6', strokeWidth: 2}}
                 />
                 <Legend iconType="circle" wrapperStyle={{ paddingTop: '20px' }} />
@@ -210,8 +210,8 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
           </div>
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:-translate-y-1 hover:shadow-lg transition-all">
-          <h2 className="text-lg font-bold text-gray-900 mb-6">Blood Group Distribution</h2>
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 p-6 md:p-8 shadow-[0_2px_10px_rgba(0,0,0,0.02)] hover:-translate-y-1 hover:shadow-lg transition-all">
+          <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-6 transition-colors">Blood Group Distribution</h2>
           <div className="h-[300px] w-full flex items-center justify-center">
             {stats.bloodGroupData?.length > 0 ? (
               <ResponsiveContainer width="100%" height="100%">
@@ -246,10 +246,10 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
       </div>
 
       <div className="mt-8">
-        <h2 className="text-xl font-bold text-gray-900 mb-6">Pending Verifications</h2>
-        <div className="bg-white rounded-2xl border border-gray-100 overflow-x-auto shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
-          <table className="w-full text-left text-sm text-gray-600">
-            <thead className="bg-gray-50 border-b border-gray-100 text-gray-700">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6 transition-colors">Pending Verifications</h2>
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 overflow-x-auto shadow-[0_2px_10px_rgba(0,0,0,0.02)] transition-colors">
+          <table className="w-full text-left text-sm text-gray-600 dark:text-gray-400">
+            <thead className="bg-gray-50 dark:bg-slate-800/50 border-b border-gray-100 dark:border-slate-800 text-gray-700 dark:text-gray-300">
               <tr>
                 <th className="px-6 py-3 font-semibold">Name/Organization</th>
                 <th className="px-6 py-3 font-semibold">Type</th>
@@ -257,10 +257,10 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
                 <th className="px-6 py-3 font-semibold text-right">Action</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-gray-100 dark:divide-slate-800">
               {stats.pendingVerifications?.length === 0 ? (
                 <tr>
-                  <td colSpan={4} className="px-6 py-8 text-center text-gray-500">
+                  <td colSpan={4} className="px-6 py-8 text-center text-gray-500 dark:text-gray-400">
                     <CheckCircle2 className="w-8 h-8 text-green-500 mx-auto mb-2" />
                     All caught up! No pending verifications.
                   </td>
@@ -268,14 +268,14 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
               ) : (
                 stats.pendingVerifications?.map((org: any) => (
                   <tr key={org.id}>
-                    <td className="px-6 py-4 font-medium text-gray-900">
+                    <td className="px-6 py-4 font-medium text-gray-900 dark:text-white transition-colors">
                       <div className="flex items-center gap-2">
                         {org.type === 'HOSPITAL' ? <Stethoscope className="w-4 h-4 text-gray-400" /> : <Building2 className="w-4 h-4 text-gray-400" />}
                         {org.user?.name || "Unknown"}
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`px-2 py-1 rounded text-xs font-medium ${org.type === 'HOSPITAL' ? 'bg-teal-50 text-teal-700' : 'bg-blue-50 text-blue-700'}`}>
+                      <span className={`px-2 py-1 rounded text-xs font-medium ${org.type === 'HOSPITAL' ? 'bg-teal-50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-400' : 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'}`}>
                         {org.type === 'HOSPITAL' ? 'HOSPITAL' : 'BLOOD BANK'}
                       </span>
                     </td>
@@ -300,21 +300,21 @@ export default function AdminDashboardClient({ stats }: { stats: any }) {
       {/* Verification Modal */}
       {showVerifyModal && orgToVerify && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-          <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative animate-in zoom-in-95 duration-300">
-            <div className="w-16 h-16 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
+          <div className="bg-white dark:bg-slate-900 border dark:border-slate-800 rounded-3xl p-8 max-w-md w-full shadow-2xl relative animate-in zoom-in-95 duration-300">
+            <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mx-auto mb-6 transition-colors">
               <ShieldCheck className="w-8 h-8" />
             </div>
             
-            <h2 className="text-2xl font-black text-center text-gray-900 mb-2">Verify Organization</h2>
-            <p className="text-center text-gray-500 mb-6">
-              Are you sure you want to verify <strong>{orgToVerify.user?.name}</strong>? They will be permanently marked as a trusted {orgToVerify.type === 'HOSPITAL' ? 'hospital' : 'blood bank'} on the platform.
+            <h2 className="text-2xl font-black text-center text-gray-900 dark:text-white mb-2 transition-colors">Verify Organization</h2>
+            <p className="text-center text-gray-500 dark:text-gray-400 mb-6 transition-colors">
+              Are you sure you want to verify <strong className="dark:text-white">{orgToVerify.user?.name}</strong>? They will be permanently marked as a trusted {orgToVerify.type === 'HOSPITAL' ? 'hospital' : 'blood bank'} on the platform.
             </p>
             
             <div className="flex gap-3">
               <button 
                 onClick={() => setShowVerifyModal(false)}
                 disabled={verifyingId === orgToVerify.id}
-                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-900 font-bold py-3 px-4 rounded-xl transition-colors"
+                className="flex-1 bg-gray-100 dark:bg-slate-800 hover:bg-gray-200 dark:hover:bg-slate-700 text-gray-900 dark:text-white font-bold py-3 px-4 rounded-xl transition-colors"
               >
                 Cancel
               </button>
