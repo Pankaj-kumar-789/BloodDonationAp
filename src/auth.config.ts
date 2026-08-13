@@ -34,12 +34,15 @@ export const authConfig = {
 
       return true;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id;
         token.role = (user as any).role;
         token.name = user.name;
-        token.image = user.image;
+        // Omit image from token because base64 images cause HTTP 431 Request Header Too Large errors
+      }
+      if (trigger === "update" && session) {
+        token.name = session.name || token.name;
       }
       return token;
     },
@@ -48,7 +51,6 @@ export const authConfig = {
         session.user.id = token.id as string;
         session.user.role = token.role as any;
         session.user.name = token.name as string;
-        session.user.image = token.image as string;
       }
       return session;
     }
