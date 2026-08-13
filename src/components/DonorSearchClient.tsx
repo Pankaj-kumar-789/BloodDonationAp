@@ -143,7 +143,7 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
           <div className="flex-1 overflow-y-auto p-4">
             {filteredDonors.length === 0 ? (
               <EmptyState 
-                icon={SearchX} 
+                icon={<SearchX className="w-10 h-10" strokeWidth={1.5} />} 
                 title="No Donors Found" 
                 description="We couldn't find any donors matching your criteria. Try adjusting your filters or search radius."
                 action={{

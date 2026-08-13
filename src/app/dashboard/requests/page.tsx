@@ -70,7 +70,7 @@ export default async function ManageRequestsPage() {
           )) : (
             <div className="col-span-full">
               <EmptyState 
-                icon={CheckCircle2} 
+                icon={<CheckCircle2 className="w-10 h-10" strokeWidth={1.5} />} 
                 title="All caught up!" 
                 description="There are no pending blood requests at the moment."
               />

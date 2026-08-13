@@ -105,7 +105,7 @@ export default function BloodBankSearchClient({ bloodBanks }: { bloodBanks: any[
           {filteredBanks.length === 0 ? (
             <div className="col-span-full">
               <EmptyState 
-                icon={SearchX} 
+                icon={<SearchX className="w-10 h-10" strokeWidth={1.5} />} 
                 title="No Blood Banks Found" 
                 description="We couldn't find any blood banks matching your criteria. Try adjusting your filters or search city."
                 action={{
