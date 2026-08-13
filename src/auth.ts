@@ -42,7 +42,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
             email: user.email,
             name: user.name,
             role: user.role,
-            image: user.image,
+            // DO NOT return image here, NextAuth automatically injects it into the JWT cookie causing 431 errors
           };
         } catch (error: any) {
           console.error("Authorize error:", error.name, error.message, error.stack);
