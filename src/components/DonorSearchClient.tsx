@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Search, MapPin, Star, User as UserIcon, Droplet, Clock, ShieldCheck, Phone, Mail, Loader2, CheckCircle2 } from "lucide-react";
+import { Search, MapPin, Star, User as UserIcon, Droplet, Clock, ShieldCheck, Phone, Mail, Loader2, CheckCircle2, SearchX } from "lucide-react";
+import EmptyState from "./EmptyState";
 import { unlockContactAction } from "@/app/actions/payment";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence, Variants } from "framer-motion";
@@ -141,9 +142,20 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
           {/* Results List */}
           <div className="flex-1 overflow-y-auto p-4">
             {filteredDonors.length === 0 ? (
-              <div className="text-center text-gray-500  py-10 font-medium">
-                No donors found matching your criteria.
-              </div>
+              <EmptyState 
+                icon={SearchX} 
+                title="No Donors Found" 
+                description="We couldn't find any donors matching your criteria. Try adjusting your filters or search radius."
+                action={{
+                  label: "Clear Filters",
+                  onClick: () => {
+                    setSearchQuery("");
+                    setBloodGroupFilter("Blood Group");
+                    setDonationTypeFilter("Donation Type");
+                    setDistanceFilter("Distance");
+                  }
+                }}
+              />
             ) : (
               <motion.div 
                 variants={listVariants}

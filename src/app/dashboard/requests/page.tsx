@@ -3,6 +3,8 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { ArrowLeft, Clock, MapPin, CheckCircle2, XCircle } from "lucide-react";
 import RequestActionButtons from "./RequestActionButtons";
+import PageTransition from "@/components/PageTransition";
+import EmptyState from "@/components/EmptyState";
 
 export default async function ManageRequestsPage() {
   const session = await auth();
@@ -18,7 +20,7 @@ export default async function ManageRequestsPage() {
   const pendingCount = requests.filter(r => r.status === "PENDING").length;
 
   return (
-    <div className="max-w-6xl mx-auto space-y-6">
+    <PageTransition className="max-w-6xl mx-auto space-y-6">
       <Link href="/dashboard" className="text-sm font-medium text-gray-500 hover:text-gray-900 flex items-center gap-2 mb-4 w-fit transition-colors">
         <ArrowLeft className="w-4 h-4" /> Back to Dashboard
       </Link>
@@ -66,16 +68,16 @@ export default async function ManageRequestsPage() {
               )}
             </div>
           )) : (
-            <div className="text-center py-20 bg-gray-50 rounded-2xl border border-dashed border-gray-200">
-              <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-sm">
-                <CheckCircle2 className="w-8 h-8 text-green-500" />
-              </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-1">All caught up!</h3>
-              <p className="text-gray-500">There are no pending blood requests at the moment.</p>
+            <div className="col-span-full">
+              <EmptyState 
+                icon={CheckCircle2} 
+                title="All caught up!" 
+                description="There are no pending blood requests at the moment."
+              />
             </div>
           )}
         </div>
       </div>
-    </div>
+    </PageTransition>
   );
 }

@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Search, MapPin, Droplet, Building2, Phone, Mail } from "lucide-react";
+import { Search, MapPin, Droplet, Building2, Phone, Mail, SearchX } from "lucide-react";
 import { motion, Variants } from "framer-motion";
+import EmptyState from "./EmptyState";
 
 const containerVariants: Variants = {
   hidden: { opacity: 0 },
@@ -102,11 +103,21 @@ export default function BloodBankSearchClient({ bloodBanks }: { bloodBanks: any[
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {filteredBanks.length === 0 ? (
-            <motion.div variants={itemVariants} className="col-span-full text-center py-20">
-              <Building2 className="w-16 h-16 text-gray-300  mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-gray-900 ">No Blood Banks Found</h3>
-              <p className="text-gray-500  mt-2">Try adjusting your search criteria.</p>
-            </motion.div>
+            <div className="col-span-full">
+              <EmptyState 
+                icon={SearchX} 
+                title="No Blood Banks Found" 
+                description="We couldn't find any blood banks matching your criteria. Try adjusting your filters or search city."
+                action={{
+                  label: "Clear Filters",
+                  onClick: () => {
+                    setSearchQuery("");
+                    setBloodGroupFilter("Blood Group");
+                    setDonationTypeFilter("Donation Type");
+                  }
+                }}
+              />
+            </div>
           ) : (
             filteredBanks.map((bank) => {
               const totalUnits = bank.inventory.reduce((sum: number, item: any) => sum + (item.units || 0), 0);
