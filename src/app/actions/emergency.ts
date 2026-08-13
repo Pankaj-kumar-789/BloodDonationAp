@@ -87,7 +87,7 @@ export async function createEmergencyRequestAction(formData: FormData) {
           userId: d.userId,
           title: "Urgent Request Nearby!",
           body: `A patient at ${hospital} urgently needs ${bloodGroup.replace('_POS', '+').replace('_NEG', '-')} ${donationType.toLowerCase()}. Can you help?`,
-          link: "/emergency"
+          link: "/dashboard/requests"
         }))
       });
     }
