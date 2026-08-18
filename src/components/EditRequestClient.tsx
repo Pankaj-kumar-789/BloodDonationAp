@@ -17,6 +17,7 @@ export default function EditRequestClient({ request }: { request: any }) {
   const [status, setStatus] = useState(request.status);
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showCompleteModal, setShowCompleteModal] = useState(false);
   const [unlocking, setUnlocking] = useState(false);
   const [completing, setCompleting] = useState(false);
   const [showReviewModal, setShowReviewModal] = useState(false);
@@ -35,8 +36,8 @@ export default function EditRequestClient({ request }: { request: any }) {
     setUnlocking(false);
   };
 
-  const handleComplete = async () => {
-    if (!confirm("Are you sure you want to mark this donation as completed?")) return;
+  const confirmComplete = async () => {
+    setShowCompleteModal(false);
     setCompleting(true);
     setError("");
     
@@ -188,7 +189,7 @@ export default function EditRequestClient({ request }: { request: any }) {
                 {status !== "COMPLETED" ? (
                   <div className="mt-6 pt-6 border-t border-green-100 dark:border-green-900/30 flex justify-end transition-colors">
                     <button
-                      onClick={handleComplete}
+                      onClick={() => setShowCompleteModal(true)}
                       disabled={completing}
                       type="button"
                       className="bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-md shadow-emerald-200 flex items-center gap-2 disabled:opacity-70"
@@ -312,6 +313,35 @@ export default function EditRequestClient({ request }: { request: any }) {
                 className="flex-1 px-4 py-3 bg-primary-red hover:bg-red-700 text-white rounded-xl font-bold transition-colors shadow-lg shadow-red-200 dark:shadow-none"
               >
                 Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Custom Complete Modal Overlay */}
+      {showCompleteModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 dark:bg-black/80 backdrop-blur-sm p-4 animate-in fade-in duration-200 transition-colors">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 max-w-sm w-full shadow-2xl animate-in zoom-in-95 duration-200 transition-colors">
+            <div className="w-16 h-16 bg-emerald-50 dark:bg-emerald-950/30 rounded-full flex items-center justify-center mx-auto mb-6 text-emerald-500 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-900/30 transition-colors">
+              <CheckCircle2 className="w-8 h-8" />
+            </div>
+            <h2 className="text-2xl font-black text-center text-gray-900 dark:text-white mb-2 transition-colors">Complete Request?</h2>
+            <p className="text-center text-gray-500 dark:text-gray-400 mb-8 font-medium transition-colors">Are you sure you want to mark this donation as completed? This will update the donor's history.</p>
+            <div className="flex gap-4">
+              <button 
+                type="button" 
+                onClick={() => setShowCompleteModal(false)}
+                className="flex-1 px-4 py-3 bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-xl font-bold transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                type="button" 
+                onClick={confirmComplete}
+                className="flex-1 px-4 py-3 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold transition-colors shadow-lg shadow-emerald-200 dark:shadow-none"
+              >
+                Confirm
               </button>
             </div>
           </div>
