@@ -28,6 +28,18 @@ export async function updateRequestStatusAction(requestId: string, status: Reque
       }
     });
 
+    if (status === "ACCEPTED") {
+      // Notify the User who created the request
+      await prisma.notification.create({
+        data: {
+          userId: request.creatorId,
+          title: "A Donor is ready!",
+          body: `${session.user?.name || "A donor"} has accepted your emergency request for ${request.patientName}. Pay ₹20 to view their contact details.`,
+          link: `/dashboard/requests/${request.id}`
+        }
+      });
+    }
+
     revalidatePath("/dashboard/requests");
     return { success: true };
   } catch (error: any) {

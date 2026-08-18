@@ -116,7 +116,13 @@ export default function EditRequestClient({ request }: { request: any }) {
             </button>
             <button 
               type="button"
-              onClick={() => setStatus("COMPLETED")}
+              onClick={() => {
+                if ((request.status === "ACCEPTED" || status === "ACCEPTED") && request.acceptedBy) {
+                  alert("Please use the 'Mark Donation as Completed' button below to review the donor.");
+                } else {
+                  setStatus("COMPLETED");
+                }
+              }}
               className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${status === "COMPLETED" ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'bg-gray-800 dark:bg-slate-800 text-gray-400 hover:bg-gray-700 dark:hover:bg-slate-700 border border-gray-700 dark:border-slate-700'}`}
             >
               COMPLETED
@@ -125,7 +131,7 @@ export default function EditRequestClient({ request }: { request: any }) {
         </div>
 
         {/* Accepted Donor Section */}
-        {request.status === "ACCEPTED" && request.acceptedBy && (
+        {(request.status === "ACCEPTED" || request.status === "COMPLETED") && request.acceptedBy && (
           <div className="bg-red-50/50 dark:bg-red-950/20 border-b border-red-100 dark:border-red-900/30 p-8 transition-colors">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2 transition-colors">
               <CheckCircle2 className="w-6 h-6 text-green-500" /> Donor Found!
@@ -179,7 +185,7 @@ export default function EditRequestClient({ request }: { request: any }) {
                     </div>
                   </div>
                 </div>
-                {status !== "COMPLETED" && (
+                {status !== "COMPLETED" ? (
                   <div className="mt-6 pt-6 border-t border-green-100 dark:border-green-900/30 flex justify-end transition-colors">
                     <button
                       onClick={handleComplete}
@@ -189,6 +195,19 @@ export default function EditRequestClient({ request }: { request: any }) {
                     >
                       {completing ? <Loader2 className="w-5 h-5 animate-spin" /> : <CheckCircle2 className="w-5 h-5" />}
                       Mark Donation as Completed
+                    </button>
+                  </div>
+                ) : (
+                  <div className="mt-6 pt-6 border-t border-green-100 dark:border-green-900/30 flex justify-end transition-colors">
+                    <button
+                      onClick={() => {
+                        setDonorIdToReview(request.acceptedBy.id);
+                        setShowReviewModal(true);
+                      }}
+                      type="button"
+                      className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-md shadow-blue-200 flex items-center gap-2"
+                    >
+                      Rate & Review Donor
                     </button>
                   </div>
                 )}
