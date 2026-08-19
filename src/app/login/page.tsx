@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 import { signIn } from "next-auth/react";
 import logo from "@/assets/logo.png";
 import banner from "@/assets/hero-banner.png";
@@ -72,7 +72,10 @@ export default function LoginPage() {
 
       {/* Right side - Login Form */}
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8 py-12 lg:py-0 relative">
-        <div className="w-full max-w-md relative z-10">
+        <div className="w-full max-w-md relative z-10 flex flex-col">
+          <Link href="/" className="inline-flex items-center text-sm font-bold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors mb-4 self-start">
+            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Home
+          </Link>
           <div className="bg-white dark:bg-slate-900 p-8 sm:p-10 rounded-[2rem] shadow-[0_20px_60px_rgba(0,0,0,0.06)] border border-gray-100 dark:border-slate-800 transition-colors">
             <div className="flex flex-col items-center mb-10">
               <div className="mb-6 h-16 w-auto flex items-center justify-center">
