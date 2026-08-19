@@ -49,21 +49,7 @@ export default function Navbar({ session, unreadCount = 0 }: { session: any, unr
               <Link href="/" className="text-primary-red font-bold">
                 Home
               </Link>
-              <Link href="/search" className="text-gray-600 dark:text-gray-300 hover:text-primary-red dark:hover:text-primary-red font-medium transition-colors">
-                Donors
-              </Link>
-              <Link href="/blood-banks" className="text-gray-600 dark:text-gray-300 hover:text-primary-red dark:hover:text-primary-red font-medium transition-colors">
-                Blood Banks
-              </Link>
-              <Link href="/hospitals" className="text-gray-600 dark:text-gray-300 hover:text-primary-red dark:hover:text-primary-red font-medium transition-colors">
-                Hospitals
-              </Link>
-              <Link href="/requests" className="text-gray-600 dark:text-gray-300 hover:text-primary-red dark:hover:text-primary-red font-medium transition-colors">
-                Requests
-              </Link>
-              <Link href="/events" className="text-gray-600 dark:text-gray-300 hover:text-primary-red dark:hover:text-primary-red font-medium transition-colors">
-                Events
-              </Link>
+
               <Link href="/about" className="text-gray-600 dark:text-gray-300 hover:text-primary-red dark:hover:text-primary-red font-medium transition-colors">
                 About Us
               </Link>
