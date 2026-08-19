@@ -19,6 +19,7 @@ import heroImg from "../../public/assets/new_hero_illustration.jpg";
 import story1 from "../../public/assets/success_story_1.jpg";
 import story2 from "../../public/assets/success_story_2.jpg";
 import story3 from "../../public/assets/success_story_3.jpg";
+import founderImg from "../../public/founder.jpg";
 
 import { prisma } from "@/lib/prisma";
 
@@ -379,10 +380,11 @@ export default async function Home() {
             <div className="absolute top-0 left-0 w-64 h-64 bg-red-100/50 dark:bg-red-900/10 rounded-full blur-3xl pointer-events-none -translate-x-1/2 -translate-y-1/2"></div>
             
             <div className="w-48 h-48 md:w-56 md:h-56 shrink-0 relative rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl z-10">
-              <img 
-                src="/founder.jpg" 
+              <Image 
+                src={founderImg} 
                 alt="Pankaj Sadiyal - Founder & CEO" 
-                className="w-full h-full object-cover object-[center_20%]"
+                fill
+                className="object-cover object-[center_20%]"
               />
             </div>
             
