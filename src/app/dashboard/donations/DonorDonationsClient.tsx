@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, History, Droplet, Heart } from "lucide-react";
+import { ArrowLeft, History, Droplet, Heart, Award } from "lucide-react";
 import Link from "next/link";
 import PageTransition from "@/components/PageTransition";
 
@@ -61,7 +61,7 @@ export default function DonorDonationsClient({
                      <p className="text-[13px] text-gray-500 dark:text-gray-400 font-medium transition-colors">{new Date(donation.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'long', year: 'numeric' })}</p>
                    </div>
                 </div>
-                <div className="flex items-center gap-8 md:gap-12 pl-[68px] md:pl-0">
+                <div className="flex flex-wrap items-center gap-6 md:gap-8 pl-[68px] md:pl-0">
                   <div className="text-left md:text-center">
                     <p className="text-[11px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-wider mb-0.5 transition-colors">Donation Type</p>
                     <p className="text-[15px] font-black text-gray-900 dark:text-white transition-colors">{donation.donationType}</p>
@@ -70,6 +70,13 @@ export default function DonorDonationsClient({
                     <p className="text-[11px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-wider mb-0.5 transition-colors">Units</p>
                     <p className="text-[15px] font-black text-primary-red">{donation.units}</p>
                   </div>
+                  <Link 
+                    href={`/certificate/${donation.id}`}
+                    className="flex items-center gap-1.5 bg-yellow-50 hover:bg-yellow-100 dark:bg-yellow-900/20 dark:hover:bg-yellow-900/40 text-yellow-700 dark:text-yellow-500 font-bold py-2 px-4 rounded-xl transition-colors border border-yellow-200/50 dark:border-yellow-700/50 text-sm ml-auto"
+                  >
+                    <Award className="w-4 h-4" />
+                    <span>Certificate</span>
+                  </Link>
                 </div>
               </div>
             ))}
