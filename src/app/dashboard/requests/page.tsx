@@ -52,9 +52,14 @@ export default async function ManageRequestsPage() {
                       <span className="bg-red-500 text-white text-[10px] uppercase tracking-wider font-black px-2 py-0.5 rounded-full">Emergency</span>
                     )}
                   </div>
-                  <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 font-medium transition-colors">
-                    <span className="flex items-center gap-1"><MapPin className="w-4 h-4" /> {req.hospital}, {req.city}</span>
-                    <span className="flex items-center gap-1"><Clock className="w-4 h-4" /> {req.units} Units Needed</span>
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-sm text-gray-500 dark:text-gray-400 font-medium transition-colors mt-2 sm:mt-0">
+                    <span className="flex items-start sm:items-center gap-1.5">
+                      <MapPin className="w-4 h-4 shrink-0 mt-0.5 sm:mt-0" /> 
+                      <span className="line-clamp-2">{req.hospital}, {req.city}</span>
+                    </span>
+                    <span className="flex items-center gap-1.5 shrink-0">
+                      <Clock className="w-4 h-4" /> {req.units} Units Needed
+                    </span>
                   </div>
                 </div>
               </div>
