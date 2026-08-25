@@ -36,7 +36,7 @@ export default async function PaymentsPage() {
       amount: 500,
       currency: "INR",
       status: "COMPLETED",
-      stripeSessionId: null,
+      providerOrderId: null,
       type: "ADD_FUNDS",
       createdAt: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) // 1 week ago
     });
