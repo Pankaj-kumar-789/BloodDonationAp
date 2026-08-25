@@ -410,35 +410,35 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
                             className="p-6 bg-gradient-to-br from-gray-50 to-white dark:from-slate-800 dark:to-slate-800 border border-gray-200 dark:border-slate-700 rounded-3xl overflow-hidden shadow-sm transition-colors"
                           >
                             <h3 className="font-bold text-gray-900 dark:text-white mb-5 flex items-center gap-2 text-lg transition-colors"><ShieldCheck className="w-6 h-6 text-green-500" /> Secure Contact Details</h3>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 gap-3">
                               {selectedDonor.phone ? (
-                                <a href={`tel:${selectedDonor.phone}`} className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm flex items-center gap-4 hover:shadow-md hover:border-primary-red/30 transition-all group cursor-pointer">
+                                <a href={`tel:${selectedDonor.phone}`} className="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm flex items-center gap-4 hover:shadow-md hover:border-primary-red/30 transition-all group cursor-pointer">
                                   <div className="w-12 h-12 bg-red-50 dark:bg-red-950/40 text-primary-red dark:text-red-400 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                                     <Phone className="w-6 h-6" />
                                   </div>
-                                  <div className="min-w-0">
+                                  <div className="min-w-0 flex-1">
                                     <div className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider mb-1 transition-colors">Call Donor</div>
-                                    <div className="font-black text-gray-900 dark:text-white text-lg truncate transition-colors group-hover:text-primary-red">{selectedDonor.phone}</div>
+                                    <div className="font-black text-gray-900 dark:text-white text-lg transition-colors group-hover:text-primary-red">{selectedDonor.phone}</div>
                                   </div>
                                 </a>
                               ) : (
-                                <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm flex items-center gap-4 transition-all group opacity-70">
+                                <div className="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm flex items-center gap-4 transition-all group opacity-70">
                                   <div className="w-12 h-12 bg-gray-50 dark:bg-gray-800/40 text-gray-400 dark:text-gray-500 rounded-xl flex items-center justify-center shrink-0">
                                     <Phone className="w-6 h-6" />
                                   </div>
-                                  <div className="min-w-0">
+                                  <div className="min-w-0 flex-1">
                                     <div className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider mb-1 transition-colors">Phone Number</div>
-                                    <div className="font-black text-gray-900 dark:text-white text-lg truncate transition-colors">Not provided</div>
+                                    <div className="font-black text-gray-900 dark:text-white text-lg transition-colors">Not provided</div>
                                   </div>
                                 </div>
                               )}
-                              <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm flex items-center gap-4 hover:shadow-md transition-all group">
+                              <div className="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm flex items-center gap-4 hover:shadow-md transition-all group">
                                 <div className="w-12 h-12 bg-red-50 dark:bg-red-950/40 text-primary-red dark:text-red-400 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                                   <Mail className="w-6 h-6" />
                                 </div>
-                                <div className="min-w-0">
+                                <div className="min-w-0 flex-1">
                                   <div className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider mb-1 transition-colors">Email Address</div>
-                                  <div className="font-black text-gray-900 dark:text-white text-lg truncate transition-colors" title={selectedDonor.email}>{selectedDonor.email}</div>
+                                  <div className="font-black text-gray-900 dark:text-white text-base sm:text-lg break-all transition-colors leading-tight" title={selectedDonor.email}>{selectedDonor.email}</div>
                                 </div>
                               </div>
                             </div>
