@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image, { StaticImageData } from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -15,6 +15,11 @@ export type TeamMember = {
   facebook: string;
 };
 
+const swipeConfidenceThreshold = 10000;
+const swipePower = (offset: number, velocity: number) => {
+  return Math.abs(offset) * velocity;
+};
+
 export default function TeamSlider({ members }: { members: TeamMember[] }) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -25,6 +30,17 @@ export default function TeamSlider({ members }: { members: TeamMember[] }) {
   const prevSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex === 0 ? members.length - 1 : prevIndex - 1));
   };
+
+  // Auto-play functionality
+  useEffect(() => {
+    if (members.length <= 1) return;
+    
+    const timer = setInterval(() => {
+      nextSlide();
+    }, 5000); // 5 seconds per slide
+    
+    return () => clearInterval(timer);
+  }, [currentIndex, members.length]);
 
   return (
     <div className="flex flex-col md:flex-row items-center gap-12 lg:gap-16 max-w-4xl mx-auto bg-gray-50 dark:bg-slate-950 p-8 md:p-12 rounded-[3rem] border border-gray-100 dark:border-slate-800 shadow-sm relative overflow-hidden transition-colors min-h-[400px]">
@@ -52,11 +68,23 @@ export default function TeamSlider({ members }: { members: TeamMember[] }) {
       <AnimatePresence mode="wait">
         <motion.div 
           key={currentIndex}
-          initial={{ opacity: 0, x: 20 }}
+          initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.3 }}
-          className="w-full flex flex-col md:flex-row items-center gap-12 lg:gap-16 relative z-10"
+          exit={{ opacity: 0, x: -50 }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
+          drag="x"
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={1}
+          onDragEnd={(e, { offset, velocity }) => {
+            const swipe = swipePower(offset.x, velocity.x);
+
+            if (swipe < -swipeConfidenceThreshold) {
+              nextSlide();
+            } else if (swipe > swipeConfidenceThreshold) {
+              prevSlide();
+            }
+          }}
+          className="w-full flex flex-col md:flex-row items-center gap-12 lg:gap-16 relative z-10 cursor-grab active:cursor-grabbing"
         >
           <div className="w-48 h-48 md:w-56 md:h-56 shrink-0 relative rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-xl">
             <Image 
