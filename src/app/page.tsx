@@ -385,8 +385,8 @@ export default async function Home() {
               image: founderImg,
               bio: "\"I started RaktaSetu with a simple vision: no life should be lost due to a lack of blood availability. By bridging the gap between willing donors and those in critical need, we're building a community where saving a life is as simple as a click.\"",
               linkedin: "https://www.linkedin.com/in/pankaj-sadyal-49572a87",
-              instagram: "#",
-              facebook: "#"
+              instagram: "https://www.instagram.com/pankajsadyal?igsi=MXV0NTE2MXcyMndl",
+              facebook: "https://www.facebook.com/share/1DQ5pb9jP7/?mibextid=wwXIfr"
             },
             {
               name: "Project Manager",
