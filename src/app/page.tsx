@@ -394,10 +394,76 @@ export default async function Home() {
               <p className="text-gray-600 dark:text-gray-400 font-medium leading-relaxed mb-6">
                 "I started RaktaSetu with a simple vision: no life should be lost due to a lack of blood availability. By bridging the gap between willing donors and those in critical need, we're building a community where saving a life is as simple as a click."
               </p>
-              <div className="flex items-center justify-center md:justify-start gap-4">
-                <a href="https://www.linkedin.com/in/pankaj-sadyal-49572a87" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-[#0077b5] dark:hover:text-[#0077b5] hover:border-[#0077b5] transition-all shadow-sm">
+              <div className="flex items-center justify-center md:justify-start gap-4 mt-2">
+                {/* LinkedIn */}
+                <a href="https://www.linkedin.com/in/pankaj-sadyal-49572a87" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#0077b5] text-white flex items-center justify-center hover:scale-110 transition-all shadow-md shadow-blue-200 dark:shadow-none group">
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                 </a>
+                {/* Instagram */}
+                <a href="#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] text-white flex items-center justify-center hover:scale-110 transition-all shadow-md shadow-pink-200 dark:shadow-none group">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                </a>
+                {/* Facebook */}
+                <a href="#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:bg-[#166FE5] hover:scale-110 transition-all shadow-md shadow-blue-200 dark:shadow-none group">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 6. Company Banner */}
+      <section className="py-16 bg-gray-50 dark:bg-slate-950 border-t border-gray-100 dark:border-slate-800 transition-colors">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white dark:bg-[#1C1C1C] rounded-[2rem] p-8 md:p-10 text-gray-900 dark:text-white relative overflow-hidden shadow-2xl border border-gray-100 dark:border-[#333] transition-colors">
+            {/* Background elements */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl pointer-events-none translate-x-1/3 -translate-y-1/3"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl pointer-events-none -translate-x-1/3 translate-y-1/3"></div>
+            
+            <div className="relative z-10">
+              <div className="flex items-center gap-3 mb-1">
+                <svg className="w-6 h-6 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>
+                <h2 className="text-2xl font-bold tracking-tight">ParamSetu Innovations</h2>
+              </div>
+              <p className="text-gray-500 dark:text-gray-400 font-medium mb-8 text-[13px] transition-colors">Building intelligent software solutions that bridge ideas with innovation.</p>
+              
+              <div className="w-full h-px bg-gray-100 dark:bg-white/10 mb-8 transition-colors"></div>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                <div className="bg-gray-50 dark:bg-[#242424] rounded-2xl p-4 flex flex-col items-center justify-center gap-2 text-center border border-gray-100 dark:border-white/5 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors">
+                  <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors">Software & AI</span>
+                </div>
+                <div className="bg-gray-50 dark:bg-[#242424] rounded-2xl p-4 flex flex-col items-center justify-center gap-2 text-center border border-gray-100 dark:border-white/5 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors">
+                  <svg className="w-5 h-5 text-blue-600 dark:text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01"/><path d="M16 6h.01"/><path d="M12 6h.01"/><path d="M12 10h.01"/><path d="M12 14h.01"/><path d="M16 10h.01"/><path d="M16 14h.01"/><path d="M8 10h.01"/><path d="M8 14h.01"/></svg>
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors">Scalable Company</span>
+                </div>
+                <div className="bg-gray-50 dark:bg-[#242424] rounded-2xl p-4 flex flex-col items-center justify-center gap-2 text-center border border-gray-100 dark:border-white/5 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors">
+                  <svg className="w-5 h-5 text-purple-600 dark:text-purple-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300 transition-colors">Future-Ready Brand</span>
+                </div>
+              </div>
+              
+              <div className="w-full h-px bg-gray-100 dark:bg-white/10 mb-8 transition-colors"></div>
+              
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <svg className="w-[18px] h-[18px] text-gray-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="10" r="3"/><path d="M7 20.662V19a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v1.662"/></svg>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm transition-colors"><span className="font-bold text-gray-900 dark:text-white">Founder:</span> Pankaj Sadiyal</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <svg className="w-[18px] h-[18px] text-gray-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm transition-colors"><span className="font-bold text-gray-900 dark:text-white">Vision:</span> Creating innovative software products that solve real-world problems.</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <svg className="w-[18px] h-[18px] text-gray-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm transition-colors"><span className="font-bold text-gray-900 dark:text-white">Current Product:</span> RaktaSetu – Blood Donation Platform</p>
+                </div>
+                <div className="flex items-start gap-3">
+                  <svg className="w-[18px] h-[18px] text-gray-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                  <p className="text-gray-600 dark:text-gray-300 text-sm transition-colors"><span className="font-bold text-gray-900 dark:text-white">Future Focus:</span> AI • SaaS • Web • Mobile • Cloud Solutions</p>
+                </div>
               </div>
             </div>
           </div>
