@@ -42,15 +42,79 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
     setError("");
     setIsUnlocking(prev => ({ ...prev, [donorId]: true }));
     
-    const result = await unlockContactAction(donorId);
-    
-    if (result.error) {
-      setError(result.error);
-    } else {
-      router.refresh(); 
+    try {
+      // 1. Ask our backend to create a Razorpay Order
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ donorId })
+      });
+      
+      let data;
+      const contentType = res.headers.get("content-type");
+      if (contentType && contentType.includes("application/json")) {
+        data = await res.json();
+      } else {
+        const text = await res.text();
+        console.error("Non-JSON Response:", text);
+        throw new Error("Server returned an invalid response. Did you restart the dev server after installing Razorpay?");
+      }
+  
+      if (!res.ok) throw new Error(data.message || "Failed to create order");
+  
+      // 2. Open the Razorpay Checkout Popup
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: data.amount, 
+        currency: data.currency,
+        name: "RaktaSetu",
+        description: "Secure Contact Unlock Fee",
+        image: "/brand-logo.png", // Adds your logo to the popup
+        order_id: data.orderId,
+        handler: async function (response: any) {
+          setIsUnlocking(prev => ({ ...prev, [donorId]: true }));
+          
+          try {
+            // Verify payment on our backend
+            const verifyRes = await fetch("/api/verify-payment", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                donorId: donorId
+              })
+            });
+            
+            if (!verifyRes.ok) throw new Error("Payment verification failed");
+            
+            // Refresh UI to show unlocked contact
+            router.refresh();
+          } catch (err) {
+            setError("Payment successful, but failed to unlock contact. Please contact support.");
+          } finally {
+            setIsUnlocking(prev => ({ ...prev, [donorId]: false }));
+          }
+        },
+        theme: { color: "#C62121" },
+        modal: {
+          ondismiss: function() {
+            setIsUnlocking(prev => ({ ...prev, [donorId]: false }));
+          }
+        }
+      };
+  
+      const rzp = new (window as any).Razorpay(options);
+      rzp.on('payment.failed', function (response: any){
+        setError("Payment failed. Please try again.");
+      });
+      rzp.open();
+      
+    } catch (err: any) {
+      setError(err.message || "Failed to initiate payment");
+      setIsUnlocking(prev => ({ ...prev, [donorId]: false }));
     }
-    
-    setIsUnlocking(prev => ({ ...prev, [donorId]: false }));
   };
 
   const filteredDonors = initialDonors.filter((donor) => {
@@ -181,10 +245,10 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
                         ${isSelected ? 'border-primary-red ring-1 ring-primary-red bg-red-50/50 dark:bg-red-950/40' : 'bg-white dark:bg-slate-900 border-gray-100 dark:border-slate-800'} 
                         ${!isAvailable ? 'opacity-75 grayscale-[20%]' : ''}`}
                     >
-                      <div className="flex justify-between items-start mb-3">
-                        <div className="flex items-center gap-3">
+                      <div className="flex justify-between items-start mb-3 gap-2">
+                        <div className="flex items-center gap-3 min-w-0 flex-1">
                           {/* User Avatar */}
-                          <div className="relative">
+                          <div className="relative shrink-0">
                             {donor.image ? (
                               <img src={donor.image} alt={donor.name} className="w-12 h-12 rounded-xl object-cover border border-gray-200 dark:border-slate-700" />
                             ) : (
@@ -192,19 +256,21 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
                                 <UserIcon className="w-6 h-6" />
                               </div>
                             )}
-                            <div className="absolute -bottom-2 -right-2 bg-red-50 dark:bg-red-950/50 text-primary-red dark:text-red-400 border border-white dark:border-slate-900 text-[10px] font-bold px-1.5 py-0.5 rounded-md shadow-sm">
-                              {bloodGroup}
-                            </div>
                           </div>
 
-                          <div>
-                            <h3 className="font-bold text-gray-900 dark:text-white line-clamp-1">{donor.name}</h3>
-                            <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 gap-1 mt-0.5 font-medium">
-                              <MapPin className="w-3.5 h-3.5" /> {city} • 2.4 KM
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-2 mb-0.5 flex-wrap sm:flex-nowrap">
+                              <h3 className="font-bold text-gray-900 dark:text-white truncate">{donor.name}</h3>
+                              <span className="bg-gradient-to-r from-primary-red to-rose-600 text-white text-[10px] sm:text-xs font-black px-2 py-0.5 rounded-md shadow-sm shrink-0 flex items-center gap-1">
+                                <Droplet className="w-3 h-3 fill-white" /> {bloodGroup}
+                              </span>
+                            </div>
+                            <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 gap-1 mt-0.5 font-medium truncate">
+                              <MapPin className="w-3.5 h-3.5 shrink-0" /> <span className="truncate">{city} • 2.4 KM</span>
                             </div>
                           </div>
                         </div>
-                        <div className={`flex px-2 py-1 rounded-md text-xs font-bold items-center gap-1.5 ${isAvailable ? 'bg-green-50 dark:bg-green-950/30 text-green-700 dark:text-green-400' : 'bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-400'}`}>
+                        <div className={`flex px-2 py-1 rounded-md text-[10px] sm:text-xs font-bold items-center gap-1.5 shrink-0 ${isAvailable ? 'bg-green-50 dark:bg-green-950/30 text-green-700 dark:text-green-400' : 'bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-400'}`}>
                           <span className={`w-1.5 h-1.5 rounded-full ${isAvailable ? 'bg-green-500' : 'bg-gray-400 dark:bg-gray-500'}`}></span> 
                           {isAvailable ? 'Available' : 'Unavailable'}
                         </div>

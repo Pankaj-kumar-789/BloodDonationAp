@@ -102,16 +102,16 @@ export default function EditRequestClient({ request }: { request: any }) {
 
       <div className="bg-white dark:bg-slate-900 rounded-3xl border border-gray-100 dark:border-slate-800 shadow-sm overflow-hidden relative z-10 transition-colors">
         {/* Header */}
-        <div className="bg-gradient-to-r from-gray-900 to-gray-800 dark:from-slate-800 dark:to-slate-900 px-8 py-6 text-white flex justify-between items-center transition-colors">
+        <div className="bg-gradient-to-r from-gray-900 to-gray-800 dark:from-slate-800 dark:to-slate-900 px-6 sm:px-8 py-6 text-white flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 sm:gap-2 transition-colors">
           <div>
             <h1 className="text-2xl font-bold">Manage Request</h1>
             <p className="text-gray-400 mt-1">Update patient details, change status, or remove request.</p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 w-full sm:w-auto">
             <button 
               type="button"
               onClick={() => setStatus("PENDING")}
-              className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${status === "PENDING" ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'bg-gray-800 dark:bg-slate-800 text-gray-400 hover:bg-gray-700 dark:hover:bg-slate-700 border border-gray-700 dark:border-slate-700'}`}
+              className={`flex-1 sm:flex-none px-4 py-2 rounded-xl text-sm font-bold transition-all ${status === "PENDING" ? 'bg-amber-500 text-white shadow-lg shadow-amber-500/20' : 'bg-gray-800 dark:bg-slate-800 text-gray-400 hover:bg-gray-700 dark:hover:bg-slate-700 border border-gray-700 dark:border-slate-700'}`}
             >
               PENDING
             </button>
@@ -124,7 +124,7 @@ export default function EditRequestClient({ request }: { request: any }) {
                   setStatus("COMPLETED");
                 }
               }}
-              className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${status === "COMPLETED" ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'bg-gray-800 dark:bg-slate-800 text-gray-400 hover:bg-gray-700 dark:hover:bg-slate-700 border border-gray-700 dark:border-slate-700'}`}
+              className={`flex-1 sm:flex-none px-4 py-2 rounded-xl text-sm font-bold transition-all ${status === "COMPLETED" ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/20' : 'bg-gray-800 dark:bg-slate-800 text-gray-400 hover:bg-gray-700 dark:hover:bg-slate-700 border border-gray-700 dark:border-slate-700'}`}
             >
               COMPLETED
             </button>

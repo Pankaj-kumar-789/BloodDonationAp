@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
-import Stripe from "stripe";
+import Razorpay from "razorpay";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2024-06-20" as any,
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID!,
+  key_secret: process.env.RAZORPAY_KEY_SECRET!,
 });
 
 export async function POST(req: Request) {
@@ -16,48 +17,60 @@ export async function POST(req: Request) {
 
     const { donorId } = await req.json();
 
-    const donorProfile = await prisma.donorProfile.findUnique({
-      where: { id: donorId },
+    let donorProfile = await prisma.donorProfile.findUnique({
+      where: { userId: donorId },
       include: { user: true }
     });
 
     if (!donorProfile) {
-      return NextResponse.json({ message: "Donor not found" }, { status: 404 });
+      // Create a default profile if they don't have one yet
+      donorProfile = await prisma.donorProfile.create({
+        data: {
+          userId: donorId,
+          bloodGroup: "O_POS",
+          city: "Unknown",
+          state: "Unknown",
+        },
+        include: { user: true }
+      });
     }
 
-    // Platform fee ₹20 + Donor Fee
-    const platformFee = 20;
-    const donorFee = donorProfile.contactFee || 0;
-    const totalAmount = platformFee + donorFee;
+    // Fixed fee of ₹20
+    const totalAmount = 20;
 
-    const stripeSession = await stripe.checkout.sessions.create({
-      payment_method_types: ["card"],
-      line_items: [
-        {
-          price_data: {
-            currency: "inr",
-            product_data: {
-              name: `Unlock Contact - ${donorProfile.user.name}`,
-              description: `Blood Group: ${donorProfile.bloodGroup.replace("_", " ")}`,
-            },
-            unit_amount: totalAmount * 100, // Stripe expects amounts in paise
-          },
-          quantity: 1,
-        },
-      ],
-      mode: "payment",
-      success_url: `${process.env.NEXTAUTH_URL}/dashboard/success?session_id={CHECKOUT_SESSION_ID}&donor=${donorId}`,
-      cancel_url: `${process.env.NEXTAUTH_URL}/search`,
-      metadata: {
+    // Create a Razorpay order
+    const options = {
+      amount: totalAmount * 100, // Razorpay expects amount in paise
+      currency: "INR",
+      receipt: `receipt_order_${Date.now()}`,
+      notes: {
         userId: session.user.id,
-        donorId: donorId,
+        donorId: donorProfile.id, // Must be DonorProfile ID, not User ID
         type: "CONTACT_UNLOCK"
-      },
+      }
+    };
+
+    const order = await razorpay.orders.create(options);
+
+    // Save the transaction in the database
+    await prisma.transaction.create({
+      data: {
+        userId: session.user.id,
+        amount: totalAmount,
+        providerOrderId: order.id,
+        type: "CONTACT_UNLOCK",
+        status: "PENDING",
+      }
     });
 
-    return NextResponse.json({ id: stripeSession.id });
+    return NextResponse.json({ 
+      orderId: order.id, 
+      amount: order.amount,
+      currency: order.currency
+    });
   } catch (error: any) {
     console.error("Checkout Error:", error);
     return NextResponse.json({ message: error.message }, { status: 500 });
   }
 }
+

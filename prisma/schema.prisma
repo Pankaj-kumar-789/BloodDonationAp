@@ -209,7 +209,7 @@ model Transaction {
   amount          Float
   currency        String        @default("INR")
   status          PaymentStatus @default(PENDING)
-  stripeSessionId String?       @unique
+  providerOrderId String?       @unique
   type            String        // "CONTACT_UNLOCK"
   createdAt       DateTime      @default(now())
 }
