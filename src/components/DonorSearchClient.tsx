@@ -288,9 +288,15 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
                       <div className="md:hidden">
                         {isAvailable ? (
                           isUnlocked ? (
-                            <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-900/30 text-green-700 dark:text-green-400 p-3 rounded-xl">
-                              <div className="flex items-center gap-2 font-bold text-sm mb-1"><Phone className="w-4 h-4" /> {donor.phone || "No phone added"}</div>
-                              <div className="flex items-center gap-2 text-xs font-medium"><Mail className="w-4 h-4" /> {donor.email}</div>
+                            <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-900/30 text-green-700 dark:text-green-400 p-3 rounded-xl flex flex-col gap-2">
+                              {donor.phone ? (
+                                <a href={`tel:${donor.phone}`} className="flex items-center gap-2 font-bold text-sm bg-green-100 dark:bg-green-900/50 p-2 rounded-lg hover:bg-green-200 dark:hover:bg-green-800/60 transition-colors w-fit">
+                                  <Phone className="w-4 h-4" /> Call: {donor.phone}
+                                </a>
+                              ) : (
+                                <div className="flex items-center gap-2 font-bold text-sm px-2 text-green-700/70 dark:text-green-400/70"><Phone className="w-4 h-4" /> No phone added</div>
+                              )}
+                              <div className="flex items-center gap-2 text-xs font-medium px-2"><Mail className="w-4 h-4" /> {donor.email}</div>
                             </div>
                           ) : (
                             <button 
@@ -405,15 +411,27 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
                           >
                             <h3 className="font-bold text-gray-900 dark:text-white mb-5 flex items-center gap-2 text-lg transition-colors"><ShieldCheck className="w-6 h-6 text-green-500" /> Secure Contact Details</h3>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                              <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm flex items-center gap-4 hover:shadow-md transition-all group">
-                                <div className="w-12 h-12 bg-red-50 dark:bg-red-950/40 text-primary-red dark:text-red-400 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                                  <Phone className="w-6 h-6" />
+                              {selectedDonor.phone ? (
+                                <a href={`tel:${selectedDonor.phone}`} className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm flex items-center gap-4 hover:shadow-md hover:border-primary-red/30 transition-all group cursor-pointer">
+                                  <div className="w-12 h-12 bg-red-50 dark:bg-red-950/40 text-primary-red dark:text-red-400 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                                    <Phone className="w-6 h-6" />
+                                  </div>
+                                  <div className="min-w-0">
+                                    <div className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider mb-1 transition-colors">Call Donor</div>
+                                    <div className="font-black text-gray-900 dark:text-white text-lg truncate transition-colors group-hover:text-primary-red">{selectedDonor.phone}</div>
+                                  </div>
+                                </a>
+                              ) : (
+                                <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm flex items-center gap-4 transition-all group opacity-70">
+                                  <div className="w-12 h-12 bg-gray-50 dark:bg-gray-800/40 text-gray-400 dark:text-gray-500 rounded-xl flex items-center justify-center shrink-0">
+                                    <Phone className="w-6 h-6" />
+                                  </div>
+                                  <div className="min-w-0">
+                                    <div className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider mb-1 transition-colors">Phone Number</div>
+                                    <div className="font-black text-gray-900 dark:text-white text-lg truncate transition-colors">Not provided</div>
+                                  </div>
                                 </div>
-                                <div className="min-w-0">
-                                  <div className="text-xs text-gray-500 dark:text-gray-400 font-bold uppercase tracking-wider mb-1 transition-colors">Phone Number</div>
-                                  <div className="font-black text-gray-900 dark:text-white text-lg truncate transition-colors">{selectedDonor.phone || "Not provided"}</div>
-                                </div>
-                              </div>
+                              )}
                               <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm flex items-center gap-4 hover:shadow-md transition-all group">
                                 <div className="w-12 h-12 bg-red-50 dark:bg-red-950/40 text-primary-red dark:text-red-400 rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                                   <Mail className="w-6 h-6" />

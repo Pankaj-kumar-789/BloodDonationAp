@@ -58,19 +58,19 @@ export default async function BloodBanksPage() {
                   </div>
                 </div>
                 
-                <div className="grid grid-cols-2 gap-4 mt-6">
-                  <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-3 flex items-center gap-3 transition-colors">
-                    <MapPin className="w-4 h-4 text-gray-400" />
-                    <div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mt-6">
+                  <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-3 flex items-center gap-3 transition-colors min-w-0">
+                    <MapPin className="w-4 h-4 text-gray-400 shrink-0" />
+                    <div className="min-w-0 flex-1">
                       <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Location</p>
-                      <p className="text-[13px] font-bold text-gray-900 dark:text-white transition-colors">{bank.city}, {bank.state}</p>
+                      <p className="text-[13px] font-bold text-gray-900 dark:text-white transition-colors truncate">{bank.city}, {bank.state}</p>
                     </div>
                   </div>
-                  <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-3 flex items-center gap-3 transition-colors">
-                    <Phone className="w-4 h-4 text-gray-400" />
-                    <div>
+                  <div className="bg-gray-50 dark:bg-slate-800 rounded-xl p-3 flex items-center gap-3 transition-colors min-w-0">
+                    <Phone className="w-4 h-4 text-gray-400 shrink-0" />
+                    <div className="min-w-0 flex-1">
                       <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Contact</p>
-                      <p className="text-[13px] font-bold text-gray-900 dark:text-white transition-colors">{bank.user.phone || "Not provided"}</p>
+                      <p className="text-[13px] font-bold text-gray-900 dark:text-white transition-colors truncate">{bank.user.phone || "Not provided"}</p>
                     </div>
                   </div>
                 </div>
