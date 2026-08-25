@@ -5,7 +5,7 @@ import { ThemeProvider } from "./ThemeProvider";
 
 export function Providers({ children, session }: { children: React.ReactNode, session?: any }) {
   return (
-    <ThemeProvider attribute="class" defaultTheme="system" enableSystem={true}>
+    <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={true}>
       <SessionProvider session={session}>{children}</SessionProvider>
     </ThemeProvider>
   );
