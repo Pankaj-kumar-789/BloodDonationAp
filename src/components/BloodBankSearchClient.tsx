@@ -146,9 +146,15 @@ export default function BloodBankSearchClient({ bloodBanks }: { bloodBanks: any[
                     </div>
                     
                     <div className="space-y-3 pt-4 border-t border-gray-100 dark:border-slate-800 transition-colors">
-                      <div className="flex justify-between items-center text-sm bg-gray-50 dark:bg-slate-800/50 p-2.5 rounded-lg transition-colors">
-                        <span className="text-gray-500 dark:text-gray-400 flex items-center gap-2"><Phone className="w-4 h-4" /> Contact</span>
-                        <span className="font-bold text-gray-900 dark:text-white">{bank.user?.phone || "N/A"}</span>
+                      <div className="flex justify-between items-center text-sm bg-gray-50 dark:bg-slate-800/50 p-2.5 rounded-lg transition-colors group cursor-pointer hover:bg-red-50 dark:hover:bg-red-950/30">
+                        <span className="text-gray-500 dark:text-gray-400 flex items-center gap-2"><Phone className="w-4 h-4 group-hover:text-primary-red transition-colors" /> Call Now</span>
+                        {bank.user?.phone ? (
+                          <a href={`tel:${bank.user?.phone}`} className="font-bold text-primary-red dark:text-red-400 underline decoration-primary-red/40 underline-offset-2 group-hover:text-red-600 dark:group-hover:text-red-300 transition-colors">
+                            {bank.user.phone}
+                          </a>
+                        ) : (
+                          <span className="font-bold text-gray-900 dark:text-white">N/A</span>
+                        )}
                       </div>
                       <div className="flex justify-between items-center text-sm bg-gray-50 dark:bg-slate-800/50 p-2.5 rounded-lg transition-colors">
                         <span className="text-gray-500 dark:text-gray-400 flex items-center gap-2"><Mail className="w-4 h-4" /> Email</span>

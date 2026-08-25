@@ -290,8 +290,8 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
                           isUnlocked ? (
                             <div className="bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-900/30 text-green-700 dark:text-green-400 p-3 rounded-xl flex flex-col gap-2">
                               {donor.phone ? (
-                                <a href={`tel:${donor.phone}`} className="flex items-center gap-2 font-bold text-sm bg-green-100 dark:bg-green-900/50 p-2 rounded-lg hover:bg-green-200 dark:hover:bg-green-800/60 transition-colors w-fit">
-                                  <Phone className="w-4 h-4" /> Call: {donor.phone}
+                                <a href={`tel:${donor.phone}`} className="flex items-center justify-center gap-2 font-bold text-sm bg-green-500 hover:bg-green-600 text-white dark:bg-green-600 dark:hover:bg-green-700 py-2.5 px-4 rounded-xl transition-all w-full shadow-sm shadow-green-500/20">
+                                  <Phone className="w-4 h-4" /> Tap to Call: <span className="underline decoration-white/60 underline-offset-2">{donor.phone}</span>
                                 </a>
                               ) : (
                                 <div className="flex items-center gap-2 font-bold text-sm px-2 text-green-700/70 dark:text-green-400/70"><Phone className="w-4 h-4" /> No phone added</div>
