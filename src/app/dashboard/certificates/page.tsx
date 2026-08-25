@@ -1,9 +1,10 @@
-import { Award, ArrowLeft, Download, Calendar, MapPin } from "lucide-react";
+import { Award, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import PageTransition from "@/components/PageTransition";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";
+import CertificateCard from "@/components/CertificateCard";
 
 export default async function CertificatesPage() {
   const session = await auth();
@@ -35,39 +36,13 @@ export default async function CertificatesPage() {
         {donations.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {donations.map((donation) => (
-              <div key={donation.id} className="relative bg-gradient-to-br from-red-50 to-white dark:from-slate-800 dark:to-slate-900/50 border border-red-100 dark:border-slate-700 rounded-3xl p-6 shadow-sm hover:shadow-md transition-all group overflow-hidden">
-                {/* Decorative background element */}
-                <div className="absolute -right-6 -top-6 text-red-500/[0.03] dark:text-white/[0.02] transform rotate-12 group-hover:scale-110 transition-transform duration-500 pointer-events-none">
-                  <Award className="w-40 h-40" />
-                </div>
-                
-                <div className="relative z-10 flex flex-col h-full">
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-14 h-14 bg-white dark:bg-slate-800 rounded-2xl shadow-sm flex items-center justify-center border border-red-50 dark:border-slate-700 shrink-0">
-                      <Award className="w-7 h-7 text-orange-500" />
-                    </div>
-                    <div>
-                      <h3 className="font-black text-gray-900 dark:text-white text-lg">Life Saver</h3>
-                      <p className="text-xs font-bold text-primary-red dark:text-red-400 uppercase tracking-wider">Certificate of Honor</p>
-                    </div>
-                  </div>
-                  
-                  <div className="space-y-3 mb-8 flex-1">
-                    <div className="flex items-center gap-2.5 text-sm text-gray-600 dark:text-gray-400 font-medium bg-white/50 dark:bg-slate-900/50 p-2.5 rounded-xl border border-white dark:border-slate-700/50">
-                      <Calendar className="w-4 h-4 text-gray-400" />
-                      {donation.date.toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
-                    </div>
-                    <div className="flex items-center gap-2.5 text-sm text-gray-600 dark:text-gray-400 font-medium bg-white/50 dark:bg-slate-900/50 p-2.5 rounded-xl border border-white dark:border-slate-700/50">
-                      <MapPin className="w-4 h-4 shrink-0 text-gray-400" />
-                      <span className="truncate">{donation.hospital}</span>
-                    </div>
-                  </div>
-                  
-                  <button className="w-full bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 hover:border-primary-red/50 dark:hover:border-red-500/50 hover:shadow-sm text-gray-900 dark:text-white font-bold py-3.5 px-4 rounded-xl text-[14px] transition-all flex items-center justify-center gap-2 group/btn">
-                    <Download className="w-4 h-4 text-gray-400 group-hover/btn:text-primary-red transition-colors" /> Download PDF
-                  </button>
-                </div>
-              </div>
+              <CertificateCard 
+                key={donation.id} 
+                donation={{
+                  ...donation,
+                  donorName: session.user.name || "Blood Donor"
+                }} 
+              />
             ))}
           </div>
         ) : (
