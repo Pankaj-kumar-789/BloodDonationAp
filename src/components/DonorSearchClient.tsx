@@ -142,7 +142,7 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
   });
 
   return (
-    <div className="flex flex-col h-[calc(100vh-80px)] md:h-[calc(100vh-96px)] bg-gray-50/50 dark:bg-slate-950 transition-colors">
+    <div className="flex flex-col flex-1 h-full bg-gray-50/50 dark:bg-slate-950 transition-colors">
       <div className="flex flex-1 overflow-hidden">
         {/* Sidebar Filters & Results */}
         <div className="w-full md:w-[400px] lg:w-[450px] bg-white dark:bg-slate-900 border-r border-gray-100 dark:border-slate-800 flex flex-col h-full overflow-hidden shrink-0 transition-colors">
@@ -398,9 +398,9 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                  <div className="flex flex-col 2xl:flex-row gap-8">
                     {/* Left Column */}
-                    <div className="lg:col-span-2 space-y-8">
+                    <div className="flex-1 min-w-0 space-y-8">
                       {/* Contact Details (if unlocked) */}
                       <AnimatePresence>
                         {isSelectedUnlocked && (
@@ -473,26 +473,32 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
                     </div>
 
                     {/* Right Column - Stats */}
-                    <div className="space-y-4">
-                      <div className="bg-gray-50 dark:bg-slate-800 rounded-3xl p-6 border border-gray-100 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-700 transition-colors shadow-sm">
-                        <div className="text-gray-500 dark:text-gray-400 text-sm font-bold uppercase tracking-wider mb-2 transition-colors">Donor Rating</div>
-                        <div className="font-black text-gray-900 dark:text-white text-4xl flex items-center gap-2 transition-colors">
-                          {selectedDonor.donorProfile?.rating || "4.9"}
-                          <Star className="w-8 h-8 text-yellow-500 fill-current" />
+                    <div className="w-full 2xl:w-72 shrink-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-1 gap-4">
+                      <div className="bg-gray-50 dark:bg-slate-800 rounded-3xl p-5 border border-gray-100 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-700 transition-colors shadow-sm flex flex-col justify-between">
+                        <div>
+                          <div className="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-wider mb-2 transition-colors truncate">Donor Rating</div>
+                          <div className="font-black text-gray-900 dark:text-white text-3xl flex items-center gap-2 transition-colors">
+                            {selectedDonor.donorProfile?.rating || "4.9"}
+                            <Star className="w-6 h-6 text-yellow-500 fill-current" />
+                          </div>
                         </div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400 mt-2 font-medium transition-colors">Based on previous donations</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-2 font-medium transition-colors">Based on previous donations</div>
                       </div>
-                      <div className="bg-gray-50 dark:bg-slate-800 rounded-3xl p-6 border border-gray-100 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-700 transition-colors shadow-sm">
-                        <div className="text-gray-500 dark:text-gray-400 text-sm font-bold uppercase tracking-wider mb-2 transition-colors">Total Donations</div>
-                        <div className="font-black text-gray-900 dark:text-white text-4xl transition-colors">
-                          0
+                      <div className="bg-gray-50 dark:bg-slate-800 rounded-3xl p-5 border border-gray-100 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-700 transition-colors shadow-sm flex flex-col justify-between">
+                        <div>
+                          <div className="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-wider mb-2 transition-colors truncate">Total Donations</div>
+                          <div className="font-black text-gray-900 dark:text-white text-3xl transition-colors">
+                            0
+                          </div>
                         </div>
-                        <div className="text-sm text-gray-500 dark:text-gray-400 mt-2 font-medium transition-colors">Lives saved through RaktaSetu</div>
+                        <div className="text-xs text-gray-500 dark:text-gray-400 mt-2 font-medium transition-colors">Lives saved through RaktaSetu</div>
                       </div>
-                      <div className="bg-gray-50 dark:bg-slate-800 rounded-3xl p-6 border border-gray-100 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-700 transition-colors shadow-sm">
-                        <div className="text-gray-500 dark:text-gray-400 text-sm font-bold uppercase tracking-wider mb-2 transition-colors">Last Active</div>
-                        <div className="font-black text-gray-900 dark:text-white text-3xl flex items-center gap-2 transition-colors">
-                          <Clock className="w-6 h-6 text-primary-red" /> Today
+                      <div className="bg-gray-50 dark:bg-slate-800 rounded-3xl p-5 border border-gray-100 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-700 transition-colors shadow-sm flex flex-col justify-between sm:col-span-2 lg:col-span-1 2xl:col-span-1">
+                        <div>
+                          <div className="text-gray-500 dark:text-gray-400 text-xs font-bold uppercase tracking-wider mb-2 transition-colors truncate">Last Active</div>
+                          <div className="font-black text-gray-900 dark:text-white text-2xl flex items-center gap-2 transition-colors">
+                            <Clock className="w-5 h-5 text-primary-red" /> Today
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -501,31 +507,56 @@ export default function DonorSearchClient({ initialDonors, unlockedDonorIds = []
               </div>
             </motion.div>
           ) : (
-            <div className="flex-1 flex flex-col items-center justify-center text-center p-8 relative overflow-hidden">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-tr from-red-500/5 via-red-500/10 to-transparent rounded-full blur-3xl -z-10"></div>
+            <div className="flex-1 flex flex-col relative overflow-y-auto p-6 md:p-12">
+              {/* Decorative Backgrounds */}
+              <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-red-500/10 via-red-500/5 to-transparent rounded-full blur-3xl -z-10"></div>
+              <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-blue-500/5 via-transparent to-transparent rounded-full blur-3xl -z-10"></div>
               
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="max-w-md w-full flex flex-col items-center z-10"
+                className="max-w-4xl w-full mx-auto flex flex-col z-10 mt-4 md:mt-12"
               >
-                <div className="w-32 h-32 bg-gradient-to-br from-red-50 to-red-100 text-primary-red rounded-[2.5rem] flex items-center justify-center mb-8 shadow-2xl border border-white dark:border-slate-900 rotate-3 hover:rotate-0 transition-transform duration-300">
-                  <Search className="w-14 h-14" />
-                </div>
-                <h2 className="text-4xl font-black text-gray-900 dark:text-white tracking-tight mb-4 transition-colors">Discover Heroes</h2>
-                <p className="text-gray-500 dark:text-gray-400 font-medium text-lg leading-relaxed mb-10 transition-colors">
-                  Select a donor from the list to view their complete profile, check their availability, and unlock their contact details for emergency needs.
-                </p>
-                
-                <div className="grid grid-cols-2 gap-4 w-full">
-                  <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 hover:scale-105 transition-transform cursor-default">
-                    <div className="text-4xl font-black text-gray-900 dark:text-white mb-2 transition-colors">{initialDonors.length}</div>
-                    <div className="text-sm font-bold uppercase tracking-wider text-primary-red">Total Donors</div>
+                <div className="flex flex-col xl:flex-row items-center gap-6 xl:gap-8 mb-12 xl:mb-16">
+                  <div className="w-20 h-20 xl:w-28 xl:h-28 bg-gradient-to-br from-red-50 to-red-100 dark:from-slate-800 dark:to-slate-800 text-primary-red dark:text-red-400 rounded-2xl xl:rounded-[2rem] flex items-center justify-center shrink-0 shadow-xl border border-white dark:border-slate-700 rotate-3 transition-transform duration-300">
+                    <Search className="w-10 h-10 xl:w-14 xl:h-14" />
                   </div>
-                  <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm p-6 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 hover:scale-105 transition-transform cursor-default">
-                    <div className="text-4xl font-black text-gray-900 dark:text-white mb-2 transition-colors">100%</div>
-                    <div className="text-sm font-bold uppercase tracking-wider text-green-500">Verified</div>
+                  <div className="text-center xl:text-left flex-1">
+                    <h2 className="text-3xl xl:text-5xl font-black text-gray-900 dark:text-white tracking-tight mb-3 xl:mb-4 transition-colors">Discover Heroes</h2>
+                    <p className="text-gray-500 dark:text-gray-400 font-medium text-base xl:text-lg leading-relaxed max-w-2xl mx-auto xl:mx-0 transition-colors">
+                      Select a donor from the list to view their complete profile, check their real-time availability, and securely unlock their contact details for emergency needs.
+                    </p>
+                  </div>
+                </div>
+                
+                <h3 className="text-lg xl:text-xl font-bold text-gray-900 dark:text-white mb-6 text-center xl:text-left transition-colors">How it works</h3>
+                <div className="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-6 w-full mb-12">
+                  <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-6 xl:p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 hover:-translate-y-1 transition-transform">
+                    <div className="w-10 h-10 xl:w-12 xl:h-12 bg-gray-100 dark:bg-slate-800 rounded-xl flex items-center justify-center mb-4 xl:mb-6 text-gray-900 dark:text-white font-black text-lg xl:text-xl">1</div>
+                    <h4 className="text-base xl:text-lg font-bold text-gray-900 dark:text-white mb-2">Search & Filter</h4>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm font-medium leading-relaxed">Use the sidebar to filter donors by blood group, donation type, or distance to find the perfect match.</p>
+                  </div>
+                  <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-6 xl:p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 hover:-translate-y-1 transition-transform">
+                    <div className="w-10 h-10 xl:w-12 xl:h-12 bg-gray-100 dark:bg-slate-800 rounded-xl flex items-center justify-center mb-4 xl:mb-6 text-gray-900 dark:text-white font-black text-lg xl:text-xl">2</div>
+                    <h4 className="text-base xl:text-lg font-bold text-gray-900 dark:text-white mb-2">Review Profile</h4>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm font-medium leading-relaxed">Check their rating, past donations, and current availability status to ensure they are ready to help.</p>
+                  </div>
+                  <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md p-6 xl:p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 hover:-translate-y-1 transition-transform xl:col-span-2 2xl:col-span-1">
+                    <div className="w-10 h-10 xl:w-12 xl:h-12 bg-red-50 dark:bg-red-950/30 rounded-xl flex items-center justify-center mb-4 xl:mb-6 text-primary-red dark:text-red-400 font-black text-lg xl:text-xl">3</div>
+                    <h4 className="text-base xl:text-lg font-bold text-gray-900 dark:text-white mb-2">Unlock Contact</h4>
+                    <p className="text-gray-500 dark:text-gray-400 text-sm font-medium leading-relaxed">Securely unlock their phone number and email to coordinate the life-saving donation immediately.</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 xl:gap-6 w-full max-w-xl mx-auto xl:mx-0">
+                  <div className="bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm p-5 xl:p-6 rounded-3xl border border-gray-100 dark:border-slate-800 flex items-center gap-4">
+                    <div className="text-3xl xl:text-4xl font-black text-gray-900 dark:text-white transition-colors">{initialDonors.length}</div>
+                    <div className="text-xs xl:text-sm font-bold uppercase tracking-wider text-primary-red leading-tight">Total<br/>Donors</div>
+                  </div>
+                  <div className="bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm p-5 xl:p-6 rounded-3xl border border-gray-100 dark:border-slate-800 flex items-center gap-4">
+                    <div className="text-3xl xl:text-4xl font-black text-gray-900 dark:text-white transition-colors">100<span className="text-xl xl:text-2xl">%</span></div>
+                    <div className="text-xs xl:text-sm font-bold uppercase tracking-wider text-green-500 leading-tight">Verified<br/>Users</div>
                   </div>
                 </div>
               </motion.div>

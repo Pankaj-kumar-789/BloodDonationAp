@@ -17,7 +17,7 @@ export default function SearchTabsClient({
   const [activeTab, setActiveTab] = useState<"donors" | "banks">("donors");
 
   return (
-    <div className="flex flex-col h-[calc(100vh-80px)] md:h-[calc(100vh-96px)] bg-gray-50/50 dark:bg-slate-900 transition-colors">
+    <div className="flex flex-col flex-1 h-full bg-gray-50/50 dark:bg-slate-900 transition-colors">
       {/* Tabs Header */}
       <div className="bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 px-4 md:px-8 py-4 shrink-0 flex justify-center transition-colors">
         <div className="bg-gray-100 dark:bg-slate-800 p-1 rounded-xl flex gap-1 w-full max-w-md transition-colors">

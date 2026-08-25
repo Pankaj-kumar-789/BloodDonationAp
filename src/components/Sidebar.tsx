@@ -23,6 +23,15 @@ export default function Sidebar({ session }: { session: any }) {
   const [isExpanded, setIsExpanded] = useState(true);
   const pathname = usePathname();
 
+  // Auto-collapse sidebar on standard laptop screens to maximize content visibility
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (window.innerWidth < 1536) {
+        setIsExpanded(false);
+      }
+    }
+  }, []);
+
   // Don't show sidebar on auth pages or homepage
   if (pathname === "/" || pathname === "/login" || pathname === "/register" || pathname === "/forgot-password") return null;
 
