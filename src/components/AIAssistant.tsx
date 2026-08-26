@@ -59,6 +59,12 @@ export default function AIAssistant() {
         assistantContent += chunk;
         setMessages(prev => prev.map(m => m.id === assistantId ? { ...m, content: assistantContent } : m));
       }
+      
+      // If the AI SDK swallowed a rate limit or crashed silently, it returns an empty stream.
+      // We replace the empty bubble with a polite fallback message.
+      if (assistantContent.trim() === "") {
+         setMessages(prev => prev.map(m => m.id === assistantId ? { ...m, content: "I'm currently receiving too many requests and need a quick breather! Please wait a moment and try asking again." } : m));
+      }
     } catch (err: any) {
       setError(err);
     } finally {
