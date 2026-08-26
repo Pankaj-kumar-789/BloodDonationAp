@@ -5,9 +5,13 @@ import Razorpay from "razorpay";
 
 export async function POST(req: Request) {
   try {
+    if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
+      return NextResponse.json({ message: "Razorpay keys are missing in Vercel Environment Variables. Please add RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET." }, { status: 400 });
+    }
+
     const razorpay = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID || "dummy_key",
-      key_secret: process.env.RAZORPAY_KEY_SECRET || "dummy_secret",
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
     });
 
     const session = await auth();

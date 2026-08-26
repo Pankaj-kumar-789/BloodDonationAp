@@ -12,6 +12,10 @@ export async function POST(req: Request) {
 
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature, donorId } = await req.json();
 
+    if (!process.env.RAZORPAY_KEY_SECRET) {
+      return NextResponse.json({ message: "Razorpay keys are missing in Vercel Environment Variables." }, { status: 500 });
+    }
+
     // Verify the payment signature
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSignature = crypto
