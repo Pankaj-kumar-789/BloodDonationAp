@@ -37,7 +37,7 @@ export async function POST(req: Request) {
     }
 
     const result = streamText({
-      model: google('gemini-3.6-flash'), // Automatically uses GOOGLE_GENERATIVE_AI_API_KEY from .env
+      model: google('gemini-3.5-flash'), // Automatically uses GOOGLE_GENERATIVE_AI_API_KEY from .env
       system: systemPrompt + liveStatsStr,
       messages,
     });
