@@ -8,6 +8,10 @@ const systemPrompt = "You are RaktaSetu's AI Medical & Eligibility Assistant. Yo
 export async function POST(req: Request) {
   console.log("=== API CHAT ROUTE CALLED ===");
   try {
+    if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+      return new Response("Error: The GOOGLE_GENERATIVE_AI_API_KEY environment variable is missing on Vercel. Please add it in your Vercel Project Settings.", { status: 200 });
+    }
+
     const { messages } = await req.json();
     console.log("Messages:", JSON.stringify(messages));
 
@@ -36,7 +40,24 @@ export async function POST(req: Request) {
       messages,
     });
 
-    return result.toTextStreamResponse();
+    const stream = new ReadableStream({
+      async start(controller) {
+        try {
+          for await (const chunk of result.textStream) {
+            controller.enqueue(new TextEncoder().encode(chunk));
+          }
+        } catch (streamErr: any) {
+          console.error("AI Stream Error:", streamErr);
+          controller.enqueue(new TextEncoder().encode(`\n\n[AI Connection Error: ${streamErr.message}]`));
+        } finally {
+          controller.close();
+        }
+      }
+    });
+
+    return new Response(stream, {
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+    });
   } catch (err: any) {
     return new Response(err.message, { status: 500 });
   }
