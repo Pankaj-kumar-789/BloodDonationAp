@@ -40,25 +40,9 @@ export async function POST(req: Request) {
       messages,
     });
 
-    const stream = new ReadableStream({
-      async start(controller) {
-        try {
-          for await (const chunk of result.textStream) {
-            controller.enqueue(new TextEncoder().encode(chunk));
-          }
-        } catch (streamErr: any) {
-          console.error("AI Stream Error:", streamErr);
-          controller.enqueue(new TextEncoder().encode(`\n\n[AI Connection Error: ${streamErr.message}]`));
-        } finally {
-          controller.close();
-        }
-      }
-    });
-
-    return new Response(stream, {
-      headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-    });
+    return result.toTextStreamResponse();
   } catch (err: any) {
+    console.error("AI Route Error:", err);
     return new Response(err.message, { status: 500 });
   }
 }
