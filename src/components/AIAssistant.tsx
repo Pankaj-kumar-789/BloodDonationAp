@@ -174,12 +174,17 @@ export default function AIAssistant() {
       </AnimatePresence>
 
       {/* Floating Action Button */}
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className={`w-14 h-14 rounded-2xl shadow-xl flex items-center justify-center text-white transition-all duration-300 hover:-translate-y-1 ${isOpen ? 'bg-gray-800 dark:bg-slate-700 hover:bg-gray-900 rotate-90 rounded-full' : 'bg-gradient-to-br from-[#C62121] to-rose-600 hover:shadow-red-500/25'}`}
-      >
-        {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
-      </button>
+      <div className="relative group">
+        {!isOpen && (
+          <span className="absolute -inset-1 rounded-2xl bg-red-500 opacity-50 animate-ping group-hover:hidden"></span>
+        )}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className={`relative z-10 w-14 h-14 rounded-2xl shadow-xl flex items-center justify-center text-white transition-all duration-300 hover:-translate-y-1 ${isOpen ? 'bg-gray-800 dark:bg-slate-700 hover:bg-gray-900 rotate-90 rounded-full' : 'bg-gradient-to-br from-[#C62121] to-rose-600 hover:shadow-red-500/25'}`}
+        >
+          {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
+        </button>
+      </div>
     </div>
   );
 }
