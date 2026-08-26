@@ -18,6 +18,7 @@ export const metadata: Metadata = {
 import { prisma } from "@/lib/prisma";
 
 import Sidebar from "@/components/Sidebar";
+import AIAssistant from "@/components/AIAssistant";
 
 import Script from "next/script";
 
@@ -46,9 +47,10 @@ export default async function RootLayout({
         <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
         <Providers session={session}>
           <Sidebar session={session} />
-          <div className="flex-1 flex flex-col min-w-0 h-[100dvh] overflow-y-auto overflow-x-hidden">
+          <div className="flex-1 flex flex-col min-w-0 h-[100dvh] overflow-y-auto overflow-x-hidden relative">
             <Navbar session={session} unreadCount={unreadCount} />
             <main className="flex-grow flex flex-col">{children}</main>
+            <AIAssistant />
           </div>
         </Providers>
       </body>
