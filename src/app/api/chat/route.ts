@@ -12,6 +12,21 @@ export async function POST(req: Request) {
       return new Response("Error: The GOOGLE_GENERATIVE_AI_API_KEY environment variable is missing on Vercel. Please add it in your Vercel Project Settings.", { status: 200 });
     }
 
+    // Direct test to catch hidden Google API errors on Vercel
+    try {
+      const testRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent?key=${process.env.GOOGLE_GENERATIVE_AI_API_KEY}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: "hi" }] }] })
+      });
+      if (!testRes.ok) {
+        const errText = await testRes.text();
+        return new Response(`[AI Connection Error: Google API rejected the request on Vercel: ${errText}]`, { status: 200 });
+      }
+    } catch (fetchErr: any) {
+      return new Response(`[AI Connection Error: Failed to reach Google API from Vercel: ${fetchErr.message}]`, { status: 200 });
+    }
+
     const { messages } = await req.json();
     console.log("Messages:", JSON.stringify(messages));
 
