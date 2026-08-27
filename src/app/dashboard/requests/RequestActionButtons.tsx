@@ -19,7 +19,7 @@ export default function RequestActionButtons({ requestId }: { requestId: string 
       <button 
         onClick={() => handleAction("REJECT")}
         disabled={isProcessing !== null}
-        className="flex-1 md:flex-none px-6 py-3 bg-white text-gray-700 font-bold border border-gray-200 rounded-xl hover:bg-gray-50 hover:text-gray-900 transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+        className="flex-1 md:flex-none px-6 py-3 bg-white dark:bg-slate-800 text-gray-700 dark:text-gray-300 font-bold border border-gray-200 dark:border-slate-700 rounded-xl hover:bg-gray-50 dark:hover:bg-slate-700 hover:text-gray-900 dark:hover:text-white transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
       >
         {isProcessing === "REJECT" ? <Loader2 className="w-5 h-5 animate-spin" /> : <XCircle className="w-5 h-5" />}
         Reject

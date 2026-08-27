@@ -49,15 +49,15 @@ export default function AcceptRequestButton({ requestId }: { requestId: string }
       {/* Custom Volunteer Modal */}
       {showModal && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-200">
-          <div className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl animate-in zoom-in-95 duration-200">
-            <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6 text-primary-red border border-red-100">
+          <div className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-3xl p-8 max-w-sm w-full shadow-2xl animate-in zoom-in-95 duration-200">
+            <div className="w-16 h-16 bg-red-50 dark:bg-red-900/20 rounded-full flex items-center justify-center mx-auto mb-6 text-primary-red border border-red-100 dark:border-red-900/50">
               <Heart className="w-8 h-8 fill-primary-red text-primary-red animate-pulse" />
             </div>
-            <h2 className="text-2xl font-black text-center text-gray-900 mb-2">Confirm Volunteer?</h2>
-            <p className="text-center text-gray-500 mb-6 font-medium">Are you sure you want to volunteer for this request? Your contact details will be shared with the hospital/patient.</p>
+            <h2 className="text-2xl font-black text-center text-gray-900 dark:text-white mb-2">Confirm Volunteer?</h2>
+            <p className="text-center text-gray-500 dark:text-gray-400 mb-6 font-medium">Are you sure you want to volunteer for this request? Your contact details will be shared with the hospital/patient.</p>
             
             {errorMsg && (
-              <div className="mb-6 p-3 bg-red-50 text-red-600 rounded-xl font-medium text-sm flex items-center justify-center gap-2 border border-red-100">
+              <div className="mb-6 p-3 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-xl font-medium text-sm flex items-center justify-center gap-2 border border-red-100 dark:border-red-900/50">
                 <AlertCircle className="w-4 h-4 flex-shrink-0" /> {errorMsg}
               </div>
             )}
@@ -67,7 +67,7 @@ export default function AcceptRequestButton({ requestId }: { requestId: string }
                 type="button" 
                 onClick={() => { setShowModal(false); setErrorMsg(""); }}
                 disabled={loading}
-                className="flex-1 px-4 py-3 bg-gray-50 hover:bg-gray-100 border border-gray-200 text-gray-700 rounded-xl font-bold transition-colors disabled:opacity-50"
+                className="flex-1 px-4 py-3 bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 border border-gray-200 dark:border-slate-700 text-gray-700 dark:text-gray-300 rounded-xl font-bold transition-colors disabled:opacity-50"
               >
                 Cancel
               </button>
