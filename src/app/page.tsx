@@ -387,24 +387,6 @@ export default async function Home() {
               linkedin: "https://www.linkedin.com/in/pankaj-sadyal-49572a87",
               instagram: "https://www.instagram.com/pankajsadyal?igsi=MXV0NTE2MXcyMndl",
               facebook: "https://www.facebook.com/share/1DQ5pb9jP7/?mibextid=wwXIfr"
-            },
-            {
-              name: "Project Manager",
-              role: "Head of Operations",
-              image: pmImg,
-              bio: "\"Executing our vision takes precision and dedication. I ensure that every aspect of RaktaSetu runs smoothly, bridging the gap between our development teams and the end-users. When lives are on the line, our platform's reliability is absolutely critical.\"",
-              linkedin: "#",
-              instagram: "#",
-              facebook: "#"
-            },
-            {
-              name: "Team Lead",
-              role: "Technical Lead",
-              image: teamleadImg,
-              bio: "\"Building a seamless, lightning-fast platform is my core mission. Every piece of code we write is optimized to connect donors with receivers in the blink of an eye, because every single second matters in an emergency.\"",
-              linkedin: "#",
-              instagram: "#",
-              facebook: "#"
             }
           ]} />
         </div>
