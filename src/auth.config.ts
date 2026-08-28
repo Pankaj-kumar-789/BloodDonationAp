@@ -11,14 +11,19 @@ export const authConfig = {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isApiAuthRoute = nextUrl.pathname.startsWith("/api/auth");
-      const isPublicRoute = ["/", "/login", "/register", "/forgot-password"].includes(nextUrl.pathname);
+      const isAuthRoute = ["/login", "/register", "/forgot-password"].includes(nextUrl.pathname);
+      const isPublicRoute = ["/", "/about", "/search"].includes(nextUrl.pathname);
 
       if (isApiAuthRoute) return true;
 
-      if (isPublicRoute) {
+      if (isAuthRoute) {
         if (isLoggedIn) {
           return Response.redirect(new URL("/dashboard", nextUrl));
         }
+        return true;
+      }
+
+      if (isPublicRoute) {
         return true;
       }
 
