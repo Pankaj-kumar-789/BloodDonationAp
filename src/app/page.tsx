@@ -470,7 +470,7 @@ export default async function Home() {
       {/* Footer Section */}
       <footer className="bg-white dark:bg-slate-950 border-t border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-400 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="flex flex-col xl:flex-row justify-between items-center gap-10 xl:gap-8 border-b border-gray-100 dark:border-slate-800 pb-10 mb-8">
+          <div className="flex flex-col xl:flex-row justify-between items-center gap-10 xl:gap-8 border-b border-gray-100 dark:border-slate-800 pb-10 mb-8 flex-wrap">
             
             {/* Left: Brand */}
             <div className="flex flex-col items-center xl:items-start space-y-4 xl:w-[25%] shrink-0">
@@ -484,7 +484,7 @@ export default async function Home() {
             </div>
 
             {/* Middle: Contact Info Row */}
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-center xl:justify-evenly flex-1 gap-8 lg:gap-10 px-4 xl:px-8">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-center xl:justify-evenly flex-1 gap-8 lg:gap-10 px-4 xl:px-8 flex-wrap">
               <div className="flex items-center gap-4">
                 <div className="w-11 h-11 bg-gray-50 dark:bg-slate-900 rounded-full flex items-center justify-center flex-shrink-0">
                   <MapPin className="w-5 h-5 text-gray-500 dark:text-gray-400" />
@@ -529,7 +529,7 @@ export default async function Home() {
           </div>
 
           {/* Bottom Row */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6 flex-wrap">
             <div className="flex items-center gap-4">
               <a href="#" className="w-10 h-10 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:bg-[#166FE5] hover:scale-110 transition-all shadow-md shadow-blue-200">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
