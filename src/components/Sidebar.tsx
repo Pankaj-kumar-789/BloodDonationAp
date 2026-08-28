@@ -32,8 +32,8 @@ export default function Sidebar({ session }: { session: any }) {
     }
   }, []);
 
-  // Don't show sidebar on auth pages or homepage
-  if (pathname === "/" || pathname === "/login" || pathname === "/register" || pathname === "/forgot-password") return null;
+  // Don't show sidebar on auth pages, homepage, or about page
+  if (pathname === "/" || pathname === "/about" || pathname === "/login" || pathname === "/register" || pathname === "/forgot-password") return null;
 
   const menuItems: Array<{name: string, icon: any, path: string, exact?: boolean, badge?: number}> = [
     { name: "About Us", icon: <UserIcon className="w-5 h-5" />, path: "/about" },

@@ -22,7 +22,7 @@ export default function Navbar({ session, unreadCount = 0 }: { session: any, unr
   }, []);
 
   const isAuthPage = pathname === "/login" || pathname === "/register" || pathname === "/forgot-password";
-  const isSidebarVisible = !(pathname === "/" || isAuthPage);
+  const isSidebarVisible = !(pathname === "/" || pathname === "/about" || isAuthPage);
   const isDark = mounted && resolvedTheme === "dark";
   
   if (isAuthPage || !mounted) return null;
