@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { ArrowRight, Heart, Shield, Activity, Users } from "lucide-react";
 import TeamSlider from "@/components/TeamSlider";
-import founderImg from "../../public/founder.jpg";
-import pmImg from "../../public/pm.jpg";
-import teamleadImg from "../../public/teamlead.jpg";
+import founderImg from "../../../public/founder.jpg";
+import pmImg from "../../../public/pm.jpg";
+import teamleadImg from "../../../public/teamlead.jpg";
 
 export default function AboutPage() {
   return (
