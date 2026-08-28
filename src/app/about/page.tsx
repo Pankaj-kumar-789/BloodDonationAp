@@ -98,13 +98,13 @@ export default function AboutPage() {
       {/* Story Section */}
       <section className="py-16 lg:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-br from-gray-900 to-slate-900 dark:from-slate-900 dark:to-slate-950 rounded-[3rem] p-8 md:p-16 overflow-hidden relative border border-gray-800 transition-colors">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-primary-red/20 blur-[100px] rounded-full pointer-events-none"></div>
+          <div className="bg-white dark:bg-slate-900 rounded-[3rem] p-8 md:p-16 overflow-hidden relative border border-gray-100 dark:border-slate-800 shadow-2xl dark:shadow-none transition-colors">
+            <div className="absolute top-0 right-0 w-96 h-96 bg-primary-red/5 dark:bg-primary-red/10 blur-[100px] rounded-full pointer-events-none"></div>
             
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
               <div>
-                <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-6">How it all started.</h2>
-                <div className="space-y-4 text-gray-300 font-medium">
+                <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white mb-6">How it all started.</h2>
+                <div className="space-y-4 text-gray-600 dark:text-gray-300 font-medium">
                   <p>
                     RaktaSetu was born out of a critical realization: despite having millions of willing blood donors, people still struggle to find blood during emergencies due to a lack of coordination and real-time connectivity.
                   </p>
@@ -118,21 +118,21 @@ export default function AboutPage() {
               </div>
               
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md">
-                  <div className="text-4xl font-black text-white mb-2">10K+</div>
-                  <div className="text-gray-400 text-sm font-medium">Registered Donors</div>
+                <div className="bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-3xl p-6 backdrop-blur-md transition-colors">
+                  <div className="text-4xl font-black text-gray-900 dark:text-white mb-2">10K+</div>
+                  <div className="text-gray-500 dark:text-gray-400 text-sm font-medium">Registered Donors</div>
                 </div>
-                <div className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md translate-y-8">
-                  <div className="text-4xl font-black text-white mb-2">500+</div>
-                  <div className="text-gray-400 text-sm font-medium">Partner Hospitals</div>
+                <div className="bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-3xl p-6 backdrop-blur-md translate-y-8 transition-colors">
+                  <div className="text-4xl font-black text-gray-900 dark:text-white mb-2">500+</div>
+                  <div className="text-gray-500 dark:text-gray-400 text-sm font-medium">Partner Hospitals</div>
                 </div>
-                <div className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md">
-                  <div className="text-4xl font-black text-white mb-2">24/7</div>
-                  <div className="text-gray-400 text-sm font-medium">Emergency Support</div>
+                <div className="bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-3xl p-6 backdrop-blur-md transition-colors">
+                  <div className="text-4xl font-black text-gray-900 dark:text-white mb-2">24/7</div>
+                  <div className="text-gray-500 dark:text-gray-400 text-sm font-medium">Emergency Support</div>
                 </div>
-                <div className="bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-md translate-y-8">
-                  <div className="text-4xl font-black text-white mb-2">15K+</div>
-                  <div className="text-gray-400 text-sm font-medium">Lives Impacted</div>
+                <div className="bg-gray-50 dark:bg-white/5 border border-gray-100 dark:border-white/10 rounded-3xl p-6 backdrop-blur-md translate-y-8 transition-colors">
+                  <div className="text-4xl font-black text-gray-900 dark:text-white mb-2">15K+</div>
+                  <div className="text-gray-500 dark:text-gray-400 text-sm font-medium">Lives Impacted</div>
                 </div>
               </div>
             </div>
