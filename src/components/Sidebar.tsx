@@ -36,6 +36,7 @@ export default function Sidebar({ session }: { session: any }) {
   if (pathname === "/" || pathname === "/login" || pathname === "/register" || pathname === "/forgot-password") return null;
 
   const menuItems: Array<{name: string, icon: any, path: string, exact?: boolean, badge?: number}> = [
+    { name: "About Us", icon: <UserIcon className="w-5 h-5" />, path: "/about" },
     { name: "Find Donors", icon: <Search className="w-5 h-5" />, path: "/search" },
     { name: "Emergency Request", icon: <HeartPulse className="w-5 h-5" />, path: "/emergency" },
   ];

@@ -50,11 +50,9 @@ export default function Navbar({ session, unreadCount = 0 }: { session: any, unr
                 Home
               </Link>
 
-              {!session && (
-                <Link href="/about" className="text-gray-600 dark:text-gray-300 hover:text-primary-red dark:hover:text-primary-red font-medium transition-colors">
-                  About Us
-                </Link>
-              )}
+              <Link href="/about" className="text-gray-600 dark:text-gray-300 hover:text-primary-red dark:hover:text-primary-red font-medium transition-colors">
+                About Us
+              </Link>
 
               {session ? (
                 <div className="flex items-center gap-4 ml-4">
@@ -128,11 +126,9 @@ export default function Navbar({ session, unreadCount = 0 }: { session: any, unr
             className="md:hidden bg-white dark:bg-slate-900 border-b border-gray-100 dark:border-slate-800 shadow-lg overflow-hidden"
           >
             <div className="px-4 pt-2 pb-4 space-y-1">
-              {!session && (
-                <Link href="/about" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-[#C62121] hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors">
-                  About Us
-                </Link>
-              )}
+              <Link href="/about" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-[#C62121] hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors">
+                About Us
+              </Link>
               <Link href="/search" onClick={() => setIsOpen(false)} className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-[#C62121] hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors">
                 Find Donors
               </Link>

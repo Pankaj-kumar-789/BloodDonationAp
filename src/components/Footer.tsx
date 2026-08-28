@@ -53,6 +53,7 @@ export default function Footer() {
           <div className="md:col-span-4 lg:col-span-2 lg:col-start-6">
             <h3 className="font-bold text-gray-900 mb-6 text-lg">Platform</h3>
             <ul className="space-y-4">
+              <li><Link href="/about" className="text-gray-500 hover:text-primary-red font-medium transition-colors flex items-center gap-2 group"><span className="w-1.5 h-1.5 rounded-full bg-gray-300 group-hover:bg-primary-red transition-colors"></span>About Us</Link></li>
               <li><Link href="/search" className="text-gray-500 hover:text-primary-red font-medium transition-colors flex items-center gap-2 group"><span className="w-1.5 h-1.5 rounded-full bg-gray-300 group-hover:bg-primary-red transition-colors"></span>Find Donors</Link></li>
               <li><Link href="/emergency" className="text-gray-500 hover:text-primary-red font-medium transition-colors flex items-center gap-2 group"><span className="w-1.5 h-1.5 rounded-full bg-gray-300 group-hover:bg-primary-red transition-colors"></span>Emergency Request</Link></li>
               <li><Link href="/register" className="text-gray-500 hover:text-primary-red font-medium transition-colors flex items-center gap-2 group"><span className="w-1.5 h-1.5 rounded-full bg-gray-300 group-hover:bg-primary-red transition-colors"></span>Become a Donor</Link></li>

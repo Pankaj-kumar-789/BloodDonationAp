@@ -4,6 +4,8 @@ import Link from "next/link";
 import { ArrowRight, Heart, Shield, Activity, Users } from "lucide-react";
 import TeamSlider from "@/components/TeamSlider";
 import founderImg from "../../public/founder.jpg";
+import pmImg from "../../public/pm.jpg";
+import teamleadImg from "../../public/teamlead.jpg";
 
 export default function AboutPage() {
   return (
@@ -127,15 +129,33 @@ export default function AboutPage() {
       <section className="py-16 bg-white dark:bg-slate-900 border-t border-gray-100 dark:border-slate-800 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <TeamSlider members={[
-            {
-              name: "Pankaj Sadiyal",
-              role: "Founder & CEO",
-              image: founderImg,
-              bio: "\"I started RaktaSetu with a simple vision: no life should be lost due to a lack of blood availability. By bridging the gap between willing donors and those in critical need, we're building a community where saving a life is as simple as a click.\"",
-              linkedin: "https://www.linkedin.com/in/pankaj-sadyal-49572a87",
-              instagram: "https://www.instagram.com/pankajsadyal?igsi=MXV0NTE2MXcyMndl",
-              facebook: "https://www.facebook.com/share/1DQ5pb9jP7/?mibextid=wwXIfr"
-            }
+              {
+                name: "Pankaj Sadiyal",
+                role: "Founder & CEO",
+                image: founderImg,
+                bio: "\"I started RaktaSetu with a simple vision: no life should be lost due to a lack of blood availability. By bridging the gap between willing donors and those in critical need, we're building a community where saving a life is as simple as a click.\"",
+                linkedin: "https://www.linkedin.com/in/pankaj-sadyal-49572a87",
+                instagram: "https://www.instagram.com/pankajsadyal?igsi=MXV0NTE2MXcyMndl",
+                facebook: "https://www.facebook.com/share/1DQ5pb9jP7/?mibextid=wwXIfr"
+              },
+              {
+                name: "Project Manager",
+                role: "Head of Operations",
+                image: pmImg,
+                bio: "\"Executing our vision takes precision and dedication. I ensure that every aspect of RaktaSetu runs smoothly, bridging the gap between our development teams and the end-users. When lives are on the line, our platform's reliability is absolutely critical.\"",
+                linkedin: "",
+                instagram: "",
+                facebook: ""
+              },
+              {
+                name: "Team Lead",
+                role: "Technical Lead",
+                image: teamleadImg,
+                bio: "\"Building a seamless, lightning-fast platform is my core mission. Every piece of code we write is optimized to connect donors with receivers in the blink of an eye, because every single second matters in an emergency.\"",
+                linkedin: "",
+                instagram: "",
+                facebook: ""
+              }
           ]} />
         </div>
       </section>
