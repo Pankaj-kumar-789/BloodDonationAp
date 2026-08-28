@@ -213,6 +213,11 @@ export default function AboutPage() {
                   <svg className="w-[18px] h-[18px] text-gray-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                   <p className="text-gray-600 dark:text-gray-300 text-sm transition-colors"><span className="font-bold text-gray-900 dark:text-white">Future Focus:</span> AI • SaaS • Web • Mobile • Cloud Solutions</p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
       {/* Footer Section */}
       <footer className="bg-white dark:bg-slate-950 border-t border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-400 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
