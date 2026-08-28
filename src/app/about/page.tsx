@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, Heart, Shield, Activity, Users, MapPin, Mail, Phone } from "lucide-react";
 import logo from "@/assets/logo.png";
 import TeamSlider from "@/components/TeamSlider";
+import heroImg from "../../../public/assets/new_hero_illustration.jpg";
 import founderImg from "../../../public/founder.jpg";
 import pmImg from "../../../public/pm.jpg";
 import teamleadImg from "../../../public/teamlead.jpg";
@@ -27,13 +28,25 @@ export default function AboutPage() {
           <p className="max-w-2xl mx-auto text-lg md:text-xl text-gray-600 dark:text-gray-400 mb-10 transition-colors">
             RaktaSetu is a modern, unified platform designed to connect blood donors, hospitals, and patients in real-time, eliminating the critical delays that cost lives during medical emergencies.
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
             <Link href="/register" className="w-full sm:w-auto bg-primary-red hover:bg-red-700 text-white px-8 py-4 rounded-xl font-bold transition-all shadow-lg shadow-red-200 dark:shadow-none flex items-center justify-center gap-2">
               Join as a Donor <ArrowRight className="w-5 h-5" />
             </Link>
             <Link href="/emergency" className="w-full sm:w-auto bg-white dark:bg-slate-900 border border-gray-200 dark:border-slate-800 hover:bg-gray-50 dark:hover:bg-slate-800 text-gray-900 dark:text-white px-8 py-4 rounded-xl font-bold transition-colors">
               Request Blood Now
             </Link>
+          </div>
+
+          <div className="relative w-full max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-gray-100 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm pt-8 px-4">
+            <div className="aspect-[16/9] relative rounded-t-2xl overflow-hidden">
+              <Image 
+                src={heroImg} 
+                alt="RaktaSetu Community" 
+                fill
+                className="object-contain object-bottom mix-blend-multiply dark:mix-blend-normal"
+                priority
+              />
+            </div>
           </div>
         </div>
       </section>
