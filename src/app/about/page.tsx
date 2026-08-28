@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Heart, Shield, Activity, Users } from "lucide-react";
+import { ArrowRight, Heart, Shield, Activity, Users, MapPin, Mail, Phone } from "lucide-react";
+import logo from "@/assets/logo.png";
 import TeamSlider from "@/components/TeamSlider";
 import founderImg from "../../../public/founder.jpg";
 import pmImg from "../../../public/pm.jpg";
@@ -211,11 +213,93 @@ export default function AboutPage() {
                   <svg className="w-[18px] h-[18px] text-gray-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
                   <p className="text-gray-600 dark:text-gray-300 text-sm transition-colors"><span className="font-bold text-gray-900 dark:text-white">Future Focus:</span> AI • SaaS • Web • Mobile • Cloud Solutions</p>
                 </div>
+      {/* Footer Section */}
+      <footer className="bg-white dark:bg-slate-950 border-t border-gray-100 dark:border-slate-800 text-gray-600 dark:text-gray-400 transition-colors">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="flex flex-col xl:flex-row justify-between items-center gap-10 xl:gap-8 border-b border-gray-100 dark:border-slate-800 pb-10 mb-8">
+            
+            {/* Left: Brand */}
+            <div className="flex flex-col items-center xl:items-start space-y-4 xl:w-[25%] shrink-0">
+              <Link href="/" className="flex items-center gap-3">
+                <Image src={logo} alt="RaktaSetu Logo" width={48} height={48} className="w-12 h-12" />
+                <div>
+                  <h2 className="text-2xl font-black text-gray-900 dark:text-white leading-none">RaktaSetu</h2>
+                  <p className="text-[10px] text-gray-500 dark:text-gray-400 font-bold tracking-widest uppercase mt-1">Leave the worry to us</p>
+                </div>
+              </Link>
+            </div>
+
+            {/* Middle: Contact Info Row */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-center xl:justify-evenly flex-1 gap-8 lg:gap-10 px-4 xl:px-8">
+              <div className="flex items-center gap-4">
+                <div className="w-11 h-11 bg-gray-50 dark:bg-slate-900 rounded-full flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                </div>
+                <div className="text-sm">
+                  <p className="font-bold text-gray-900 dark:text-white mb-0.5">Visit Us</p>
+                  <p className="text-gray-500 dark:text-gray-400 whitespace-nowrap">Himachal Pradesh</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="w-11 h-11 bg-gray-50 dark:bg-slate-900 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                </div>
+                <div className="text-sm">
+                  <p className="font-bold text-gray-900 dark:text-white mb-0.5">Email Us</p>
+                  <a href="mailto:pankajsadyal0@gmail.com" className="text-gray-500 dark:text-gray-400 hover:text-[#C62121] transition-colors whitespace-nowrap">pankajsadyal0@gmail.com</a>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="w-11 h-11 bg-gray-50 dark:bg-slate-900 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Phone className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                </div>
+                <div className="text-sm">
+                  <p className="font-bold text-gray-900 dark:text-white mb-0.5">Call Us</p>
+                  <a href="tel:+919876953067" className="text-gray-500 dark:text-gray-400 hover:text-[#C62121] transition-colors whitespace-nowrap">+91 98769 53067</a>
+                </div>
+              </div>
+            </div>
+
+            {/* Right: Actions / Badges */}
+            <div className="flex justify-center xl:justify-end xl:w-[25%] shrink-0">
+              <div className="px-5 py-3 border border-gray-100 dark:border-slate-800 bg-gray-50 dark:bg-slate-900 rounded-xl flex items-center gap-3 shadow-sm">
+                <Shield className="w-6 h-6 text-green-600 dark:text-green-500" />
+                <div>
+                  <p className="font-black text-gray-900 dark:text-white text-sm leading-tight uppercase tracking-wider">Verified & Secured</p>
+                  <p className="text-[9px] text-gray-500 dark:text-gray-400 uppercase font-bold tracking-widest mt-0.5">Trusted Platform</p>
+                </div>
               </div>
             </div>
           </div>
+
+          {/* Bottom Row */}
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+            <div className="flex items-center gap-4">
+              <a href="#" className="w-10 h-10 rounded-full bg-[#1877F2] text-white flex items-center justify-center hover:bg-[#166FE5] hover:scale-110 transition-all shadow-md shadow-blue-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              </a>
+              <a href="#" className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#f09433] via-[#e6683c] to-[#bc1888] text-white flex items-center justify-center hover:scale-110 transition-all shadow-md shadow-pink-200">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+              </a>
+            </div>
+
+            <div className="flex items-center gap-6 text-sm text-gray-500 font-medium">
+              <a href="#" className="hover:text-[#C62121] transition-colors">Security Policy</a>
+              <span className="text-gray-300">|</span>
+              <a href="#" className="hover:text-[#C62121] transition-colors">Privacy Policy</a>
+              <span className="text-gray-300">|</span>
+              <a href="#" className="hover:text-[#C62121] transition-colors">Terms of Use</a>
+            </div>
+
+            <div className="text-sm text-gray-400 font-medium">
+              Copyright Ac {new Date().getFullYear()} RaktaSetu. <br className="sm:hidden" />
+              <span className="text-gray-500">A product of <span className="font-bold text-gray-600 dark:text-gray-300">ParamSetu Innovations</span></span>
+            </div>
+          </div>
         </div>
-      </section>
+      </footer>
     </div>
   );
 }
