@@ -173,7 +173,7 @@ export default function AboutPage() {
                 facebook: ""
               },
               {
-                name: "Team Lead",
+                name: "Manoj Sharma",
                 role: "Technical Lead",
                 image: teamleadImg,
                 bio: "\"Building a seamless, lightning-fast platform is my core mission. Every piece of code we write is optimized to connect donors with receivers in the blink of an eye, because every single second matters in an emergency.\"",
