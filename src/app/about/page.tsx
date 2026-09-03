@@ -155,7 +155,7 @@ export default function AboutPage() {
                 facebook: "https://www.facebook.com/share/1DQ5pb9jP7/?mibextid=wwXIfr"
               },
               {
-                name: "Co-Founder",
+                name: "Atinder Thakur",
                 role: "Co-Founder & COO",
                 image: cofounderImg,
                 bio: "\"We are on a mission to completely revolutionize the way blood emergencies are handled. Our platform acts as a critical lifeline that transforms the chaotic process of finding blood into a streamlined, reliable, and instantaneous connection.\"",
