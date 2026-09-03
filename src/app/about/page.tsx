@@ -164,7 +164,7 @@ export default function AboutPage() {
                 facebook: ""
               },
               {
-                name: "Project Manager",
+                name: "Mahesh Sharma",
                 role: "Head of Operations",
                 image: pmImg,
                 bio: "\"Executing our vision takes precision and dedication. I ensure that every aspect of RaktaSetu runs smoothly, bridging the gap between our development teams and the end-users. When lives are on the line, our platform's reliability is absolutely critical.\"",
