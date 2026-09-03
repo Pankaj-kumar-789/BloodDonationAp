@@ -394,27 +394,27 @@ export default async function Home() {
               role: "Co-Founder & COO",
               image: cofounderImg,
               bio: "\"We are on a mission to completely revolutionize the way blood emergencies are handled. Our platform acts as a critical lifeline that transforms the chaotic process of finding blood into a streamlined, reliable, and instantaneous connection.\"",
-              linkedin: "",
-              instagram: "",
-              facebook: ""
+              linkedin: "#",
+              instagram: "#",
+              facebook: "#"
             },
             {
               name: "Mahesh Sharma",
               role: "Head of Operations",
               image: pmImg,
               bio: "\"Executing our vision takes precision and dedication. I ensure that every aspect of RaktaSetu runs smoothly, bridging the gap between our development teams and the end-users. When lives are on the line, our platform's reliability is absolutely critical.\"",
-              linkedin: "",
-              instagram: "",
-              facebook: ""
+              linkedin: "#",
+              instagram: "#",
+              facebook: "#"
             },
             {
               name: "Manoj Sharma",
               role: "Technical Lead",
               image: teamleadImg,
               bio: "\"Building a seamless, lightning-fast platform is my core mission. Every piece of code we write is optimized to connect donors with receivers in the blink of an eye, because every single second matters in an emergency.\"",
-              linkedin: "",
-              instagram: "",
-              facebook: ""
+              linkedin: "#",
+              instagram: "#",
+              facebook: "#"
             }
           ]} />
         </div>
