@@ -7,6 +7,7 @@ import logo from "@/assets/logo.png";
 import TeamSlider from "@/components/TeamSlider";
 import heroImg from "../../../public/assets/new_hero_illustration.jpg";
 import founderImg from "../../../public/founder.jpg";
+import cofounderImg from "../../../public/cofounder.jpg";
 import pmImg from "../../../public/pm.jpg";
 import teamleadImg from "../../../public/teamlead.jpg";
 
@@ -152,6 +153,15 @@ export default function AboutPage() {
                 linkedin: "https://www.linkedin.com/in/pankaj-sadyal-49572a87",
                 instagram: "https://www.instagram.com/pankajsadyal?igsi=MXV0NTE2MXcyMndl",
                 facebook: "https://www.facebook.com/share/1DQ5pb9jP7/?mibextid=wwXIfr"
+              },
+              {
+                name: "Co-Founder",
+                role: "Co-Founder & COO",
+                image: cofounderImg,
+                bio: "\"We are on a mission to completely revolutionize the way blood emergencies are handled. Our platform acts as a critical lifeline that transforms the chaotic process of finding blood into a streamlined, reliable, and instantaneous connection.\"",
+                linkedin: "",
+                instagram: "",
+                facebook: ""
               },
               {
                 name: "Project Manager",
